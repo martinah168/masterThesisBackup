@@ -1,0 +1,4 @@
+from .diffusion import SpacedDiffusionBeatGans, SpacedDiffusionBeatGansConfig
+
+Sampler = SpacedDiffusionBeatGans
+SamplerConfig = SpacedDiffusionBeatGansConfig

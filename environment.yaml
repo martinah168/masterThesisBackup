@@ -1,0 +1,8 @@
+name: diffae2.0
+channels:
+  - defaults
+dependencies:
+  - pip=23.2.1
+  - python=3.10.12
+  - pip:
+      - -r requirements.txt
