@@ -10,7 +10,7 @@ class Dataset_CSV(Dataset):
     def __init__(self, path, transform, split: None | Literal["train", "val", "test"] = None, col="file_path"):
         print(path)
         dataset = pd.read_csv(path)
-        assert col in dataset
+        assert col in dataset, dataset
         assert not isinstance(transform, tuple)
         self.transform = transform
         self.dataset = dataset.loc[dataset["Split"] == split]

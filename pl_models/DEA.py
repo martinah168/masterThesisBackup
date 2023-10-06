@@ -50,7 +50,7 @@ class DAE_LitModel(pl.LightningModule):
             pl.seed_everything(conf.seed)
             set_determinism(seed=conf.seed)
 
-        self.save_hyperparameters()
+        self.save_hyperparameters(conf)
 
         self.conf = conf
         self.model: Model = get_model(conf)
@@ -208,7 +208,7 @@ class DAE_LitModel(pl.LightningModule):
                 # train only do the latent diffusion
                 losses = {"latent": latent_losses["loss"], "loss": latent_losses["loss"]}
             elif self.conf.train_mode == TrainMode.simclr:
-                raise NotImplementedError("latent_infer_path")
+                raise NotImplementedError("simclr")
                 images = torch.cat([b["img"] for b in batch], dim=0)
                 features_list = []
                 batch_size_gpu = self.conf.sample_size
@@ -222,7 +222,7 @@ class DAE_LitModel(pl.LightningModule):
                 losses["loss"] = loss
                 losses["sim_accuracy"] = accuracy.detach()
             elif self.conf.train_mode == TrainMode.simsiam:
-                raise NotImplementedError("latent_infer_path")
+                raise NotImplementedError("simsiam")
                 self.model: SimSiam
                 images = torch.stack([b["img"] for b in batch], dim=0)
                 # compute output and loss

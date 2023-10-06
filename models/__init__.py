@@ -1,4 +1,4 @@
 from typing import Union
 from .unet import BeatGANsUNetModel
 
-Model = BeatGANsUNetModel  # Union[]  # BeatGANsUNetModel, BeatGANsAutoencModel, MLPSkipNet
+Model = Union[BeatGANsUNetModel, BeatGANsUNetModel]  # Union[]  # BeatGANsUNetModel, BeatGANsAutoencModel, MLPSkipNet
