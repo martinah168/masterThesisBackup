@@ -17,12 +17,19 @@ from torch import nn
 from torch import tanh
 import torch
 from monai.networks.nets.vit import ViT
-import timm
+
 from models import Model
 from utils.enums_model import ModelName, ModelType, LatentNetType
 
 
 def get_model(opt: DAE_Option) -> Model:
+    img_size = opt.img_size
+    if isinstance(img_size, list):
+        if len(img_size) == 1:
+            img_size = img_size[0]
+
+    assert isinstance(img_size, int), img_size
+    # if isinstance(int) else opt.
     if opt.model_name in [ModelName.autoencoder]:
         if opt.model_name == ModelName.autoencoder:
             opt.model_type = ModelType.autoencoder
@@ -63,7 +70,7 @@ def get_model(opt: DAE_Option) -> Model:
             enc_channel_mult=opt.enc_channel_mult,
             enc_grad_checkpoint=opt.enc_grad_checkpoint,
             enc_attn_resolutions=opt.enc_attn,
-            image_size=opt.img_size,
+            image_size=img_size,
             in_channels=opt.in_channels,
             model_channels=opt.model_channels,
             num_classes=None,

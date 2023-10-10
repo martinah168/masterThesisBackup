@@ -134,7 +134,8 @@ class Gaussian_Diffusion:
                 # x_t is static wrt. to the diffusion process
                 model_forward = model.forward(x=x_t.detach(), t=self._scale_timesteps(t), x_start=x_start.detach(), **model_kwargs)
             model_output = model_forward.pred
-
+            if model_forward.cond_emb is not None:
+                terms["cond_emb"] = model_forward.cond_emb
             _model_output = model_output
             if self.train_pred_xstart_detach:
                 _model_output = _model_output.detach()
@@ -162,6 +163,7 @@ class Gaussian_Diffusion:
                 terms["loss"] = terms["mse"] + terms["vb"]
             else:
                 terms["loss"] = terms["mse"]
+
         else:
             raise NotImplementedError(self.loss_type)
 

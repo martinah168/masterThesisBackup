@@ -1,5 +1,3 @@
-from pathlib import Path
-import sys
 from typing import Literal
 from pytorch_lightning import Trainer
 import torch

@@ -13,6 +13,7 @@ from diffusion.ddim_sampler import get_sampler
 from models import Model
 from utils.enums_model import OptimizerType
 from utils.mri import extract_slices_from_volume
+from utils.hessian_penalty_pytorch import hessian_penalty
 
 sys.path.append("..")
 import monai
@@ -50,7 +51,7 @@ class DAE_LitModel(pl.LightningModule):
             pl.seed_everything(conf.seed)
             set_determinism(seed=conf.seed)
 
-        self.save_hyperparameters(conf)
+        self.save_hyperparameters()
 
         self.conf = conf
         self.model: Model = get_model(conf)
@@ -194,6 +195,15 @@ class DAE_LitModel(pl.LightningModule):
                 if "img_aug" in batch:
                     model_kwargs = dict(x_start_aug=batch["img_aug"])
                 losses = self.sampler.training_losses(model=self.model, x_start=x_start, t=t, model_kwargs=model_kwargs)
+
+                # hessian_penalty
+                if self.conf.hessian_penalty != 0:
+                    # https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123510579.pdf
+                    assert "cond_emb" in losses
+                    hl = hessian_penalty(self.model.encoder, x_start, G_z=losses["cond_emb"])
+                    losses["hessian_penalty"] = hl.detach()
+                    losses["loss"] = losses["loss"] + hl
+
             elif self.conf.train_mode.is_latent_diffusion():
                 raise NotImplementedError("latent_infer_path")
                 """
@@ -233,7 +243,12 @@ class DAE_LitModel(pl.LightningModule):
                 raise NotImplementedError()
             loss = losses["loss"].mean()
             losses = {k: v.detach() if k != "loss" else v for k, v in losses.items()}
-            loss_keys = [*filter(lambda k: k in losses, ["loss", "vae", "latent", "mmd", "chamfer", "arg_cnt", "info_nce", "sim_accuracy"])]
+            loss_keys = [
+                *filter(
+                    lambda k: k in losses,
+                    ["loss", "vae", "latent", "mmd", "chamfer", "arg_cnt", "info_nce", "sim_accuracy", "hessian_penalty"],
+                )
+            ]
             # divide by accum batches to make the accumulated gradient exact!
             for key in loss_keys:
                 losses[key] = self.all_gather(losses[key]).mean()  # type: ignore

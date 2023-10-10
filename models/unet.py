@@ -239,7 +239,7 @@ class BeatGANsUNetModel(nn.Module):
 
         # hs = []
         hs = [[] for _ in range(len(self.channel_mult))]
-        emb = self.time_embed(timestep_embedding(t, self.time_emb_channels))
+        t_emb = self.time_embed(timestep_embedding(t, self.time_emb_channels))
 
         if self.num_classes is not None:
             raise NotImplementedError()
@@ -251,13 +251,13 @@ class BeatGANsUNetModel(nn.Module):
         k = 0
         for i in range(len(self.input_num_blocks)):
             for j in range(self.input_num_blocks[i]):
-                h = self.input_blocks[k](h, emb=emb)
+                h = self.input_blocks[k](h, emb=t_emb)
                 # print(i, j, h.shape)
                 hs[i].append(h)
                 k += 1
         assert k == len(self.input_blocks)
 
-        h = self.middle_block(h, emb=emb)
+        h = self.middle_block(h, emb=t_emb)
         k = 0
         for i in range(len(self.output_num_blocks)):
             for j in range(self.output_num_blocks[i]):
@@ -269,7 +269,7 @@ class BeatGANsUNetModel(nn.Module):
                 except IndexError:
                     lateral = None
                     # print(i, j, lateral)
-                h = self.output_blocks[k](h, emb=emb, lateral=lateral)
+                h = self.output_blocks[k](h, emb=t_emb, lateral=lateral)
                 k += 1
 
         h = h.type(x.dtype)

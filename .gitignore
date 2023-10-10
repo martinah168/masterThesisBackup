@@ -1,0 +1,6 @@
+*.pyc
+*.yaml
+*.ckpt
+events.out.*
+*.cpython*
+__pycache__

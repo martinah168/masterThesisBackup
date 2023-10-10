@@ -31,7 +31,7 @@ class Train_Option(Option_to_Dataclass):
 
 @dataclass
 class DataSet_Option:
-    dataset = "/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None
     in_channels: int = 1  # Channel of the Noised input
@@ -42,6 +42,9 @@ class DataSet_Option:
     def shape(self):
         if isinstance(self.img_size, int):
             return (self.img_size,) * self.dims
+        elif len(self.img_size) == 1:
+            self.img_size = self.img_size[0]
+            return self.shape
         if len(self.img_size) != self.dims:
             raise ValueError(
                 f"dims ({self.dims}) is different length than image_size ({self.img_size}). Use same length for image_size or an int or update dims"
@@ -103,6 +106,8 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     ema_decay: float = 0.999
     grad_clip: float = 1.0
     rescale_timesteps: bool = False
+    # Embedding
+    hessian_penalty: float = 0
     # Debugging
     overfit: bool = False
     train_mode: TrainMode = TrainMode.diffusion
