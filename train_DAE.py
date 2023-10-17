@@ -1,6 +1,7 @@
 from typing import Literal
 from pytorch_lightning import Trainer
 import torch
+torch.cuda.empty_cache()
 from pl_models.DEA import DAE_LitModel
 from utils import arguments
 from pytorch_lightning.callbacks import ModelCheckpoint
@@ -29,7 +30,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         save_last=True,
         save_top_k=3,
         auto_insert_metric_name=True,
-        every_n_train_steps=opt.save_every_samples // opt.batch_size_effective,
+        every_n_train_steps=1,#opt.save_every_samples // opt.batch_size_effective,
     )
 
     early_stopping = EarlyStopping(
@@ -49,7 +50,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
 
     n_overfit_batches = 1 if opt.overfit else 0.0
 
-    log_every_n_steps = 1 if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
+    log_every_n_steps = 1 #if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
     gpus = opt.gpus
     accelerator = "gpu"
     if gpus is None:
@@ -116,6 +117,9 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     else:
         raise NotImplementedError()
 
+def test():
+    #/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_19/checkpoints/last.ckpt
+    return
 
 def get_opt(config=None) -> arguments.DAE_Option:
     torch.cuda.empty_cache()

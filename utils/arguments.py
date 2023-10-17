@@ -23,7 +23,7 @@ class Train_Option(Option_to_Dataclass):
     num_cpu: int = 16
     # Logging
     log_dir: str = "lightning_logs"
-    log_every_n_steps = 3000
+    log_every_n_steps = 1#3000
     fast_dev_run: bool = False
     optimizer: OptimizerType = OptimizerType.adam
     weight_decay: float = 0.0
@@ -31,12 +31,12 @@ class Train_Option(Option_to_Dataclass):
 
 @dataclass
 class DataSet_Option:
-    dataset: str = "/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None
     in_channels: int = 1  # Channel of the Noised input
-    img_size: int | list[int] = 256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
-    dims: int = 2
+    img_size: int | list[int] = 128#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
+    dims: int = 2#3
 
     @property
     def shape(self):
