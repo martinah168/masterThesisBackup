@@ -8,6 +8,8 @@ from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.loggers import TensorBoardLogger
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pprint import pprint
+from pathlib import Path
+import nibabel as nib
 
 
 def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
@@ -63,6 +65,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     else:
         nodes = len(gpus)
     trainer = Trainer(
+        #min_epochs= 5,
         max_steps=opt.total_samples // opt.batch_size_effective,
         devices=gpus,  # type: ignore
         num_nodes=nodes,
@@ -119,6 +122,25 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
 
 def test():
     #/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_19/checkpoints/last.ckpt
+
+    #### Load checkpoint ####
+    checkpoint_path = "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_19/checkpoints/last.ckpt"#"/media/data/robert/code/DiffAE/lightning_logs/DAE_NAKO_256/version_1/checkpoints/last.ckpt"
+    device: str | None = "cuda:0"
+    print("checkpoint_path", checkpoint_path)
+    assert Path(checkpoint_path).exists()
+    encoder = DAE_LitModel.load_from_checkpoint(checkpoint_path)
+
+     #### Load overfit sample ####
+    overfit_sample_path = "/media/DATA/martina_ma/datasets/verse013_024_subreg_cropped.nii.gz"
+    img_nifti = nib.load(overfit_sample_path)
+    print(img_nifti.header.get_data_shape())
+    #from_im = img_nifti.get_fdata()
+    #from_im = from_im.reshape(-1, from_im.shape[-1])
+    #from_im = from_im.to(torch.float32) 
+
+    trainer = Trainer()
+    trainer.test(encoder)
+    
     return
 
 def get_opt(config=None) -> arguments.DAE_Option:
@@ -132,3 +154,4 @@ def get_opt(config=None) -> arguments.DAE_Option:
 
 if __name__ == "__main__":
     train(get_opt())
+    #test()

@@ -187,6 +187,7 @@ class DAE_LitModel(pl.LightningModule):
                 """
                 main training mode!!!
                 """
+                
                 imgs = batch["img"]
                 x_start = imgs
                 # with numpy seed we have the problem that the sample t's are related!
@@ -292,6 +293,10 @@ class DAE_LitModel(pl.LightningModule):
             if not self.trainer.fast_dev_run:  # type: ignore
                 if self.conf.train_mode.is_diffusion():
                     self.log_sample(x_start=imgs)
+                    # Reorder the dimensions to match "CHW" format
+                    #input_tensor_chw = imgs.permute(0, 2, 3, 1)
+
+                   # self.log_image(tag="img",image=imgs[0], step=0)
                 # self.evaluate_scores()
 
     #### Optimizer ####
@@ -521,6 +526,7 @@ class DAE_LitModel(pl.LightningModule):
             experiment: SummaryWriter = self.logger.experiment  # type: ignore
             if isinstance(experiment, SummaryWriter):
                 experiment.add_image(tag, image, step)
+               # experiment.add_image('Original', image, dataformats='NCHW')
             # elif isinstance(experiment, wandb.sdk.wandb_run.Run):
             #    experiment.log(
             #        {tag: [wandb.Image(image.cpu())]},

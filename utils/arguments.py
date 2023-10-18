@@ -15,10 +15,10 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 class Train_Option(Option_to_Dataclass):
     experiment_name: str = "NAKO_256"
     lr: float = 0.0001
-    batch_size: int = 64
-    batch_size_eval: int = 64
+    batch_size: int = 1#64
+    batch_size_eval: int = 1#64
     debug: bool = True
-    new: bool = False
+    new: bool = True#False
     gpus: list[int] | None = None
     num_cpu: int = 16
     # Logging
@@ -79,7 +79,7 @@ class DAE_Model_Option:
 class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     seed: int | None = 0
     # Train
-    total_samples: int = 100000000
+    total_samples: int = 1000#100000000
     # Validation
     early_stopping_patience: int = 100
     save_every_samples: int = 25000
@@ -140,8 +140,8 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
 
             _target_batch_size = _target_batch_size if not self.overfit else max_batch_size_that_fits_in_memory
 
-        self._target_batch_size = _target_batch_size
-        self.batch_size = min(max_batch_size_that_fits_in_memory, _target_batch_size)
+        self._target_batch_size = 1#_target_batch_size
+        self.batch_size = 1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
         return self._target_batch_size
 
     @property
