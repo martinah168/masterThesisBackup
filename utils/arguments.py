@@ -1,9 +1,9 @@
 from collections.abc import Callable, Mapping
 from typing import Any, Literal
-from attr import dataclass
+
 import torch
 from utils.auto_arguments import Option_to_Dataclass
-from dataclasses import Field, asdict, field
+from dataclasses import Field, asdict, dataclass, field
 from dataloader import transforms as T
 from pathlib import Path
 from .enums import TrainMode
@@ -35,7 +35,7 @@ class DataSet_Option:
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None
     in_channels: int = 1  # Channel of the Noised input
-    img_size: int | list[int] = 256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
+    img_size: int = 256  # TODO Diffusion_Autoencoder_Model can't deal with list[int] | list[int]
     dims: int = 2
 
     @property

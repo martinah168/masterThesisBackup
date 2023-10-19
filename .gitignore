@@ -4,3 +4,5 @@
 events.out.*
 *.cpython*
 __pycache__
+*.png
+*.pyc

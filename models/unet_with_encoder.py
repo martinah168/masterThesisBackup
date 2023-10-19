@@ -188,7 +188,7 @@ class Diffusion_Autoencoder_Model(BeatGANsUNetModel):
         else:
             return S
 
-    def forward(self, x, t, y=None, x_start=None, cond_emb=None, style=None, noise=None, t_cond=None, **kwargs):
+    def forward(self, x, t, y=None, x_start=None, cond=None, style=None, noise=None, t_cond=None, **kwargs):
         """
         Apply the model to an input batch.
 
@@ -206,7 +206,7 @@ class Diffusion_Autoencoder_Model(BeatGANsUNetModel):
             # if the noise is given, we predict the cond from noise
             cond_emb = self.noise_to_cond(noise)
 
-        if cond_emb is None:
+        if cond is None:
             if x is not None:
                 assert x_start is not None
                 assert len(x) == len(x_start), f"{len(x)} != {len(x_start)}"
@@ -214,7 +214,8 @@ class Diffusion_Autoencoder_Model(BeatGANsUNetModel):
             # get augmented version of x_start if given
             x_start_enc = kwargs.get("x_start_aug", x_start)
             cond_emb = self.encode(x_start_enc)
-
+        else:
+            cond_emb = cond
         if t is not None:
             _t_emb = timestep_embedding(t, self.model_channels)
             _t_cond_emb = timestep_embedding(t_cond, self.model_channels)
