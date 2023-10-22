@@ -4,6 +4,7 @@ from pathlib import Path
 from typing import Literal
 import pandas as pd
 import torch
+from dataloader.datasets.dataset_superres import Dataset_CSV_super
 
 sys.path.append("..")
 from utils.arguments import DataSet_Option, DAE_Option
@@ -21,24 +22,22 @@ def get_num_channels(opt: DataSet_Option):
 SPLIT = Literal["train", "val", "test"]
 
 
-def get_dataset(opt: DataSet_Option, split: SPLIT = "train"):
+def get_dataset(opt: DataSet_Option, split: SPLIT = "train", super_res=False):
     dataset = opt.dataset
     ds_type = opt.ds_type
     if ds_type == "csv_2D":
         assert dataset.endswith(".csv"), dataset + " is not a csv"
         transf1 = get_transforms2D(opt, split)
-        return Dataset_CSV(path=dataset, transform=transf1, split=split)
+        if super_res:
+            return Dataset_CSV_super(opt=opt, path=dataset, transform=transf1, split=split)
+        else:
+            return Dataset_CSV(path=dataset, transform=transf1, split=split)
     else:
         raise NotImplementedError(ds_type)
 
 
 def get_data_loader(
-    opt: DAE_Option,
-    dataset,
-    shuffle: bool,
-    drop_last: bool = True,
-    parallel=False,  # FIXME always False?
-    split: SPLIT = "train",
+    opt: DAE_Option, dataset, shuffle: bool, drop_last: bool = True, parallel=False, split: SPLIT = "train"  # FIXME always False?
 ):
     from torch import distributed
     from torch.utils.data import DataLoader, WeightedRandomSampler

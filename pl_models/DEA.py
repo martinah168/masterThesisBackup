@@ -10,6 +10,7 @@ from typing import Literal
 from diffusion.beta_schedule import ScheduleSampler
 
 from diffusion.ddim_sampler import get_sampler
+from diffusion.renderer import render_condition, render_uncondition
 from models import Model
 from utils.enums_model import OptimizerType
 from utils.mri import extract_slices_from_volume
@@ -146,7 +147,7 @@ class DAE_LitModel(pl.LightningModule):
     def val_dataloader(self):
         return self._shared_loader("val")
 
-    def _shared_loader(self, mode: Literal["train", "val"]):
+    def _shared_loader(self, mode: Literal["train", "val"], super_res=False):
         opt = self.conf
         print(f"on {mode} dataloader start ...")
         if self.conf.train_mode.require_dataset_infer():
@@ -159,7 +160,7 @@ class DAE_LitModel(pl.LightningModule):
             return get_data_loader(opt, self.train_data if train else self.val_data, shuffle=train, drop_last=not train)
 
     ###### Training #####
-    def forward(self, noise=None, x_start=None, ema_model: bool = False):
+    def forward(self, noise=None, x_start=None, ema_model: bool = False, **qargs):
         with autocast(False):
             model = self.ema_model if ema_model else self.model
             return self.eval_sampler.sample(model=model, noise=noise, x_start=x_start)
@@ -218,31 +219,8 @@ class DAE_LitModel(pl.LightningModule):
                 latent_losses = self.latent_sampler.training_losses(model=self.model.latent_net, x_start=cond, t=t)
                 # train only do the latent diffusion
                 losses = {"latent": latent_losses["loss"], "loss": latent_losses["loss"]}
-            elif self.conf.train_mode == TrainMode.simclr:
-                raise NotImplementedError("simclr")
-                images = torch.cat([b["img"] for b in batch], dim=0)
-                features_list = []
-                batch_size_gpu = self.conf.sample_size
-                for img_chunk in torch.split(images, batch_size_gpu):
-                    cur_feats = self.model(img_chunk)
-                    features_list.append(cur_feats)
-                features = torch.cat(features_list, dim=0)
-                loss, accuracy = info_nce_loss(features)
-                losses = {}
-                losses["info_nce"] = loss.detach()
-                losses["loss"] = loss
-                losses["sim_accuracy"] = accuracy.detach()
-            elif self.conf.train_mode == TrainMode.simsiam:
-                raise NotImplementedError("simsiam")
-                self.model: SimSiam
-                images = torch.stack([b["img"] for b in batch], dim=0)
-                # compute output and loss
-                p1, p2, z1, z2 = self.model(x1=images[0], x2=images[1])
-                loss = -(self.criterion(p1, z2).mean() + self.criterion(p2, z1).mean()) * 0.5
-                losses["loss"] = loss
             else:
                 raise NotImplementedError()
-            loss = losses["loss"].mean()
             losses = {k: v.detach() if k != "loss" else v for k, v in losses.items()}
             loss_keys = [
                 *filter(
@@ -281,22 +259,21 @@ class DAE_LitModel(pl.LightningModule):
                 ema(self.model.latent_net, self.ema_model.latent_net, self.conf.ema_decay)
             else:
                 ema(self.model, self.ema_model, self.conf.ema_decay)
-
+            imgs_lr = None
             # logging
             if self.conf.train_mode.require_dataset_infer():
                 imgs = None
             elif isinstance(batch, list):
                 imgs = torch.cat([b["img"] for b in batch], dim=0)
+            elif "img_lr" in batch:
+                imgs_lr = batch["img_lr"]
+                imgs = batch["img"]
             else:
                 imgs = batch["img"]
 
             if not self.trainer.fast_dev_run:  # type: ignore
                 if self.conf.train_mode.is_diffusion():
-                    self.log_sample(x_start=imgs)
-                    # Reorder the dimensions to match "CHW" format
-                    #input_tensor_chw = imgs.permute(0, 2, 3, 1)
-
-                   # self.log_image(tag="img",image=imgs[0], step=0)
+                    self.log_sample(x_start=imgs, x_start_lr=imgs_lr)
                 # self.evaluate_scores()
 
     #### Optimizer ####
@@ -369,30 +346,31 @@ class DAE_LitModel(pl.LightningModule):
     #    pred_img = (pred_img + 1) / 2
     #    return pred_img
 
-    # def render(self, noise, cond=None, T=None):
-    #    if T is None:
-    #        sampler = self.eval_sampler
-    #    else:
-    #        sampler = self.conf._make_diffusion_conf(T).make_sampler()
+    def render(self, noise, cond=None, T=None, x_start=None):
+        if T is None:
+            sampler = self.eval_sampler
+        else:
+            sampler = get_sampler(self.conf, eval=False, T=T)
 
-    #    if cond is not None:
-    #        pred_img = render_condition(self.conf, self.ema_model, noise, sampler=sampler, cond=cond)
-    #    else:
-    #        pred_img = render_uncondition(self.conf, self.ema_model, noise, sampler=sampler, latent_sampler=None)
-    #    return pred_img
+        if cond is not None:
+            pred_img = render_condition(self.conf, self.ema_model, noise, sampler=sampler, cond=cond, x_start=x_start)
+        else:
+            pred_img = render_uncondition(self.conf, self.ema_model, noise, sampler=sampler, latent_sampler=None)
+        return pred_img
 
-    # def encode(self, x):
-    #    assert self.conf.model_type.has_autoenc()
-    #    cond = self.ema_model.encoder.forward(x)
-    #    return cond
+    def encode(self, x):
+        assert self.conf.model_type.has_autoenc()
+        cond = self.model.encoder.forward(x)
+        return cond
 
-    # def encode_stochastic(self, x, cond, T=None):
-    #    if T is None:
-    #        sampler = self.eval_sampler
-    #    else:
-    #        sampler = self.conf._make_diffusion_conf(T).make_sampler()
-    #    out = sampler.ddim_reverse_sample_loop(self.ema_model, x, model_kwargs={"cond": cond})
-    #    return out["sample"]
+    def encode_stochastic(self, x, cond, T=None):
+        if T is None:
+            sampler = self.eval_sampler
+        else:
+            sampler = get_sampler(self.conf, eval=False, T=T)
+
+        out = sampler.ddim_reverse_sample_loop(self.ema_model, x, model_kwargs={"cond": cond})
+        return out["sample"]
 
     # @property
     # def batch_size(self):
@@ -496,29 +474,29 @@ class DAE_LitModel(pl.LightningModule):
 
     #    conds = torch.cat(conds).float()
     #    return conds
-    def log_sample(self, x_start):
+    def log_sample(self, x_start, x_start_lr):
         """
         put images to the tensorboard
         """
         if self.conf.sample_every_samples > 0 and is_time(self.num_samples, self.conf.sample_every_samples, self.conf.batch_size_effective):
             if self.conf.train_mode.require_dataset_infer():
-                _log_sample(self, x_start, self.model, "", use_xstart=False)
+                _log_sample(self, x_start, x_start_lr, self.model, "", use_xstart=False)
                 # _log_sample(self, x_start, self.ema_model, "_ema", use_xstart=False)
             else:
                 if self.conf.model_type.has_autoenc() and self.conf.model_type.can_sample():
-                    _log_sample(self, x_start, self.model, "", use_xstart=False)
+                    _log_sample(self, x_start, x_start_lr, self.model, "", use_xstart=False)
                     # _log_sample(self, x_start, self.ema_model, "_ema", use_xstart=False)
                     # autoencoding mode
-                    _log_sample(self, x_start, self.model, "_enc", use_xstart=True, save_real=True)
+                    _log_sample(self, x_start, x_start_lr, self.model, "_enc", use_xstart=True, save_real=True)
                     # _log_sample(self, x_start, self.ema_model, "_enc_ema", use_xstart=True, save_real=True)
                 elif self.conf.train_mode.use_latent_net():
-                    _log_sample(self, x_start, self.model, "", use_xstart=False)
+                    _log_sample(self, x_start, x_start_lr, self.model, "", use_xstart=False)
                     # _log_sample(self, x_start, self.ema_model, "_ema", use_xstart=False)
                     # autoencoding mode
-                    _log_sample(self, x_start, self.model, "_enc", use_xstart=True, save_real=True)
+                    _log_sample(self, x_start, x_start_lr, self.model, "_enc", use_xstart=True, save_real=True)
                     # _log_sample(self, x_start, self.ema_model, "_enc_ema", use_xstart=True, save_real=True)
                 else:
-                    _log_sample(self, x_start, self.model, "", use_xstart=True, save_real=True)
+                    _log_sample(self, x_start, x_start_lr, self.model, "", use_xstart=True, save_real=True)
                     # _log_sample(self, x_start, self.ema_model, "_ema", use_xstart=True, save_real=True)
 
     def log_image(self, tag: str, image: torch.Tensor, step: int) -> None:
@@ -820,17 +798,22 @@ from collections import deque
 
 
 @torch.no_grad()
-def _log_sample(self: DAE_LitModel, x_start, model, postfix, use_xstart, save_real=False, interpolate=False):
+def _log_sample(self: DAE_LitModel, x_start, x_start_lr, model, postfix, use_xstart, save_real=False, interpolate=False):
     global buffer_image_names
     model.eval()
     all_x_T = self.split_tensor(self.x_T)
     batch_size = min(len(all_x_T), self.conf.batch_size_eval)
-    # allow for super large models
+    ## allow for super large models
     loader = DataLoader(all_x_T, batch_size=batch_size)  # type: ignore
     Gen = []
     for x_T in loader:  # tqdm(loader, desc="img", total=len(loader)):
         if use_xstart:
-            _xstart = x_start[: len(x_T)]
+            if x_start_lr is None:
+                _xstart = x_start[: len(x_T)]
+
+            else:
+                _xstart = x_start_lr[: len(x_T)]
+                _xstart_hr = x_start[: len(x_T)]
         else:
             _xstart = None
         if self.conf.train_mode.is_latent_diffusion() and not use_xstart:
@@ -869,6 +852,7 @@ def _log_sample(self: DAE_LitModel, x_start, model, postfix, use_xstart, save_re
         # (n, c, h, w)
         gen = gen.flatten(0, 1)
     if self.conf.dims == 3:
+        raise NotImplementedError()
         if self.global_rank == 0:
             # TODO: convert gif to mp4 to save it to wandb
             # if logged to tensorboard
@@ -883,36 +867,50 @@ def _log_sample(self: DAE_LitModel, x_start, model, postfix, use_xstart, save_re
     grid_params = lambda t: dict(
         tensor=t, nrow=3 if self.conf.dims == 3 else int(np.sqrt(t.size(0))), normalize=True, padding=0, value_range=(-1, 1)
     )
+    log_img = []
+    if save_real and use_xstart and x_start_lr is not None:
+        a = _save_image(self, _xstart_hr, grid_params, postfix, sample_dir)
+        log_img.append(a)
     if save_real and use_xstart:
-        # save the original images to the tensorboard
-        real: torch.Tensor = self.all_gather(_xstart)  # type: ignore
-        if (real.dim() - self.conf.dims) == 3:
-            real = real.flatten(0, 1)
-        if self.conf.dims == 3:
-            # visualize volume using MONAI
-            if self.global_rank == 0:
-                if isinstance(self.logger, pl_loggers.TensorBoardLogger):
-                    plot_2d_or_3d_image(real, self.global_step, self.logger.experiment, tag=f"sample{postfix}/real", frame_dim=-1)
-                elif isinstance(self.logger, pl_loggers.WandbLogger):
-                    # log as 3d object
-                    # TODO: add rendering as mesh
-                    ...
-            # extract 2d slice from different sequences
-            real = extract_slices_from_volume(real)
-        if self.global_rank == 0:
-            real_grid = make_grid(**grid_params(real))
-            self.log_image(f"sample{postfix}/real", real_grid, self.global_step)
-            path = os.path.join(sample_dir, "real.png")
-            remove_old_jpgs(path)
-            save_image(real_grid, path)
+        a = _save_image(self, _xstart, grid_params, postfix, sample_dir)
+        log_img.append(a)
     if self.global_rank == 0:
         # save samples to the tensorboard
         gen_grid = make_grid(**grid_params(gen))
         path = os.path.join(sample_dir, f"{self.global_step}.png")
         remove_old_jpgs(path)
         save_image(gen_grid, path)
-        self.log_image(f"sample{postfix}/fake", gen_grid, self.global_step)
+        log_img.append(gen_grid)
+        print("log")
+        self.log_image(f"sample{postfix}/fake", torch.concat(log_img, dim=-1), self.global_step)
     model.train()
+    # x_start_lr
+
+
+def _save_image(self: DAE_LitModel, _xstart, grid_params, postfix, sample_dir):
+    # save the original images to the tensorboard
+    real: torch.Tensor = self.all_gather(_xstart)  # type: ignore
+    if (real.dim() - self.conf.dims) == 3:
+        real = real.flatten(0, 1)
+    if self.conf.dims == 3:
+        raise NotImplementedError()
+        # visualize volume using MONAI
+        if self.global_rank == 0:
+            if isinstance(self.logger, pl_loggers.TensorBoardLogger):
+                plot_2d_or_3d_image(real, self.global_step, self.logger.experiment, tag=f"sample{postfix}/real", frame_dim=-1)
+            elif isinstance(self.logger, pl_loggers.WandbLogger):
+                # log as 3d object
+                # TODO: add rendering as mesh
+                ...
+        # extract 2d slice from different sequences
+        real = extract_slices_from_volume(real)
+    if self.global_rank == 0:
+        real_grid = make_grid(**grid_params(real))
+        # self.log_image(f"sample{postfix}/real", real_grid, self.global_step)
+        path = os.path.join(sample_dir, "real.png")
+        remove_old_jpgs(path)
+        save_image(real_grid, path)
+        return real_grid
 
 
 buffer_image_names = deque()

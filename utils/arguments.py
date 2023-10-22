@@ -1,9 +1,9 @@
 from collections.abc import Callable, Mapping
 from typing import Any, Literal
-from attr import dataclass
+
 import torch
 from utils.auto_arguments import Option_to_Dataclass
-from dataclasses import Field, asdict, field
+from dataclasses import Field, asdict, dataclass, field
 from dataloader import transforms as T
 from pathlib import Path
 from .enums import TrainMode

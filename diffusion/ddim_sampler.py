@@ -609,6 +609,7 @@ class Gaussian_Diffusion:
         xstart_t = []
         T = []
         indices = list(range(self.num_timesteps))
+        model_kwargs = {"x_start": x}
         sample = x
         for i in indices:
             t = torch.tensor([i] * len(sample), device=device)
@@ -1027,8 +1028,9 @@ class SpacedDiffusion(Gaussian_Diffusion):
         return t
 
 
-def get_sampler(opt: DAE_Option, eval: bool = True) -> Gaussian_Diffusion:
-    T = opt.num_timesteps_ddim if eval else opt.num_timesteps
+def get_sampler(opt: DAE_Option, eval: bool = True, T=None) -> Gaussian_Diffusion:
+    if T is None:
+        T = opt.num_timesteps_ddim if eval else opt.num_timesteps
     force_ddim = opt.num_timesteps_ddim != opt.num_timesteps and eval
     if opt.generative_type == GenerativeType.ddpm and not force_ddim:
         section_counts = [T]
