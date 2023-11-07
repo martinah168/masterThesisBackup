@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "simsiam"
-    ]
+    ],
+    "python.pythonPath": "/home/martina/anaconda3/envs/dae_cond/bin/python"
 }

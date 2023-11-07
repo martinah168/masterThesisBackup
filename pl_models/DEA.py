@@ -171,6 +171,8 @@ class DAE_LitModel(pl.LightningModule):
         if len(self.last_100_loss) == 101:
             self.last_100_loss.popleft()
         self.log("train/avg_loss", value=np.mean(np.array(self.last_100_loss)).item(), prog_bar=True)
+#        self.log_image(tag="img_log", image=batch["img"],step=self.global_step)
+        #plot_2d_or_3d_image(data=batch["img"], step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage")
         return loss
 
     @torch.no_grad()
@@ -503,7 +505,7 @@ class DAE_LitModel(pl.LightningModule):
         if self.global_rank == 0:
             experiment: SummaryWriter = self.logger.experiment  # type: ignore
             if isinstance(experiment, SummaryWriter):
-                experiment.add_image(tag, image, step)
+                experiment.add_images(tag, image, step,dataformats='NCHW')
                # experiment.add_image('Original', image, dataformats='NCHW')
             # elif isinstance(experiment, wandb.sdk.wandb_run.Run):
             #    experiment.log(

@@ -4,6 +4,7 @@ from math import floor, ceil
 from torch.nn import functional as F
 from typing import TYPE_CHECKING
 import torch
+import numpy as np
 
 if TYPE_CHECKING:
     from utils.arguments import DataSet_Option
@@ -14,13 +15,32 @@ else:
 class Transforms_Enum(Enum):
     random_crop = auto()
     resize = auto()
-    RandomHorizontalFlip = auto()
-    RandomVerticalFlip = auto()
+    #RandomHorizontalFlip = auto()
+    #RandomVerticalFlip = auto()
     pad = auto()
     CenterCrop = auto()
-    CenterCrop256 = auto()
-    to_RGB = auto()
+    Flip_wLabels = auto()
+    #CenterCrop256 = auto()
+    #to_RGB = auto()
 
+def np_flip(x, dim):
+    dim = x.ndim + dim if dim < 0 else dim
+    return x[
+        tuple(
+            slice(None, None) if i != dim else np.arange(x.shape[i] - 1, -1, -1)
+            for i in range(x.ndim)
+        )
+    ]
+def np_rhsubf(image: np.ndarray, dim: int, tmp=60):
+    assert (
+        np.max(image) >= 1
+    ), f"RHF without a image1 doesnt work! {np.min(image)}, {np.max(image)}"
+    image_f = np.flip(image, dim)  # np_flip(image, dim=dim)
+    for pair in [(43, 44), (45, 46), (47, 48)]:  # costalis, superior, inferior
+        image_f[image_f == pair[0]] = tmp
+        image_f[image_f == pair[1]] = pair[0]
+        image_f[image_f == tmp] = pair[1]
+    return image_f
 
 def get_transforms2D(opt: DataSet_Option, split):
     size = opt.img_size  # type: ignore
@@ -31,7 +51,7 @@ def get_transforms2D(opt: DataSet_Option, split):
 
 def get_transforms(size: tuple[int, int], tf: list[Transforms_Enum] | None, train=False):
     if tf is None:
-        tf = [Transforms_Enum.pad, Transforms_Enum.random_crop, Transforms_Enum.RandomHorizontalFlip]
+        tf = [Transforms_Enum.pad, Transforms_Enum.random_crop]#, Transforms_Enum.RandomHorizontalFlip]
     out: list = [transforms.ToTensor()]
     for t in tf:
         if isinstance(t, str):
@@ -42,23 +62,28 @@ def get_transforms(size: tuple[int, int], tf: list[Transforms_Enum] | None, trai
             out.append(transforms.RandomCrop(size)) if train else out.append(transforms.CenterCrop(size))
         elif t.value == Transforms_Enum.CenterCrop.value:
             out.append(transforms.CenterCrop(size))
-        elif t.value == Transforms_Enum.CenterCrop256.value:
-            out.append(transforms.CenterCrop(256))
+       # elif t.value == Transforms_Enum.CenterCrop256.value:
+        #    out.append(transforms.CenterCrop(256))
         elif t.value == Transforms_Enum.resize.value:
             out.append(transforms.Resize(size))
-        elif t.value == Transforms_Enum.RandomHorizontalFlip.value:
-            out.append(transforms.RandomHorizontalFlip())
-        elif t.value == Transforms_Enum.RandomVerticalFlip.value:
-            out.append(transforms.RandomVerticalFlip())
+       # elif t.value == Transforms_Enum.RandomHorizontalFlip.value:
+        #    out.append(transforms.RandomHorizontalFlip())
+        #elif t.value == Transforms_Enum.RandomVerticalFlip.value:
+        #    out.append(transforms.RandomVerticalFlip())
         elif t.value == Transforms_Enum.pad.value:
             out.append(Pad(size))
-        elif t.value == Transforms_Enum.to_RGB.value:
-            out.append(to_RGB())
+        #elif t.value == Transforms_Enum.to_RGB.value:
+         #   out.append(to_RGB())
+        elif t.value == Transforms_Enum.Flip_wLabels.value:
+            out.append(Flip_wLabels)
         else:
             raise NotImplementedError(t.name)
-    out.append(transforms.Normalize(0.5, 0.5))
+    #out.append(transforms.Normalize(0.5, 0.5))
     return transforms.Compose(out)
 
+class Flip_wLabels:
+    def __call__(self, image: np.ndarray, dim: int, tmp=60):
+        return np_rhsubf(image=image, dim=0)
 
 class Pad:
     def __init__(self, size: tuple[int, int] | int) -> None:

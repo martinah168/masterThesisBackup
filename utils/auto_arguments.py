@@ -132,7 +132,7 @@ class Train_Option(Option_to_Dataclass):
 
     lr: float = 0.0002
 
-    batch_size: int = 1
+    batch_size: int = 4#1
     max_epochs: int = 15
     num_cpu: int = 16
     exp_name: str = "NAME"

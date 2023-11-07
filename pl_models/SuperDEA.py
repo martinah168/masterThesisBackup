@@ -83,6 +83,7 @@ class SuperDAE_LitModel(pl.LightningModule):
         loss = self._shared_step(batch, batch_idx, "train")
         self.last_100_loss.append(loss["loss"].detach().cpu().numpy())
         self.log("train/avg_loss", value=np.mean(np.array(self.last_100_loss)).item(), prog_bar=True)
+        
         return loss
 
     def _shared_step(self, batch, batch_idx, step_mode: str):

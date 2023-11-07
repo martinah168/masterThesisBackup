@@ -11,9 +11,9 @@ from tqdm import tqdm
 from scipy.ndimage import gaussian_filter
 
 import torch.nn.functional as F
-from resize.pytorch import resize
-from degrade.degrade import fwhm_units_to_voxel_space, fwhm_needed
-from degrade.degrade import select_kernel
+#from resize.pytorch import resize
+#from degrade.degrade import fwhm_units_to_voxel_space, fwhm_needed
+#from degrade.degrade import select_kernel
 import torchvision.transforms as transforms
 import torchvision.transforms.functional as TF
 from utils.arguments import DataSet_Option

@@ -10,12 +10,15 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pprint import pprint
 from pathlib import Path
 import nibabel as nib
-
-
+#import BIDS
+#from BIDS.core.poi import Centroid_Reference
+#import bids
+#from bids.BIDS.core.poi import Centroid_Reference
 def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     pprint(opt.__dict__)
 
     model: DAE_LitModel = DAE_LitModel(opt)
+    opt.new = True
     if not opt.debug:
         try:
             pass
@@ -23,7 +26,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         except Exception:
             print("Could not compile, running normally")
 
-    monitor_str = "loss/val_loss"
+    monitor_str = "loss/val_loss"#"loss/train_loss"#"loss/val_loss"
 
     checkpoint = ModelCheckpoint(
         filename="{epoch}-{step}_latest",
@@ -32,7 +35,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         save_last=True,
         save_top_k=3,
         auto_insert_metric_name=True,
-        every_n_train_steps=1,#opt.save_every_samples // opt.batch_size_effective,
+        every_n_train_steps=1#opt.save_every_samples // opt.batch_size_effective,
     )
 
     early_stopping = EarlyStopping(
@@ -52,7 +55,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
 
     n_overfit_batches = 1 if opt.overfit else 0.0
 
-    log_every_n_steps = 1 #if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
+    log_every_n_steps = 1 if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
     gpus = opt.gpus
     accelerator = "gpu"
     if gpus is None:
@@ -70,7 +73,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         devices=gpus,  # type: ignore
         num_nodes=nodes,
         accelerator=accelerator,
-        precision=16 if not opt.fp32 else 32,
+        precision="16-mixed" if not opt.fp32 else 32,
         callbacks=[checkpoint, early_stopping],
         logger=logger,
         log_every_n_steps=log_every_n_steps,

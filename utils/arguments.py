@@ -15,8 +15,8 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 class Train_Option(Option_to_Dataclass):
     experiment_name: str = "NAKO_256"
     lr: float = 0.0001
-    batch_size: int = 1#64
-    batch_size_eval: int = 1#64
+    batch_size: int = 4#64
+    batch_size_eval: int = 4#64
     debug: bool = True
     new: bool = True#False
     gpus: list[int] | None = None
@@ -33,10 +33,10 @@ class Train_Option(Option_to_Dataclass):
 class DataSet_Option:
     dataset: str = "/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
-    transforms: list[T.Transforms_Enum] | None = None
+    transforms: list[T.Transforms_Enum] | None = None # TODO: adapt list to my transforms and then fix transforms.py
     in_channels: int = 1  # Channel of the Noised input
     img_size: int | list[int] = 128#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
-    dims: int = 2#3
+    dims: int = 2
 
     @property
     def shape(self):
@@ -140,8 +140,8 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
 
             _target_batch_size = _target_batch_size if not self.overfit else max_batch_size_that_fits_in_memory
 
-        self._target_batch_size = 1#_target_batch_size
-        self.batch_size = 1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
+        self._target_batch_size = 4#_target_batch_size
+        self.batch_size = 4#1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
         return self._target_batch_size
 
     @property

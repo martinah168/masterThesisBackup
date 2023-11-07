@@ -6,7 +6,10 @@ import torch
 from torch.utils.data import Dataset
 import pandas as pd
 import nibabel as nib
-
+import matplotlib.pyplot as plt
+#from BIDS import NII
+from BIDS import NII
+from BIDS.core.np_utils import np_map_labels, Label_Map
 
 class Dataset_CSV(Dataset):
     def __init__(self, path, transform, split: None | Literal["train", "val", "test"] = None, col="file_path"):
@@ -22,31 +25,66 @@ class Dataset_CSV(Dataset):
     def __len__(self):
         return len(self.dataset)
 
+    #2D 
     def __getitem__(self, index):
         row = self.dataset.iloc[index]
         img_nifti = nib.load(row[self.col])
-
+        #Extract a specific 2D slice from the 3D volume (e.g., the middle slice along the z-axis)
+        #print("img shape:", img_nifti.shape)
+        z_slice = img_nifti.shape[2] // 2  # Choose the middle slice or adjust as needed
+        from_im = img_nifti.get_fdata()[:, :, z_slice]  # Extract the 2D slice
+        
         #reorient,rescale
-        print(img_nifti.header.get_data_shape())
-        from_im = img_nifti.get_fdata()#.unsqueeze(1).float()
-   #     from_im = read_image(row[self.col])#Image.open(row[self.col])
-    #    from_im = from_im.convert("L")
-        # add dimension for 3d conv
-# Flatten the 3D image into a 2D image
-        from_im = from_im.reshape(-1, from_im.shape[-1])
-
-        
-
+        #print(img_nifti.header.get_data_shape())
+        #from_im = img_nifti.get_fdata()
+        #print(np.unique( from_im))
+        from_im = np_map_labels(arr=from_im,label_map={50: 49})
+        #from_im = self.map_labels(from_im)
+        #print(np.unique( from_im))
         from_im = self.transform(from_im)
+        from_im = from_im/49
+        #print(np.unique( from_im))
         from_im = from_im.to(torch.float32) 
-        # Convert to a 2D tensor
-       # from_im = torch.from_numpy(from_im).float()
-        #single_image_arrary = np.expand_dims(from_im, axis=0)
-        
-        #single_image_arrary = single_image_arrary.astype(np.float32)
-        # to tensor
-        #from_im = torch.from_numpy(single_image_arrary)
-        return {"img": from_im}  # , "index": target, "cls_labels": target}
+        return {"img": from_im}  
+
+    #3D
+    # def __getitem__(self, index):
+    #         row = self.dataset.iloc[index]
+    #         nii = NII.load(row[self.col], True)
+    #         from_im = nii.get_seg_array()
+    #         from_im = np_map_labels(arr=from_im,label_map={50: 49})
+    #         #img_nifti = nib.load(row[self.col])
+
+    #         #reorient,rescale
+    #         #print(img_nifti.header.get_data_shape())
+    #         #from_im = img_nifti.get_fdata()
+    #         #from_im = from_im.reshape(-1, from_im.shape[-1])
+
+            
+
+    #         #from_im = self.transform(from_im)
+    #         #print("from_im shape:", from_im.shape)
+    #         from_im = from_im/49
+    #         #print("from_im shape:", from_im.shape)
+    #         from_im = torch.from_numpy(from_im).unsqueeze(0)
+            
+    #         from_im = from_im.to(torch.float32)
+           
+    #         #print("tesnor", from_im.shape)
+    #         return {"img": from_im}  # , "index": target, "cls_labels": target}
 
     def get_extended_info(self, index):
         return self.dataset.iloc[index], *self.__getitem__(index)
+    
+    def map_labels(self, seg_arr):
+        seg_arr = np_map_labels(arr=seg_arr,label_map={49: 9})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={48: 8})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={47: 7})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={46: 6})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={45: 5})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={44: 4})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={43: 3})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={42: 2})
+        seg_arr = np_map_labels(arr=seg_arr,label_map={41: 1})
+        return seg_arr
+
