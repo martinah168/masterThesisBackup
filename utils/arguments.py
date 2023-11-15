@@ -14,9 +14,9 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 @dataclass
 class Train_Option(Option_to_Dataclass):
     experiment_name: str = "NAKO_256"
-    lr: float = 0.0001
-    batch_size: int = 4#64
-    batch_size_eval: int = 4#64
+    lr: float = 0.0001# 0.0001
+    batch_size: int = 32#4#64
+    batch_size_eval: int =32#64
     debug: bool = True
     new: bool = True#False
     gpus: list[int] | None = None
@@ -28,14 +28,14 @@ class Train_Option(Option_to_Dataclass):
     optimizer: OptimizerType = OptimizerType.adam
     weight_decay: float = 0.0
 
-
+#"/media/DATA/martina_ma/cutout/output_test.csv"#
 @dataclass
 class DataSet_Option:
-    dataset: str = "/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "/media/DATA/martina_ma/cutout/train_test.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None # TODO: adapt list to my transforms and then fix transforms.py
     in_channels: int = 1  # Channel of the Noised input
-    img_size: int | list[int] = 128#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
+    img_size: int | list[int] = 144#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
     dims: int = 2
 
     @property
@@ -79,7 +79,7 @@ class DAE_Model_Option:
 class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     seed: int | None = 0
     # Train
-    total_samples: int = 1000#100000000
+    total_samples: int = 1000
     # Validation
     early_stopping_patience: int = 100
     save_every_samples: int = 25000
@@ -115,6 +115,9 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     # Model
     model_name: ModelName = ModelName.autoencoder  # TODO BEATSGAN???
     net_latent_net_type = LatentNetType.none
+    #fidscore
+    work_cache_dir: str = '/media/DATA/martina_ma/my_cache'
+    eval_num_images: int = 5_00
 
     @property
     def target_batch_size(self):
@@ -140,8 +143,8 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
 
             _target_batch_size = _target_batch_size if not self.overfit else max_batch_size_that_fits_in_memory
 
-        self._target_batch_size = 4#_target_batch_size
-        self.batch_size = 4#1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
+        self._target_batch_size = 32#_target_batch_size
+        self.batch_size = 32#1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
         return self._target_batch_size
 
     @property
@@ -151,6 +154,20 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     @property
     def sample_size(self):
         return self.batch_size
+    name: str = ''
+    @property
+    def generate_dir(self):
+        # we try to use the local dirs to reduce the load over network drives
+        # hopefully, this would reduce the disconnection problems with sshfs
+        return f'{self.work_cache_dir}/gen_images/{self.name}'
+
+    data_name: str = ''
+    @property
+    def fid_cache(self):
+        # we try to use the local dirs to reduce the load over network drives
+        # hopefully, this would reduce the disconnection problems with sshfs
+        return f'{self.work_cache_dir}/eval_images/{self.data_name}_size{self.img_size}_{self.eval_num_images}'
+
 
 
 #    # Training

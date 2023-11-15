@@ -75,7 +75,7 @@ def get_transforms(size: tuple[int, int], tf: list[Transforms_Enum] | None, trai
         #elif t.value == Transforms_Enum.to_RGB.value:
          #   out.append(to_RGB())
         elif t.value == Transforms_Enum.Flip_wLabels.value:
-            out.append(Flip_wLabels)
+            out.append(Flip_wLabels())
         else:
             raise NotImplementedError(t.name)
     #out.append(transforms.Normalize(0.5, 0.5))
@@ -83,7 +83,7 @@ def get_transforms(size: tuple[int, int], tf: list[Transforms_Enum] | None, trai
 
 class Flip_wLabels:
     def __call__(self, image: np.ndarray, dim: int, tmp=60):
-        return np_rhsubf(image=image, dim=0)
+        return np_rhsubf(image=image, dim=2)
 
 class Pad:
     def __init__(self, size: tuple[int, int] | int) -> None:

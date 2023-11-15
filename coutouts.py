@@ -53,7 +53,7 @@ def make_max_slice(data):
 
 
 
-def get_data(root='/media/DATA/martina_ma/data/dataset-verse'):
+def get_data(root='/media/DATA/martina_ma/data/dataset-fxclass'):
    bids_global_object = BIDS_Global_info([root], ["derivatives_spine_r"],
                                          additional_key=["sequ", "seg", "ovl","ses"], verbose=True, )
    bids_family_dict = {}
@@ -64,10 +64,16 @@ def get_data(root='/media/DATA/martina_ma/data/dataset-verse'):
        query = subject_container.new_query(flatten=False)
        query.filter('seg', 'vert')
        query.filter('seg', 'subreg')
-
+       if subject_name == "unsorted":
+        print("unsorted")
+        continue
 
        for bids_family in query.loop_dict(sort=True):
            # finally we get a bids_family
+           if ["msk_seg-vert", "msk_seg-subreg"] not in bids_family:
+            #maybe print bids_family.family_id oder so
+             print(bids_family.family_id)
+             continue
            bids_family_dict[query.subject.name] = bids_family.get_bids_files_as_dict(
                ['msk_seg-vert', 'msk_seg-subreg'])
    return bids_family_dict
@@ -136,6 +142,17 @@ def crop(center, vert_arr, nii_vert, nii_subreg, label, subject_name, cut_s):
 
 def make_cutout(bids_family_dict, max_cutout_size):
    for subject in bids_family_dict:
+       match = re.search(r'\d+', subject)
+
+       if match:
+            number = int(match.group())
+            print(number)
+       else:
+            print("No number found")
+       if subject == "Alex10" or "ctfu" in subject or number <= 411:
+           print("already cutout done - skip")
+           continue
+       
        vert_seg = bids_family_dict[subject]['msk_seg-vert'][0]
        subreg = bids_family_dict[subject]['msk_seg-subreg'][0]
        #ctd = bids_family_dict[subject]['ctd_seg-subreg'][0]
@@ -188,13 +205,13 @@ if __name__ == '__main__':
    max_x = 0
    max_y = 0
    max_z = 0
-   cut = False
+   cut = True
    bids_family_dict = get_data()
    if cut:
        make_cutout(bids_family_dict, (144, 96, 144))
    else:
     
-    csv_filename = '/media/DATA/martina_ma/cutout/cutout_verse.csv'
+    csv_filename = '/media/DATA/martina_ma/cutout/cutout_tri.csv'
     with open(csv_filename, "w") as file:
             writer = csv.writer(file, lineterminator='\n')
     
@@ -254,7 +271,7 @@ if __name__ == '__main__':
             #
             print(max_x,max_y,max_z)
             file.close()
-            with open('/media/DATA/martina_ma/cutout/max_c_test_verse.txt', 'w') as the_file:
+            with open('/media/DATA/martina_ma/cutout/max_c_test_tru.txt', 'w') as the_file:
                 the_file.write(str(max_x))
                 the_file.write('\n')
                 the_file.write(str(max_y))

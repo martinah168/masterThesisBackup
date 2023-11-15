@@ -15,6 +15,9 @@ from models import Model
 from utils.enums_model import OptimizerType
 from utils.mri import extract_slices_from_volume
 from utils.hessian_penalty_pytorch import hessian_penalty
+from config import *
+
+from utils.metrics import *
 
 sys.path.append("..")
 import monai
@@ -41,7 +44,16 @@ from dataloader.dataset_factory import get_dataset, get_data_loader
 from utils.arguments import DAE_Option
 
 from utils.enums import TrainMode
+from tensorboard.plugins import projector
+config = projector.ProjectorConfig()
 
+# embedding = config.embeddings.add()
+# embedding.tensor_name = h.name
+
+# # Use the same LOG_DIR where you stored your checkpoint.
+# summary_writer = tf.summary.FileWriter(LOG_DIR)
+
+# projector.visualize_embeddings(summary_writer, config)
 
 class DAE_LitModel(pl.LightningModule):
     ###### INIT PROCESS ######
@@ -171,13 +183,20 @@ class DAE_LitModel(pl.LightningModule):
         if len(self.last_100_loss) == 101:
             self.last_100_loss.popleft()
         self.log("train/avg_loss", value=np.mean(np.array(self.last_100_loss)).item(), prog_bar=True)
+        
 #        self.log_image(tag="img_log", image=batch["img"],step=self.global_step)
         #plot_2d_or_3d_image(data=batch["img"], step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage")
         return loss
 
     @torch.no_grad()
     def validation_step(self, batch, batch_idx):
-        return self._shared_step(batch, batch_idx, "val")
+        loss =  self._shared_step(batch, batch_idx, "val")
+        #print(loss)
+        #TODO: log val loss
+        #loss = self._shared_step(batch, batch_idx, "val")
+        #self.log("loss/val_loss", loss["loss"], prog_bar=True)  # Log validation loss
+        # Log any other validation metrics if needed
+        return loss
 
     def _shared_step(self, batch, batch_idx, step_mode: str):
         """
@@ -231,10 +250,15 @@ class DAE_LitModel(pl.LightningModule):
                 )
             ]
             # divide by accum batches to make the accumulated gradient exact!
+            #self.evaluate_scores()
+            #it = losses["cond_emb"]
+            #self.logger.experiment.add_embedding(it, global_step=self.global_step)
+            #self.logger.experiment.add_scalar("loss/{step_mode}_{key}", losses["loss"], global_step = self.global_step)
             for key in loss_keys:
                 losses[key] = self.all_gather(losses[key]).mean()  # type: ignore
             for key in loss_keys:
                 self.log(f"loss/{step_mode}_{key}", losses[key].item(), rank_zero_only=True)
+                
         return losses
 
     def on_train_start(self):
@@ -276,7 +300,7 @@ class DAE_LitModel(pl.LightningModule):
             if not self.trainer.fast_dev_run:  # type: ignore
                 if self.conf.train_mode.is_diffusion():
                     self.log_sample(x_start=imgs, x_start_lr=imgs_lr)
-                # self.evaluate_scores()
+            #self.evaluate_scores()
 
     #### Optimizer ####
     def on_before_optimizer_step(self, optimizer: Optimizer) -> None:
@@ -505,8 +529,8 @@ class DAE_LitModel(pl.LightningModule):
         if self.global_rank == 0:
             experiment: SummaryWriter = self.logger.experiment  # type: ignore
             if isinstance(experiment, SummaryWriter):
-                experiment.add_images(tag, image, step,dataformats='NCHW')
-               # experiment.add_image('Original', image, dataformats='NCHW')
+                #experiment.add_images(tag, image, step,dataformats='NCHW')
+                experiment.add_image('Original', image)#, dataformats='NCHW')
             # elif isinstance(experiment, wandb.sdk.wandb_run.Run):
             #    experiment.log(
             #        {tag: [wandb.Image(image.cpu())]},
@@ -521,57 +545,57 @@ class DAE_LitModel(pl.LightningModule):
     #        np_histogram = wandb.Histogram(np_histogram=np_histogram, num_bins=53)
     #        self.logger.experiment.log({tag: np_histogram}, step=step)
 
-    # def evaluate_scores(self):
-    #    """
-    #    evaluate FID and other scores during training (put to the tensorboard)
-    #    For, FID. It is a fast version with 5k images (gold standard is 50k).
-    #    Don't use its results in the paper!
-    #    """
+    def evaluate_scores(self):
+       """
+       evaluate FID and other scores during training (put to the tensorboard)
+       For, FID. It is a fast version with 5k images (gold standard is 50k).
+       Don't use its results in the paper!
+       """
 
-    #    def fid(model, postfix):
-    #        score = evaluate_fid(
-    #            self.eval_sampler,
-    #            model,
-    #            self.conf,
-    #            device=self.device,
-    #            train_data=self.train_data,
-    #            val_data=self.val_data,
-    #            latent_sampler=self.eval_latent_sampler,
-    #            conds_mean=self.conds_mean,
-    #            conds_std=self.conds_std,
-    #        )
-    #        if self.global_rank == 0:
-    #            self.log(f"FID{postfix}", score)
-    #            if not os.path.exists(self.conf.logdir):
-    #                os.makedirs(self.conf.logdir)
-    #            with open(os.path.join(self.conf.logdir, "eval.txt"), "a") as f:
-    #                metrics = {
-    #                    f"FID{postfix}": score,
-    #                    "num_samples": self.num_samples,
-    #                    "step": self.global_step,
-    #                }
-    #                f.write(json.dumps(metrics) + "\n")
+       def fid(model, postfix):
+           score = evaluate_fid(
+               self.eval_sampler,
+               model,
+               self.conf,
+               device=self.device,
+               train_data=self.train_data,
+               val_data=self.val_data,
+               latent_sampler=self.eval_latent_sampler#,
+               #conds_mean=self.conds_mean,
+               #conds_std=self.conds_std,
+           )
+           print("score:",score)
+           if self.global_rank == 0:
+               self.log(f"FID{postfix}", score)
+               if not os.path.exists(self.conf.logdir):
+                   os.makedirs(self.conf.logdir)
+               with open(os.path.join(self.conf.logdir, "eval.txt"), "a") as f:
+                   metrics = {
+                       f"FID{postfix}": score,
+                       "num_samples": self.num_samples,
+                       "step": self.global_step,
+                   }
+                   f.write(json.dumps(metrics) + "\n")
 
-    #    def lpips(model, postfix):
-    #        if self.conf.model_type.has_autoenc() and self.conf.train_mode.is_autoenc():
-    #            # {'lpips', 'ssim', 'mse'}
-    #            score = evaluate_lpips(
-    #                self.eval_sampler, model, self.conf, device=self.device, val_data=self.val_data, latent_sampler=self.eval_latent_sampler
-    #            )
+       def lpips(model, postfix):
+           if self.conf.model_type.has_autoenc() and self.conf.train_mode.is_autoenc():
+               # {'lpips', 'ssim', 'mse'}
+               score = evaluate_lpips(
+                   self.eval_sampler, model, self.conf, device=self.device, val_data=self.val_data, latent_sampler=self.eval_latent_sampler
+               )
 
-    #            if self.global_rank == 0:
-    #                for key, val in score.items():
-    #                    self.log(f"{key}{postfix}", val.item())
-
+               if self.global_rank == 0:
+                   for key, val in score.items():
+                       self.log(f"{key}{postfix}", val.item())
+        
     #    if (
-    #        self.conf.eval_every_samples > 0
-    #        and self.num_samples > 0
-    #        and is_time(self.num_samples, self.conf.eval_every_samples, self.conf.batch_size_effective)
+    #        self.num_samples > 0
+    #        and is_time(self.conf.batch_size_effective)
     #    ):
     #        print(f"eval fid @ {self.num_samples}")
     #        lpips(self.model, "")
-    #        if self.conf.dims == 2:
-    #            fid(self.model, "")
+       if self.conf.dims == 2:
+           fid(self.model, "")
 
     #    if (
     #        self.conf.eval_ema_every_samples > 0
@@ -581,8 +605,8 @@ class DAE_LitModel(pl.LightningModule):
     #        if self.conf.dims == 2:
     #            print(f"eval fid ema @ {self.num_samples}")
     #            fid(self.ema_model, "_ema")
-    #        # it's too slow
-    #        # lpips(self.ema_model, '_ema')
+           #it's too slow
+           #lpips(self.ema_model, '_ema')
 
     def split_tensor(self, x):
         """
@@ -884,7 +908,7 @@ def _log_sample(self: DAE_LitModel, x_start, x_start_lr, model, postfix, use_xst
         save_image(gen_grid, path)
         log_img.append(gen_grid)
         print("log")
-        self.log_image(f"sample{postfix}/fake", torch.concat(log_img, dim=-1), self.global_step)
+        #self.log_image(f"sample{postfix}/fake", torch.concat(log_img, dim=-1), self.global_step)
     model.train()
     # x_start_lr
 

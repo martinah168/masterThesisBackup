@@ -19,7 +19,7 @@ from typing import NamedTuple, Tuple
 import numpy as np
 import torch
 from torch.cuda.amp import autocast
-
+from torchmetrics.functional.image.lpips import learned_perceptual_image_patch_similarity
 
 def mean_flat(tensor):
     """
@@ -134,6 +134,7 @@ class Gaussian_Diffusion:
                 # x_t is static wrt. to the diffusion process
                 model_forward = model.forward(x=x_t.detach(), t=self._scale_timesteps(t), x_start=x_start.detach(), **model_kwargs)
             model_output = model_forward.pred
+            
             if model_forward.cond_emb is not None:
                 terms["cond_emb"] = model_forward.cond_emb
             _model_output = model_output
@@ -145,7 +146,7 @@ class Gaussian_Diffusion:
             target_types = {ModelMeanType.eps: noise}
             target = target_types[self.model_mean_type]
             assert model_output.shape == target.shape == x_start.shape
-
+            #terms["lpips"] = learned_perceptual_image_patch_similarity(model_output, target)
             if self.loss_type == LossType.mse:
                 if self.model_mean_type == ModelMeanType.eps:
                     # (n, c, h, w) => (n, )

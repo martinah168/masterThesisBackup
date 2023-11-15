@@ -26,7 +26,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         except Exception:
             print("Could not compile, running normally")
 
-    monitor_str = "loss/val_loss"#"loss/train_loss"#"loss/val_loss"
+    monitor_str = "loss/train_loss"#"loss/train_loss"#
 
     checkpoint = ModelCheckpoint(
         filename="{epoch}-{step}_latest",
@@ -35,7 +35,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         save_last=True,
         save_top_k=3,
         auto_insert_metric_name=True,
-        every_n_train_steps=1#opt.save_every_samples // opt.batch_size_effective,
+        every_n_train_steps=5#opt.save_every_samples // opt.batch_size_effective,
     )
 
     early_stopping = EarlyStopping(
@@ -55,7 +55,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
 
     n_overfit_batches = 1 if opt.overfit else 0.0
 
-    log_every_n_steps = 1 if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
+    log_every_n_steps = 16 #if opt.overfit else opt.log_every_n_steps // opt.batch_size_effective
     gpus = opt.gpus
     accelerator = "gpu"
     if gpus is None:
@@ -68,8 +68,9 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     else:
         nodes = len(gpus)
     trainer = Trainer(
-        #min_epochs= 5,
-        max_steps=opt.total_samples // opt.batch_size_effective,
+        min_epochs= 300,
+        max_epochs= 600,
+        #max_steps=60000,#opt.total_samples // opt.batch_size_effective,
         devices=gpus,  # type: ignore
         num_nodes=nodes,
         accelerator=accelerator,
