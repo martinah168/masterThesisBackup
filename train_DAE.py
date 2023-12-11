@@ -10,10 +10,8 @@ from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 from pprint import pprint
 from pathlib import Path
 import nibabel as nib
-#import BIDS
-#from BIDS.core.poi import Centroid_Reference
-#import bids
-#from bids.BIDS.core.poi import Centroid_Reference
+from torchsummary import summary
+
 def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     pprint(opt.__dict__)
 
@@ -68,8 +66,8 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     else:
         nodes = len(gpus)
     trainer = Trainer(
-        min_epochs= 300,
-        max_epochs= 600,
+        min_epochs= 200,
+        max_epochs= 400,
         #max_steps=60000,#opt.total_samples // opt.batch_size_effective,
         devices=gpus,  # type: ignore
         num_nodes=nodes,
@@ -77,11 +75,12 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         precision="16-mixed" if not opt.fp32 else 32,
         callbacks=[checkpoint, early_stopping],
         logger=logger,
-        log_every_n_steps=log_every_n_steps,
+        log_every_n_steps=2,#log_every_n_steps,
         overfit_batches=n_overfit_batches,
         fast_dev_run=opt.fast_dev_run,
+        limit_val_batches=50
     )
-
+    #ßprint(model)
     if mode == "train":
         trainer.fit(model, ckpt_path=resume)
     elif mode == "eval":

@@ -112,7 +112,7 @@ def normalization(channels):
     :param channels: number of input channels.
     :return: an nn.Module for normalization.
     """
-    return GroupNorm32(min(32, channels), channels)
+    return GroupNorm32(min(32, channels), channels)#torch.nn.GroupNorm(min(8, channels), channels) #
 
 
 def timestep_embedding(timesteps, dim, max_period=10000):

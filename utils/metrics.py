@@ -17,7 +17,14 @@ import lpips
 from multiprocessing import get_context
 from torch.utils.data import Dataset
 from utils.enums_model import *
+import numpy as np
+from PIL import Image
+import pathlib
+import torchvision.transforms as transforms
 #from ssim import ssim
+
+IMAGE_EXTENSIONS = {'bmp', 'jpg', 'jpeg', 'pgm', 'png', 'ppm',
+                    'tif', 'tiff', 'webp'}
 
 Sampler = SpacedDiffusion
 
@@ -182,7 +189,7 @@ def evaluate_fid(
     remove_cache: bool = True,
     clip_latent_noise: bool = False,
 ):
-    #assert conf.fid_cache is not None
+    assert conf.fid_cache is not None
     if get_rank() == 0:
         # no parallel
         # validation data for a comparing FID
@@ -195,12 +202,12 @@ def evaluate_fid(
         # put the val images to a directory
         cache_dir = f'{conf.fid_cache}_{conf.eval_num_images}'
         if (os.path.exists(cache_dir)
-                and len(os.listdir(cache_dir)) < conf.eval_num_images):
+                and len(os.listdir(cache_dir)) <= conf.eval_num_images):
             shutil.rmtree(cache_dir)
 
         if not os.path.exists(cache_dir):
-            # write files to the cache
-            # the images are normalized, hence need to denormalize first
+            #write files to the cache
+            #the images are normalized, hence need to denormalize first
             loader_to_path(val_loader, cache_dir, denormalize=True)
 
         # create the generate dir
@@ -289,7 +296,7 @@ def evaluate_fid(
                 for batch in tqdm(train_loader, desc='generating images'):
                     imgs = batch['img'].to(device)
                     x_T = torch.randn(
-                        (len(imgs), 3, conf.img_size, conf.img_size),
+                        (2, 1, conf.img_size, 96, conf.img_size),
                         device=device)
                     batch_images = render_condition(
                         conf=conf,
@@ -297,8 +304,9 @@ def evaluate_fid(
                         x_T=x_T,
                         x_start=imgs,
                         cond=None,
-                        sampler=sampler,
-                        latent_sampler=latent_sampler).cpu()
+                        sampler=sampler
+                        # latent_sampler=latent_sampler
+                        ).cpu()
                     # model: BeatGANsAutoencModel
                     # # returns {'cond', 'cond2'}
                     # conds = model.encode(imgs)
@@ -307,12 +315,25 @@ def evaluate_fid(
                     #                               model_kwargs=conds).cpu()
                     # denormalize the images
                     batch_images = (batch_images + 1) / 2
-                    # keep the generated images
+                    #keep the generated images
                     for j in range(len(batch_images)):
                         img_name = filename(i + j)
-                        torchvision.utils.save_image(
-                            batch_images[j],
-                            os.path.join(conf.generate_dir, f'{img_name}.png'))
+                        generated_data = batch_images[j]
+                        generated_data_normalized = (generated_data - generated_data.min()) / (generated_data.max() - generated_data.min())
+                        z_slice = generated_data_normalized.shape[2] // 2  # Choose the middle slice or adjust as needed
+                        generated_data_normalized = generated_data_normalized[:, :, z_slice] 
+                        # Convert the tensor to a PIL Image
+                        image = transforms.ToPILImage()(generated_data_normalized)
+                        # Save the PIL Image to file
+                        image.save(os.path.join(conf.generate_dir, f'{img_name}.png'))
+                        # Normalize the data to the range [0, 255] for image formats
+                        #generated_data_normalized = ((generated_data - generated_data.min()) / (generated_data.max() - generated_data.min()) * 255).astype(np.uint8)
+                        #imageio.imwrite(os.path.join(conf.generate_dir, f'{img_name}.png'), generated_data_normalized)
+
+                        #np.save(os.path.join(conf.generate_dir, f'{img_name}.npy'),batch_images[j] )
+                        # torchvision.utils.save_image(
+                        #     pil_img,#batch_images[j],
+                        #     os.path.join(conf.generate_dir, f'{img_name}.jpg'))
                     i += len(imgs)
         else:
             raise NotImplementedError()
@@ -321,11 +342,16 @@ def evaluate_fid(
     barrier()
 
     if get_rank() == 0:
+       # f = fid_score.
+        path = cache_dir
+        path = pathlib.Path(path)
+        files = sorted([file for ext in IMAGE_EXTENSIONS
+                       for file in path.glob('*.{}'.format(ext))])
         fid = fid_score.calculate_fid_given_paths(
             [cache_dir, conf.generate_dir],
             batch_size,
             device=device,
-            dims=2048)
+            dims=64)
 
         # remove the cache
         if remove_cache and os.path.exists(conf.generate_dir):
@@ -359,8 +385,20 @@ def loader_to_path(loader: DataLoader, path: str, denormalize: bool):
         if denormalize:
             imgs = (imgs + 1) / 2
         for j in range(len(imgs)):
-            torchvision.utils.save_image(imgs[j],
-                                         os.path.join(path, f'{i+j}.png'))
+            generated_data = imgs[j]
+            generated_data_normalized = (generated_data - generated_data.min()) / (generated_data.max() - generated_data.min())
+            z_slice = generated_data_normalized.shape[2] // 2  # Choose the middle slice or adjust as needed
+            generated_data_normalized = generated_data_normalized[:, :, z_slice] 
+                       
+            # Convert the tensor to a PIL Image
+            image = transforms.ToPILImage()(generated_data_normalized)
+            # Save the PIL Image to file
+            image.save(os.path.join(path, f'{i+j}.png'))
+            # Normalize the data to the range [0, 255] for image formats
+            #generated_data_normalized = ((generated_data - generated_data.min()) / (generated_data.max() - generated_data.min()) * 255).astype(np.uint8)
+            #imageio.imwrite(os.path.join(path, f'{i+j}.png'), generated_data_normalized)
+            #np.save(os.path.join(path, f'{i+j}.npy'),imgs[j] )
+            #torchvision.utils.save_image(imgs[j],os.path.join(path, f'{i+j}.png'))
         i += len(imgs)
 
 class SubsetDataset(Dataset):

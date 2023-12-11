@@ -53,12 +53,12 @@ def make_max_slice(data):
 
 
 
-def get_data(root='/media/DATA/martina_ma/data/dataset-fxclass'):
-   bids_global_object = BIDS_Global_info([root], ["derivatives_spine_r"],
+def get_data(root='/media/DATA/martina_ma/data/dataset-verse'):
+   bids_global_object = BIDS_Global_info([root], ["derivatives_new"],
                                          additional_key=["sequ", "seg", "ovl","ses"], verbose=True, )
    bids_family_dict = {}
 #bids_global_object = BIDS_Global_info(['/media/data/robert/datasets/spinegan_T2w/raw/'],['rawdata',"rawdata_dixon","derivatives"],additional_key = ["sequ", "seg", "ovl"], verbose=True,)
-
+   x = bids_global_object.enumerate_subjects(sort=True)
 #derivatives_spine_r/
    for subject_name, subject_container in bids_global_object.enumerate_subjects(sort=True):
        query = subject_container.new_query(flatten=False)
@@ -149,9 +149,9 @@ def make_cutout(bids_family_dict, max_cutout_size):
             print(number)
        else:
             print("No number found")
-       if subject == "Alex10" or "ctfu" in subject or number <= 411:
-           print("already cutout done - skip")
-           continue
+    #    if subject == "Alex10" or "ctfu" in subject or number <= 411:
+    #        print("already cutout done - skip")
+    #        continue
        
        vert_seg = bids_family_dict[subject]['msk_seg-vert'][0]
        subreg = bids_family_dict[subject]['msk_seg-subreg'][0]
@@ -173,6 +173,9 @@ def make_cutout(bids_family_dict, max_cutout_size):
 
        labels = vert_nii.unique()
        for label in labels:
+           if label > 26 and label < 28:
+                print("label")
+                continue
            vert_label_nii = vert_nii.extract_label(label)
            vert_arr = vert_label_nii.get_seg_array()
            subreg_arr = subreg_nii.get_seg_array()#vert_arr_l1 = vert_L1.get_seg_array()
@@ -198,7 +201,7 @@ def make_cutout(bids_family_dict, max_cutout_size):
            folder = "/media/DATA/martina_ma/cutout/{}/".format(subject)
            if not os.path.exists(folder):
                   os.makedirs(folder)
-           nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_subreg_cropped.nii.gz".format(subject,subject, label))
+           nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_new_subreg_cropped.nii.gz".format(subject,subject, label))
 
 
 if __name__ == '__main__':
@@ -211,7 +214,7 @@ if __name__ == '__main__':
        make_cutout(bids_family_dict, (144, 96, 144))
    else:
     
-    csv_filename = '/media/DATA/martina_ma/cutout/cutout_tri.csv'
+    csv_filename = '/media/DATA/martina_ma/cutout/cutout_verse_new.csv'
     with open(csv_filename, "w") as file:
             writer = csv.writer(file, lineterminator='\n')
     

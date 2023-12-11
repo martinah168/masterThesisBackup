@@ -16,11 +16,14 @@ from utils.enums_model import OptimizerType
 from utils.mri import extract_slices_from_volume
 from utils.hessian_penalty_pytorch import hessian_penalty
 from config import *
-
+from torchmetrics import Dice
 from utils.metrics import *
 
 sys.path.append("..")
-import monai
+from monai.metrics import FIDMetric
+from monai.losses import perceptual
+from monai.networks.nets import resnet18
+from medpy.metric.binary import assd
 import numpy as np
 import pytorch_lightning as pl
 import torch
@@ -42,6 +45,11 @@ from monai.utils.misc import set_determinism
 from models.model_factory import get_model
 from dataloader.dataset_factory import get_dataset, get_data_loader
 from utils.arguments import DAE_Option
+from torchmetrics.functional import dice
+
+from BIDS.core.np_utils import np_map_labels
+import seg_metrics.seg_metrics as sg
+from dataloader.datasets.dataset_csv import model_map_to_segmentation_map, segmentation_map_to_model_map
 
 from utils.enums import TrainMode
 from tensorboard.plugins import projector
@@ -54,6 +62,11 @@ config = projector.ProjectorConfig()
 # summary_writer = tf.summary.FileWriter(LOG_DIR)
 
 # projector.visualize_embeddings(summary_writer, config)
+labels = [0,40,41,42,43,44,45,46,47,48,49]
+
+
+
+
 
 class DAE_LitModel(pl.LightningModule):
     ###### INIT PROCESS ######
@@ -105,6 +118,8 @@ class DAE_LitModel(pl.LightningModule):
 
         if self.conf.train_mode == TrainMode.simsiam:
             self.criterion = torch.nn.CosineSimilarity(dim=1)
+
+        #self.res = self.prepare_resnet()
         # Pytorch Lightning calls the following things.
         # self.prepare_data()
         # self.setup(stage)
@@ -112,6 +127,72 @@ class DAE_LitModel(pl.LightningModule):
         # self.val_dataloader()
         # self.test_dataloader()
         # self.predict_dataloader()
+
+    # def prepare_resnet(self):
+    #     resnet = resnet18(spatial_dims=3,n_input_channels=1)
+    #     pretrained_path = "/media/DATA/martina_ma/MedicalNet/pretrain/resnet_18_23dataset.pth" #TODO: check if datset or without
+    #     net_dict = resnet.state_dict()
+    #     pretrain = torch.load(pretrained_path)
+    #     pretrain['state_dict'] = {k.replace('module.', ''): v for k, v in pretrain['state_dict'].items()}
+    #     missing = tuple({k for k in net_dict.keys() if k not in pretrain['state_dict']})
+    #     print(f"missing in pretrained: {len(missing)}")
+    #     inside = tuple({k for k in pretrain['state_dict'] if k in net_dict.keys()})
+    #     print(f"inside pretrained: {len(inside)}")
+    #     unused = tuple({k for k in pretrain['state_dict'] if k not in net_dict.keys()})
+    #     print(f"unused pretrained: {len(unused)}")
+    #     assert len(inside) > len(missing)
+    #     assert len(inside) > len(unused)
+
+    #     pretrain['state_dict'] = {k: v for k, v in pretrain['state_dict'].items() if k in net_dict.keys()}
+    #     resnet.load_state_dict(pretrain['state_dict'], strict=False)
+    #     return resnet
+
+    # def calculate_fid(self, imgs, resnet):
+
+    #     resnet.to(self.device)
+    #     resnet.eval()
+    #     synth_features = []
+    #     real_features = []
+    #     #imgs = torch.tensor(imgs,dtype=torch.float32)
+    #     # Get the real images
+    #     real_images = imgs.to(self.device)
+
+    #     # Generate some synthetic images using the defined model
+    #     # n_synthetic_images = len(imgs)
+    #     # noise = torch.randn((n_synthetic_images, 1, 64, 64))
+    #     # noise = noise.to(self.device)
+    #     #scheduler.set_timesteps(num_inference_steps=25)
+
+    #     with torch.no_grad():
+    #         latent = self.encode(real_images)
+    #         latent = latent.to(torch.float32)
+    #         n = self.encode_stochastic(real_images,latent,T=20)
+    #         latent = latent.cpu()
+    #         mean = latent.mean(dim=0)
+    #         std = (latent - mean).pow(2).mean(dim=0).sqrt()
+
+    #         # sample latent vectors from the normal distribution
+    #         latent = torch.randn(1, 512)*std + mean
+
+    #         # reconstruct images from the random latent vectors
+    #         latent = latent.to(self.device)
+    #         syn_images = self.render(n, cond=latent,T=20)
+    #         #syn_images = self.render(noise=noise) #inferer.sample(input_noise=noise, diffusion_model=unet, scheduler=scheduler)
+
+    #         # Get the features for the real data
+    #         real_eval_feats = resnet.forward(real_images)
+    #         real_features.append(real_eval_feats)
+
+    #         # Get the features for the synthetic data
+    #         synth_eval_feats = resnet.forward(syn_images)
+    #         synth_features.append(synth_eval_feats)
+    #     synth_features = torch.vstack(synth_features)
+    #     real_features = torch.vstack(real_features)
+
+    #     fid = FIDMetric()
+    #     fid_res = fid(synth_features, real_features)
+
+    #     self.log(f"FID Score: {fid_res.item():.4f}")
 
     def prepare_data(self):
         self.train_data = get_dataset(self.conf, split="train")
@@ -158,6 +239,9 @@ class DAE_LitModel(pl.LightningModule):
 
     def val_dataloader(self):
         return self._shared_loader("val")
+    
+    def test_dataloader(self):
+        return self._shared_loader("test")
 
     def _shared_loader(self, mode: Literal["train", "val"], super_res=False):
         opt = self.conf
@@ -191,13 +275,63 @@ class DAE_LitModel(pl.LightningModule):
     @torch.no_grad()
     def validation_step(self, batch, batch_idx):
         loss =  self._shared_step(batch, batch_idx, "val")
-        #print(loss)
-        #TODO: log val loss
-        #loss = self._shared_step(batch, batch_idx, "val")
-        #self.log("loss/val_loss", loss["loss"], prog_bar=True)  # Log validation loss
-        # Log any other validation metrics if needed
-        return loss
+        
+        if self.current_epoch%10 == 0 and batch_idx%10 == 0:
+            #print("batch_idx",batch_idx)
+            imgs = batch['img']
+            i_np = imgs[0][0].cpu().numpy().copy()
+            np.unique(i_np)
+            T = 200
+            cond = self.encode(imgs)
+            stoch = self.encode_stochastic(imgs, cond, T=T)
+            xT = self.render(stoch, cond, T=T)
+            xT_mapped = model_map_to_segmentation_map(xT[0][0].cpu().numpy())
+            xT_mapped = xT_mapped-40
+            xT_mapped = np_map_labels(xT_mapped, {-40: 0})
+            i = model_map_to_segmentation_map(imgs[0][0].cpu().numpy())
+            i = i-40
+            i = np_map_labels(i, {-40: 0})
+           # Iterate over each label and compute ASSD
+            for label in range(1, 10):
+                # Create binary masks for the selected label in both arrays
+                binary_mask1 = (i == label).astype(int)
+                binary_mask2 = (xT_mapped == label).astype(int)
+                if 0 == np.count_nonzero(binary_mask1) or 0 == np.count_nonzero(binary_mask2):
+                    #print("label skipped",label)
+                    continue
+                # Compute ASSD for the pair of binary masks
+                label_assd = assd(binary_mask1, binary_mask2)
+                self.log(f"Assd for {label}", label_assd, rank_zero_only=True) 
+            d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int), average = 'macro', ignore_index= 0, num_classes=10)#, multiclass=True)
+            self.log(f"d_score", d, rank_zero_only=True) 
+            #self.log(f"msd", msd, rank_zero_only=True) 
+            #self.log(f"dice_score", dice, rank_zero_only=True) 
+            self.log_image(tag="img_log", image=batch["img"][:,:,60],step=self.global_step)
+            plot_2d_or_3d_image(data=i, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_original")
+            plot_2d_or_3d_image(data=xT_mapped, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_rendered")
 
+            perceptual_loss = perceptual.PerceptualLoss(3,"medicalnet_resnet10_23datasets",is_fake_3d=False)
+            perceptual_loss.to(self.device)
+            xT_mapped_tensor = torch.from_numpy(xT_mapped).to(self.device).unsqueeze(0).unsqueeze(0).float()
+            i_tensor = torch.from_numpy(i).to(self.device).unsqueeze(0).unsqueeze(0).float()
+
+            # Now apply the perceptual loss
+            p = perceptual_loss(xT_mapped_tensor, i_tensor)
+            #p = perceptual_loss(xT_mapped, i)
+            self.log(f"perceptual_loss", p, rank_zero_only=True) 
+            #self.calculate_fid(imgs,self.res)
+            #self.evaluate_scores()
+        return loss
+    
+    @torch.no_grad()
+    def test_step(self, batch, batchidx):
+        return
+        #self.evaluate_scores()
+        # pred =  loss['pred_xstart']
+        # tar = loss['x_t']
+        # d = dice(pred, tar, ignore_index=0)
+        #self.log(f"loss/val_dice", loss["dice"].item(), rank_zero_only=True)
+        # Log any other validation metrics if needed
     def _shared_step(self, batch, batch_idx, step_mode: str):
         """
         given an input, calculate the loss function
@@ -211,6 +345,7 @@ class DAE_LitModel(pl.LightningModule):
                 """
                 
                 imgs = batch["img"]
+                
                 x_start = imgs
                 # with numpy seed we have the problem that the sample t's are related!
                 t = self.T_sampler.sample(len(x_start), x_start.device)
@@ -218,7 +353,6 @@ class DAE_LitModel(pl.LightningModule):
                 if "img_aug" in batch:
                     model_kwargs = dict(x_start_aug=batch["img_aug"])
                 losses = self.sampler.training_losses(model=self.model, x_start=x_start, t=t, model_kwargs=model_kwargs)
-
                 # hessian_penalty
                 if self.conf.hessian_penalty != 0:
                     # https://www.ecva.net/papers/eccv_2020/papers_ECCV/papers/123510579.pdf
@@ -250,15 +384,11 @@ class DAE_LitModel(pl.LightningModule):
                 )
             ]
             # divide by accum batches to make the accumulated gradient exact!
-            #self.evaluate_scores()
-            #it = losses["cond_emb"]
-            #self.logger.experiment.add_embedding(it, global_step=self.global_step)
-            #self.logger.experiment.add_scalar("loss/{step_mode}_{key}", losses["loss"], global_step = self.global_step)
             for key in loss_keys:
                 losses[key] = self.all_gather(losses[key]).mean()  # type: ignore
             for key in loss_keys:
                 self.log(f"loss/{step_mode}_{key}", losses[key].item(), rank_zero_only=True)
-                
+            
         return losses
 
     def on_train_start(self):
@@ -296,11 +426,11 @@ class DAE_LitModel(pl.LightningModule):
                 imgs = batch["img"]
             else:
                 imgs = batch["img"]
-
-            if not self.trainer.fast_dev_run:  # type: ignore
-                if self.conf.train_mode.is_diffusion():
-                    self.log_sample(x_start=imgs, x_start_lr=imgs_lr)
             #self.evaluate_scores()
+            # if not self.trainer.fast_dev_run:  # type: ignore
+            #     if self.conf.train_mode.is_diffusion():
+            #         self.log_sample(x_start=imgs, x_start_lr=imgs_lr)
+            
 
     #### Optimizer ####
     def on_before_optimizer_step(self, optimizer: Optimizer) -> None:
@@ -351,26 +481,24 @@ class DAE_LitModel(pl.LightningModule):
     #    cond = (cond * self.conds_std.to(self.device)) + self.conds_mean.to(self.device)
     #    return cond
 
-    # def sample(self, N, device, T=None, T_latent=None):
-    #    if T is None:
-    #        sampler = self.eval_sampler
-    #        latent_sampler = self.latent_sampler
-    #    else:
-    #        sampler = self.conf._make_diffusion_conf(T).make_sampler()
-    #        latent_sampler = self.conf._make_latent_diffusion_conf(T_latent).make_sampler()
+    def sample(self, N, device, T=None, T_latent=None):
+       if T is None:
+           sampler = self.eval_sampler
+           latent_sampler = self.latent_sampler
+       #else:
+        #    sampler = self.conf._make_diffusion_conf(T).make_sampler()
+        #    latent_sampler = self.conf._make_latent_diffusion_conf(T_latent).make_sampler()
 
-    #    noise = torch.randn(N, 3, self.conf.img_size, self.conf.img_size, device=device)
-    #    pred_img = render_uncondition(
-    #        self.conf,
-    #        self.ema_model,
-    #        noise,
-    #        sampler=sampler,
-    #        latent_sampler=latent_sampler,
-    #        conds_mean=self.conds_mean,
-    #        conds_std=self.conds_std,
-    #    )
-    #    pred_img = (pred_img + 1) / 2
-    #    return pred_img
+       noise = torch.randn(N, 3, self.conf.img_size, self.conf.img_size, device=device)
+       pred_img = render_uncondition(
+           self.conf,
+           self.ema_model,
+           noise,
+           sampler=sampler,
+           latent_sampler=latent_sampler
+       )
+       pred_img = (pred_img + 1) / 2
+       return pred_img
 
     def render(self, noise, cond=None, T=None, x_start=None):
         if T is None:
@@ -529,8 +657,8 @@ class DAE_LitModel(pl.LightningModule):
         if self.global_rank == 0:
             experiment: SummaryWriter = self.logger.experiment  # type: ignore
             if isinstance(experiment, SummaryWriter):
-                #experiment.add_images(tag, image, step,dataformats='NCHW')
-                experiment.add_image('Original', image)#, dataformats='NCHW')
+                experiment.add_images(tag, image, step,dataformats='NCHW')
+                #experiment.add_image('Original', image)#, dataformats='NCHW')
             # elif isinstance(experiment, wandb.sdk.wandb_run.Run):
             #    experiment.log(
             #        {tag: [wandb.Image(image.cpu())]},
@@ -565,17 +693,18 @@ class DAE_LitModel(pl.LightningModule):
                #conds_std=self.conds_std,
            )
            print("score:",score)
+           self.log(f"score/fid",score, rank_zero_only=True)
            if self.global_rank == 0:
                self.log(f"FID{postfix}", score)
-               if not os.path.exists(self.conf.logdir):
-                   os.makedirs(self.conf.logdir)
-               with open(os.path.join(self.conf.logdir, "eval.txt"), "a") as f:
-                   metrics = {
-                       f"FID{postfix}": score,
-                       "num_samples": self.num_samples,
-                       "step": self.global_step,
-                   }
-                   f.write(json.dumps(metrics) + "\n")
+            #    if not os.path.exists(self.conf.logdir):
+            #        os.makedirs(self.conf.logdir)
+            #    with open(os.path.join(self.conf.logdir, "eval.txt"), "a") as f:
+            #        metrics = {
+            #            f"FID{postfix}": score,
+            #            "num_samples": self.num_samples,
+            #            "step": self.global_step,
+            #        }
+            #        f.write(json.dumps(metrics) + "\n")
 
        def lpips(model, postfix):
            if self.conf.model_type.has_autoenc() and self.conf.train_mode.is_autoenc():
@@ -594,7 +723,7 @@ class DAE_LitModel(pl.LightningModule):
     #    ):
     #        print(f"eval fid @ {self.num_samples}")
     #        lpips(self.model, "")
-       if self.conf.dims == 2:
+       if self.conf.dims == 3:
            fid(self.model, "")
 
     #    if (
@@ -622,6 +751,7 @@ class DAE_LitModel(pl.LightningModule):
         per_rank = n // world_size
         return x[rank * per_rank : (rank + 1) * per_rank]
 
+   
     # def test_step(self, batch, *args, **kwargs):
     #    """
     #    for the 'eval' mode.
@@ -878,7 +1008,7 @@ def _log_sample(self: DAE_LitModel, x_start, x_start_lr, model, postfix, use_xst
         # (n, c, h, w)
         gen = gen.flatten(0, 1)
     if self.conf.dims == 3:
-        raise NotImplementedError()
+        #raise NotImplementedError()
         if self.global_rank == 0:
             # TODO: convert gif to mp4 to save it to wandb
             # if logged to tensorboard
@@ -918,18 +1048,18 @@ def _save_image(self: DAE_LitModel, _xstart, grid_params, postfix, sample_dir):
     real: torch.Tensor = self.all_gather(_xstart)  # type: ignore
     if (real.dim() - self.conf.dims) == 3:
         real = real.flatten(0, 1)
-    if self.conf.dims == 3:
-        raise NotImplementedError()
+    #if self.conf.dims == 3:
+#        raise NotImplementedError()
         # visualize volume using MONAI
-        if self.global_rank == 0:
-            if isinstance(self.logger, pl_loggers.TensorBoardLogger):
-                plot_2d_or_3d_image(real, self.global_step, self.logger.experiment, tag=f"sample{postfix}/real", frame_dim=-1)
-            elif isinstance(self.logger, pl_loggers.WandbLogger):
-                # log as 3d object
-                # TODO: add rendering as mesh
-                ...
+        # if self.global_rank == 0:
+        #     if isinstance(self.logger, pl_loggers.TensorBoardLogger):
+        #         plot_2d_or_3d_image(real, self.global_step, self.logger.experiment, tag=f"sample{postfix}/real", frame_dim=-1)
+        #     elif isinstance(self.logger, pl_loggers.WandbLogger):
+        #         # log as 3d object
+        #         # TODO: add rendering as mesh
+        #         ...
         # extract 2d slice from different sequences
-        real = extract_slices_from_volume(real)
+        #real = extract_slices_from_volume(real)
     if self.global_rank == 0:
         real_grid = make_grid(**grid_params(real))
         # self.log_image(f"sample{postfix}/real", real_grid, self.global_step)

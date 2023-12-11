@@ -13,10 +13,10 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 
 @dataclass
 class Train_Option(Option_to_Dataclass):
-    experiment_name: str = "NAKO_256"
+    experiment_name: str = "3D_95_old_verse_w_norm"
     lr: float = 0.0001# 0.0001
-    batch_size: int = 32#4#64
-    batch_size_eval: int =32#64
+    batch_size: int = 2#4#64
+    batch_size_eval: int =2#64
     debug: bool = True
     new: bool = True#False
     gpus: list[int] | None = None
@@ -31,12 +31,12 @@ class Train_Option(Option_to_Dataclass):
 #"/media/DATA/martina_ma/cutout/output_test.csv"#
 @dataclass
 class DataSet_Option:
-    dataset: str = "/media/DATA/martina_ma/cutout/train_test.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset.csv"#"/media/DATA/martina_ma/cutout/train_test_3D.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None # TODO: adapt list to my transforms and then fix transforms.py
     in_channels: int = 1  # Channel of the Noised input
     img_size: int | list[int] = 144#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
-    dims: int = 2
+    dims: int = 3
 
     @property
     def shape(self):
@@ -54,7 +54,7 @@ class DataSet_Option:
 
 @dataclass
 class DAE_Model_Option:
-    attention_resolutions: list[int] = field(default_factory=lambda: [16])
+    attention_resolutions: list[int] = field(default_factory=lambda: [0])
     net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 2))
     dropout: float = 0.1
     embed_channels: int = 512
@@ -64,7 +64,7 @@ class DAE_Model_Option:
     enc_channel_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 4, 4))
     enc_grad_checkpoint = False
     enc_attn = None
-    model_channels: int = 64
+    model_channels: int = 8
     net_beatgans_attn_head = 1
     net_num_res_blocks = 2
     net_num_input_res_blocks = None
@@ -117,7 +117,7 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     net_latent_net_type = LatentNetType.none
     #fidscore
     work_cache_dir: str = '/media/DATA/martina_ma/my_cache'
-    eval_num_images: int = 5_00
+    eval_num_images: int = 64
 
     @property
     def target_batch_size(self):
@@ -143,8 +143,8 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
 
             _target_batch_size = _target_batch_size if not self.overfit else max_batch_size_that_fits_in_memory
 
-        self._target_batch_size = 32#_target_batch_size
-        self.batch_size = 32#1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
+        self._target_batch_size = 2#_target_batch_size
+        self.batch_size = 2#1# min(max_batch_size_that_fits_in_memory, _target_batch_size)
         return self._target_batch_size
 
     @property

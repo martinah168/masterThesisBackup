@@ -1,11 +1,11 @@
 import sys
-
+#import tensorflow as tf
 from diffusion.beta_schedule import get_named_beta_schedule, Beta_Schedule, space_timesteps
 
 sys.path.append("..")
 from dataclasses import dataclass
 from typing import NamedTuple, Tuple
-
+from BIDS.core.np_utils import np_dice
 import numpy as np
 import torch
 
@@ -20,12 +20,14 @@ import numpy as np
 import torch
 from torch.cuda.amp import autocast
 from torchmetrics.functional.image.lpips import learned_perceptual_image_patch_similarity
+from torchmetrics.functional import dice
 
 def mean_flat(tensor):
     """
     Take the mean over all non-batch dimensions.
     """
     return tensor.mean(dim=list(range(1, len(tensor.shape))))
+
 
 
 class Gaussian_Diffusion:
@@ -147,6 +149,13 @@ class Gaussian_Diffusion:
             target = target_types[self.model_mean_type]
             assert model_output.shape == target.shape == x_start.shape
             #terms["lpips"] = learned_perceptual_image_patch_similarity(model_output, target)
+            # m = _model_output.cpu().numpy().copy()
+            # m = torch.tensor(model_map_to_segmentation_map(m), dtype=int)
+            # t = target.cpu().numpy().copy()
+            # t = torch.tensor(model_map_to_segmentation_map(t), dtype=int)
+            # d = 1-dice(m,t,ignore_index = 0) #(1-np_dice(t, m, binary_compare= True))
+            # #dt = torch.from_numpy(d)
+            # terms["dice"] = d#(torch.tensor(d)) #mean_flat(d)
             if self.loss_type == LossType.mse:
                 if self.model_mean_type == ModelMeanType.eps:
                     # (n, c, h, w) => (n, )
