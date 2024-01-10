@@ -13,7 +13,7 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 
 @dataclass
 class Train_Option(Option_to_Dataclass):
-    experiment_name: str = "3D_95_old_verse_w_norm"
+    experiment_name: str = "3D_128"
     lr: float = 0.0001# 0.0001
     batch_size: int = 2#4#64
     batch_size_eval: int =2#64
@@ -31,7 +31,7 @@ class Train_Option(Option_to_Dataclass):
 #"/media/DATA/martina_ma/cutout/output_test.csv"#
 @dataclass
 class DataSet_Option:
-    dataset: str = "/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset.csv"#"/media/DATA/martina_ma/cutout/train_test_3D.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "/media/DATA/martina_ma/cutout/train_3D_95_all_dataset.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset_wo_outliers.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset.csv"#"/media/DATA/martina_ma/cutout/train_test_3D.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None # TODO: adapt list to my transforms and then fix transforms.py
     in_channels: int = 1  # Channel of the Noised input
@@ -57,8 +57,8 @@ class DAE_Model_Option:
     attention_resolutions: list[int] = field(default_factory=lambda: [0])
     net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 2))
     dropout: float = 0.1
-    embed_channels: int = 512
-    enc_out_channels: int = 512
+    embed_channels: int = 128
+    enc_out_channels: int = 128
     net_enc_pool: str = "adaptivenonzero"
     enc_num_res_blocks: int = 2
     enc_channel_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 4, 4))

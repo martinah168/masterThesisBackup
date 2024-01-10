@@ -197,9 +197,10 @@ class DAE_LitModel(pl.LightningModule):
     def prepare_data(self):
         self.train_data = get_dataset(self.conf, split="train")
         self.val_data = get_dataset(self.conf, split="val")
-
+        self.test_data = get_dataset(self.conf, split="test")
         print("train data:", len(self.train_data))
         print("val data:", len(self.val_data))
+        #print()
 
     def setup(self, stage=None) -> None:
         """
@@ -253,7 +254,15 @@ class DAE_LitModel(pl.LightningModule):
             return get_data_loader()  # TODO
         else:
             train = mode == "train"
-            return get_data_loader(opt, self.train_data if train else self.val_data, shuffle=train, drop_last=not train)
+            val = mode == "val"
+            data = None
+            if train:
+                data = self.train_data
+            elif val: 
+                data = self.val_data
+            else:
+                data = self.test_data
+            return get_data_loader(opt, data, shuffle=train, drop_last=not train)
 
     ###### Training #####
     def forward(self, noise=None, x_start=None, ema_model: bool = False, **qargs):
@@ -304,6 +313,7 @@ class DAE_LitModel(pl.LightningModule):
                 self.log(f"Assd for {label}", label_assd, rank_zero_only=True) 
             d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int), average = 'macro', ignore_index= 0, num_classes=10)#, multiclass=True)
             self.log(f"d_score", d, rank_zero_only=True) 
+            #TODO average = None to tensorboard
             #self.log(f"msd", msd, rank_zero_only=True) 
             #self.log(f"dice_score", dice, rank_zero_only=True) 
             self.log_image(tag="img_log", image=batch["img"][:,:,60],step=self.global_step)
@@ -325,7 +335,34 @@ class DAE_LitModel(pl.LightningModule):
     
     @torch.no_grad()
     def test_step(self, batch, batchidx):
-        return
+        imgs = batch['img']
+        T = 200
+        cond = self.encode(imgs)
+        stoch = self.encode_stochastic(imgs, cond, T=T)
+        xT = self.render(stoch, cond, T=T)
+        xT_mapped = model_map_to_segmentation_map(xT[0][0].cpu().numpy())
+        xT_mapped = xT_mapped-40
+        xT_mapped = np_map_labels(xT_mapped, {-40: 0})
+        i = model_map_to_segmentation_map(imgs[0][0].cpu().numpy())
+        i = i-40
+        i = np_map_labels(i, {-40: 0})
+        # Iterate over each label and compute ASSD
+        d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int), average = 'macro', ignore_index= 0, num_classes=10)#, multiclass=True)
+        self.log(f"d_score", d, rank_zero_only=True) 
+        
+        
+        perceptual_loss = perceptual.PerceptualLoss(3,"medicalnet_resnet10_23datasets",is_fake_3d=False)
+        perceptual_loss.to(self.device)
+        xT_mapped_tensor = torch.from_numpy(xT_mapped).to(self.device).unsqueeze(0).unsqueeze(0).float()
+        i_tensor = torch.from_numpy(i).to(self.device).unsqueeze(0).unsqueeze(0).float()
+
+        # Now apply the perceptual loss
+        p = perceptual_loss(xT_mapped_tensor, i_tensor)
+        #p = perceptual_loss(xT_mapped, i)
+        self.log(f"perceptual_loss", p, rank_zero_only=True) 
+        metrics = {"test_dice": d, "test_perc_loss": p}
+        self.log_dict(metrics)
+        return metrics
         #self.evaluate_scores()
         # pred =  loss['pred_xstart']
         # tar = loss['x_t']

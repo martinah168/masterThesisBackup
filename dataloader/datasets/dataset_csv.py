@@ -10,6 +10,10 @@ import matplotlib.pyplot as plt
 #from BIDS import NII
 from BIDS import NII
 from BIDS.core.np_utils import np_map_labels, Label_Map
+import re
+import os
+
+outliers = ["verse553", "verse526", "verse534","verse617"]
 
 class Dataset_CSV(Dataset):
     def __init__(self, path, transform, split: None | Literal["train", "val", "test"] = None, col="file_path"):
@@ -27,13 +31,14 @@ class Dataset_CSV(Dataset):
     
     def __getitem__(self, index):
         row = self.dataset.iloc[index]
+        folder , label = extract_label(row.file_path)
         nii = NII.load(row[self.col], True)
         from_im = nii.get_seg_array()
         #print("re_y:",from_im[143,:,143])
         if from_im.ndim == 2:
              item = self.get_item_2D(from_im)
         elif from_im.ndim == 3:
-             item = self.get_item_3D(from_im)
+             item = self.get_item_3D(from_im, folder, label)
         else:
              raise NotImplementedError()
         # prepared_item = item["img"]
@@ -62,6 +67,7 @@ class Dataset_CSV(Dataset):
         #print(re)
         # if index == 373:
         #     nii.set_array_(re).save("prepared_item.nii.gz") 
+        #print(type(item))
         return item
              
 
@@ -90,7 +96,7 @@ class Dataset_CSV(Dataset):
     
 
     #3D
-    def get_item_3D(self, from_im):
+    def get_item_3D(self, from_im, folder, vert):
             from_im = np_map_labels(arr=from_im,label_map={50: 49})
             from_im = from_im.astype(float)
             from_im = self.transform(from_im)
@@ -105,7 +111,7 @@ class Dataset_CSV(Dataset):
             from_im = from_im.to(torch.float32)
            
             #print("tensor", from_im.shape)
-            return {"img": from_im}  # , "index": target, "cls_labels": target}
+            return {"img": from_im, "label": vert , "subject": folder}  # , "index": target, "cls_labels": target}
 
     def get_extended_info(self, index):
         return self.dataset.iloc[index], *self.__getitem__(index)
@@ -143,3 +149,19 @@ def range_print(x, lb, ub):
     # Print the values and indices
     print("Values in the range:", values_in_range)
     print("Indices in the range:", indices_in_range)
+
+def extract_label(file_path):
+    parent_folder = os.path.basename(os.path.dirname(file_path))
+    pattern = r"_([0-9]+)_"
+    # Use re.search to find the match in the file path
+    match = re.search(pattern, file_path)
+    extracted_number = None
+    # Check if a match is found
+    if match:
+        # Extract the matched number
+        extracted_number = match.group(1)
+        #print("Extracted Number:", extracted_number)
+    else:
+        print("No match found.")
+    #result = 
+    return parent_folder , extracted_number 

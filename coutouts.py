@@ -53,7 +53,7 @@ def make_max_slice(data):
 
 
 
-def get_data(root='/media/DATA/martina_ma/data/dataset-verse'):
+def get_data(root='/media/DATA/martina_ma/data/dataset-ctfu'):
    bids_global_object = BIDS_Global_info([root], ["derivatives_new"],
                                          additional_key=["sequ", "seg", "ovl","ses"], verbose=True, )
    bids_family_dict = {}
@@ -201,20 +201,20 @@ def make_cutout(bids_family_dict, max_cutout_size):
            folder = "/media/DATA/martina_ma/cutout/{}/".format(subject)
            if not os.path.exists(folder):
                   os.makedirs(folder)
-           nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_new_subreg_cropped.nii.gz".format(subject,subject, label))
+           nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_subreg_cropped.nii.gz".format(subject,subject, label))
 
 
 if __name__ == '__main__':
    max_x = 0
    max_y = 0
    max_z = 0
-   cut = True
+   cut = False
    bids_family_dict = get_data()
    if cut:
        make_cutout(bids_family_dict, (144, 96, 144))
    else:
     
-    csv_filename = '/media/DATA/martina_ma/cutout/cutout_verse_new.csv'
+    csv_filename = '/media/DATA/martina_ma/cutout/cutout_ctfu.csv'
     with open(csv_filename, "w") as file:
             writer = csv.writer(file, lineterminator='\n')
     

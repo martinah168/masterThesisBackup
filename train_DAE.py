@@ -33,7 +33,29 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         save_last=True,
         save_top_k=3,
         auto_insert_metric_name=True,
-        every_n_train_steps=5#opt.save_every_samples // opt.batch_size_effective,
+        every_n_train_steps=5,#opt.save_every_samples // opt.batch_size_effective,
+        save_on_train_epoch_end= True
+    )
+    checkpoint_val = ModelCheckpoint(
+        filename="{epoch}-{step}_latest",
+        monitor="loss/val_loss",
+        mode="min",
+        save_last=True,
+        save_top_k=3,
+        auto_insert_metric_name=True,
+        every_n_train_steps=5,#opt.save_every_samples // opt.batch_size_effective,
+        save_on_train_epoch_end= True
+    )
+
+    checkpoint_dice = ModelCheckpoint(
+        filename="{epoch}-{step}{d_score:.4f}_d_score_latest",
+        monitor="d_score",
+        save_last=True,
+        save_top_k=3,
+        auto_insert_metric_name=True,
+        mode='max',
+        save_on_train_epoch_end= True,
+        #save_on_val_epoch_end = True
     )
 
     early_stopping = EarlyStopping(
@@ -45,7 +67,8 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     )
     resume = None
     if not opt.new:
-        checkpoint_path = arguments.get_latest_Checkpoint(opt, "*", opt.log_dir)
+        checkpoint_path = "/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_6/checkpoints/epoch=71-step=107030_latest.ckpt"
+        #arguments.get_latest_Checkpoint(opt, "*", opt.log_dir)
         if checkpoint_path is not None:
             resume = checkpoint_path
             print(f"Resuming from {resume}")
@@ -73,7 +96,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         num_nodes=nodes,
         accelerator=accelerator,
         precision="16-mixed" if not opt.fp32 else 32,
-        callbacks=[checkpoint, early_stopping],
+        callbacks=[checkpoint,checkpoint_dice, early_stopping],
         logger=logger,
         log_every_n_steps=2,#log_every_n_steps,
         overfit_batches=n_overfit_batches,
@@ -123,28 +146,6 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
     else:
         raise NotImplementedError()
 
-def test():
-    #/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_19/checkpoints/last.ckpt
-
-    #### Load checkpoint ####
-    checkpoint_path = "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_19/checkpoints/last.ckpt"#"/media/data/robert/code/DiffAE/lightning_logs/DAE_NAKO_256/version_1/checkpoints/last.ckpt"
-    device: str | None = "cuda:0"
-    print("checkpoint_path", checkpoint_path)
-    assert Path(checkpoint_path).exists()
-    encoder = DAE_LitModel.load_from_checkpoint(checkpoint_path)
-
-     #### Load overfit sample ####
-    overfit_sample_path = "/media/DATA/martina_ma/datasets/verse013_024_subreg_cropped.nii.gz"
-    img_nifti = nib.load(overfit_sample_path)
-    print(img_nifti.header.get_data_shape())
-    #from_im = img_nifti.get_fdata()
-    #from_im = from_im.reshape(-1, from_im.shape[-1])
-    #from_im = from_im.to(torch.float32) 
-
-    trainer = Trainer()
-    trainer.test(encoder)
-    
-    return
 
 def get_opt(config=None) -> arguments.DAE_Option:
     torch.cuda.empty_cache()
@@ -157,4 +158,3 @@ def get_opt(config=None) -> arguments.DAE_Option:
 
 if __name__ == "__main__":
     train(get_opt())
-    #test()
