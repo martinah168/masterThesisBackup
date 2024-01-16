@@ -53,8 +53,8 @@ def make_max_slice(data):
 
 
 
-def get_data(root='/media/DATA/martina_ma/data/dataset-ctfu'):
-   bids_global_object = BIDS_Global_info([root], ["derivatives_new"],
+def get_data(ids_list, root='/media/DATA/martina_ma/data/dataset-ctfu'):
+   bids_global_object = BIDS_Global_info([root], ["derivatives"],
                                          additional_key=["sequ", "seg", "ovl","ses"], verbose=True, )
    bids_family_dict = {}
 #bids_global_object = BIDS_Global_info(['/media/data/robert/datasets/spinegan_T2w/raw/'],['rawdata',"rawdata_dixon","derivatives"],additional_key = ["sequ", "seg", "ovl"], verbose=True,)
@@ -69,6 +69,9 @@ def get_data(root='/media/DATA/martina_ma/data/dataset-ctfu'):
         continue
 
        for bids_family in query.loop_dict(sort=True):
+           if bids_family.family_id  not in ids_list:
+               print("skipped",bids_family.family_id)
+               continue
            # finally we get a bids_family
            if ["msk_seg-vert", "msk_seg-subreg"] not in bids_family:
             #maybe print bids_family.family_id oder so
@@ -204,21 +207,45 @@ def make_cutout(bids_family_dict, max_cutout_size):
            nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_subreg_cropped.nii.gz".format(subject,subject, label))
 
 
+def load_ctfu_id(path= "/media/DATA/martina_ma/ctfu_ids.csv"):
+    try:
+        ctfu_ids_df = pd.read_csv(path, delimiter= ",",header=None)
+        ids_list = ctfu_ids_df.values.tolist()
+        #extracted_ids_list = [extract_substring(s) for s in ids_list[0]]
+        return ids_list[0]  # Assuming you want a list of values for the first row
+    except Exception as e:
+        print(f"Error reading CSV file: {e}")
+        return []
+
+
+def extract_substring(input_string):
+    # Define a regular expression pattern to match the desired substring
+    pattern = re.compile(r'^(.*?_ses-\d+)_.*$')
+
+    # Use search to find the first match in the input string
+    match = pattern.search(input_string)
+
+    # Return the matched substring or None if no match is found
+    return match.group(1) if match else None
+
+
 if __name__ == '__main__':
    max_x = 0
    max_y = 0
    max_z = 0
-   cut = False
-   bids_family_dict = get_data()
+   cut = True
+   ctfu_ids = load_ctfu_id()
+
+   bids_family_dict = get_data(ctfu_ids)
    if cut:
        make_cutout(bids_family_dict, (144, 96, 144))
    else:
     
-    csv_filename = '/media/DATA/martina_ma/cutout/cutout_ctfu.csv'
+    csv_filename = '/media/DATA/martina_ma/cutout/cutout_ctfu_continue.csv'
     with open(csv_filename, "w") as file:
             writer = csv.writer(file, lineterminator='\n')
     
-            bids_family_dict = get_data()
+            #bids_family_dict = get_data()
             #max_cutout_size = tuple()
             #cutout_size = []
             
@@ -233,8 +260,15 @@ if __name__ == '__main__':
                     print(number)
                 else:
                     print("No number found")
+                if number < 1066:
+                    print("already_processed")
+                    continue
                 #writer.writerow(subject)
                 vert_seg = bids_family_dict[subject]['msk_seg-vert'][0]
+                # s = extract_substring(vert_seg.BIDS_key)
+                # if s not in ctfu_ids:
+                #     print(s, "not in ctfu ids")
+                #     continue
                 subreg = bids_family_dict[subject]['msk_seg-subreg'][0]
 
 

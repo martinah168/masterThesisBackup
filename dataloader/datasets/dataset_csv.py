@@ -19,6 +19,7 @@ class Dataset_CSV(Dataset):
     def __init__(self, path, transform, split: None | Literal["train", "val", "test"] = None, col="file_path"):
         print(path)
         dataset = pd.read_csv(path, sep=",")
+        #dataset = dataset[~dataset['file_path'].str.contains('ctfu')]
         assert col in dataset, dataset
         assert not isinstance(transform, tuple)
         self.transform = transform
