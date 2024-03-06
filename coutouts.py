@@ -12,6 +12,82 @@ import csv
 import os
 import re
 
+files_to_exclude = ["verse814_019_subreg_cropped.nii.gz", "verse814_018_subreg_cropped.nii.gz","verse814_020_subreg_cropped.nii.gz",
+                    "verse642_019_subreg_cropped.nii.gz", "verse642_018_subreg_cropped.nii.gz","verse642_020_subreg_cropped.nii.gz",
+                    "verse636_019_subreg_cropped.nii.gz", "verse636_018_subreg_cropped.nii.gz","verse636_020_subreg_cropped.nii.gz",
+                    "verse626_019_subreg_cropped.nii.gz", "verse626_018_subreg_cropped.nii.gz","verse626_020_subreg_cropped.nii.gz",
+                    "verse606_019_subreg_cropped.nii.gz", "verse606_018_subreg_cropped.nii.gz","verse606_020_subreg_cropped.nii.gz",
+                    "verse581_019_subreg_cropped.nii.gz", "verse581_018_subreg_cropped.nii.gz","verse581_020_subreg_cropped.nii.gz",
+                    "verse559_019_subreg_cropped.nii.gz", "verse559_018_subreg_cropped.nii.gz","verse559_020_subreg_cropped.nii.gz",
+                    "verse544_019_subreg_cropped.nii.gz", "verse544_018_subreg_cropped.nii.gz","verse544_020_subreg_cropped.nii.gz",
+                    "verse535_025_new_subreg_cropped.nii.gz", "verse599_025_new_subreg_cropped.nii.gz","verse555_025_new_subreg_cropped.nii.gz",
+"verse591_024_new_subreg_cropped.nii.gz", "verse617_024_new_subreg_cropped.nii.gz","verse526_025_new_subreg_cropped.nii.gz",
+"verse534_025_new_subreg_cropped.nii.gz", "ctfu00974_012_subreg_cropped.nii.gz",
+"verse024_025_new_subreg_cropped.nii.gz",
+"verse584_024_new_subreg_cropped.nii.gz",
+"verse609_025_new_subreg_cropped.nii.gz",
+"fxclass0339_009_subreg_cropped.nii.gz",
+"ctfu00155_021_subreg_cropped.nii.gz",
+"fxclass0056_019_subreg_cropped.nii.gz",
+"verse587_025_new_subreg_cropped.nii.gz",
+"verse581_025_new_subreg_cropped.nii.gz",
+"verse088_025_new_subreg_cropped.nii.gz",
+"verse626_025_new_subreg_cropped.nii.gz",
+"verse606_025_new_subreg_cropped.nii.gz",
+"fxclass0290_014_subreg_cropped.nii.gz",
+"fxclass0352_009_subreg_cropped.nii.gz",
+"verse616_025_new_subreg_cropped.nii.gz",
+"verse590_025_new_subreg_cropped.nii.gz",
+"ctfu00074_014_subreg_cropped.nii.gz",
+"verse510_025_new_subreg_cropped.nii.gz",
+"verse592_025_new_subreg_cropped.nii.gz",
+"verse573_024_new_subreg_cropped.nii.gz",
+"fxclass0178_012_subreg_cropped.nii.gz"]
+
+# List of subejcts for test split
+selected_folders =["/media/DATA/martina_ma/cutout/verse009",
+"/media/DATA/martina_ma/cutout/verse073",
+"/media/DATA/martina_ma/cutout/verse269",
+"/media/DATA/martina_ma/cutout/verse750",
+"/media/DATA/martina_ma/cutout/verse712",
+"/media/DATA/martina_ma/cutout/verse594",
+"/media/DATA/martina_ma/cutout/verse236",
+"/media/DATA/martina_ma/cutout/verse757",
+"/media/DATA/martina_ma/cutout/verse650",
+"/media/DATA/martina_ma/cutout/verse068",
+"/media/DATA/martina_ma/cutout/verse080",
+"/media/DATA/martina_ma/cutout/verse759",
+"/media/DATA/martina_ma/cutout/verse511",
+"/media/DATA/martina_ma/cutout/verse260",
+"/media/DATA/martina_ma/cutout/verse081",
+"/media/DATA/martina_ma/cutout/verse514",
+"/media/DATA/martina_ma/cutout/fxclass0326",
+"/media/DATA/martina_ma/cutout/fxclass0037",
+"/media/DATA/martina_ma/cutout/fxclass0271",
+"/media/DATA/martina_ma/cutout/fxclass0309",
+"/media/DATA/martina_ma/cutout/fxclass0019",
+"/media/DATA/martina_ma/cutout/fxclass0334",
+"/media/DATA/martina_ma/cutout/fxclass0120",
+"/media/DATA/martina_ma/cutout/fxclass0384",
+"/media/DATA/martina_ma/cutout/fxclass0205",
+"/media/DATA/martina_ma/cutout/fxclass0159",
+"/media/DATA/martina_ma/cutout/fxclass0321",
+"/media/DATA/martina_ma/cutout/fxclass0218",
+"/media/DATA/martina_ma/cutout/fxclass0185",
+"/media/DATA/martina_ma/cutout/fxclass0314",
+"/media/DATA/martina_ma/cutout/fxclass0059",
+"/media/DATA/martina_ma/cutout/fxclass0103",
+"/media/DATA/martina_ma/cutout/fxclass0018",
+"/media/DATA/martina_ma/cutout/fxclass0277",
+"/media/DATA/martina_ma/cutout/fxclass0110",
+"/media/DATA/martina_ma/cutout/tri018",
+"/media/DATA/martina_ma/cutout/ctfu00006",
+"/media/DATA/martina_ma/cutout/ctfu00492",
+"/media/DATA/martina_ma/cutout/ctfu00289",
+"/media/DATA/martina_ma/cutout/ctfu00521",
+"/media/DATA/martina_ma/cutout/verse553" #broken segmentation
+]
+
 
 def erhoehe_auf_groesste_2er_potenz(tupel):
    max_wert = max(tupel)  # Finde den größten Wert im Tupel
@@ -53,8 +129,8 @@ def make_max_slice(data):
 
 
 
-def get_data(ids_list, root='/media/DATA/martina_ma/data/dataset-ctfu'):
-   bids_global_object = BIDS_Global_info([root], ["derivatives"],
+def get_data(ids_list, root='/media/DATA/martina_ma/data/dataset-fxclass'):
+   bids_global_object = BIDS_Global_info([root], ["derivatives_spine_r"],
                                          additional_key=["sequ", "seg", "ovl","ses"], verbose=True, )
    bids_family_dict = {}
 #bids_global_object = BIDS_Global_info(['/media/data/robert/datasets/spinegan_T2w/raw/'],['rawdata',"rawdata_dixon","derivatives"],additional_key = ["sequ", "seg", "ovl"], verbose=True,)
@@ -69,16 +145,25 @@ def get_data(ids_list, root='/media/DATA/martina_ma/data/dataset-ctfu'):
         continue
 
        for bids_family in query.loop_dict(sort=True):
-           if bids_family.family_id  not in ids_list:
-               print("skipped",bids_family.family_id)
+           if 'ctfu' in bids_family.family_id:
                continue
+        #    if bids_family.family_id  not in ids_list: only for ctfu
+        #        print("skipped",bids_family.family_id)
+        #        continue
            # finally we get a bids_family
            if ["msk_seg-vert", "msk_seg-subreg"] not in bids_family:
             #maybe print bids_family.family_id oder so
              print(bids_family.family_id)
              continue
-           bids_family_dict[query.subject.name] = bids_family.get_bids_files_as_dict(
+           if '337' in  bids_family.family_id:
+               print('found)')
+           sequences_keys = query.subject.sequences.keys()#.get_sequence_name(bids_family)
+           for sk in sequences_keys:
+               k = query.subject.name+'_'+sk
+               bids_family_dict[k] = bids_family.get_bids_files_as_dict(
                ['msk_seg-vert', 'msk_seg-subreg'])
+        #    bids_family_dict[query.subject.name] = bids_family.get_bids_files_as_dict(
+        #        ['msk_seg-vert', 'msk_seg-subreg'])
    return bids_family_dict
 
 
@@ -145,6 +230,9 @@ def crop(center, vert_arr, nii_vert, nii_subreg, label, subject_name, cut_s):
 
 def make_cutout(bids_family_dict, max_cutout_size):
    for subject in bids_family_dict:
+       s = subject.split('_')
+       #print(s[0])
+       #print(s[1])
        match = re.search(r'\d+', subject)
 
        if match:
@@ -201,10 +289,10 @@ def make_cutout(bids_family_dict, max_cutout_size):
            nii_subreg_s.rescale_()
            nii_subreg_s.reorient_()
            #vert_label_nii.save("{}_{:03d}_vert_cropped.nii.gz".format(subject, label))
-           folder = "/media/DATA/martina_ma/cutout/{}/".format(subject)
+           folder = "/media/DATA/martina_ma/cutout_allses/{}/".format(s[0])
            if not os.path.exists(folder):
                   os.makedirs(folder)
-           nii_subreg_s.save("/media/DATA/martina_ma/cutout/{}/{}_{:03d}_subreg_cropped.nii.gz".format(subject,subject, label))
+           nii_subreg_s.save("/media/DATA/martina_ma/cutout_allses/{}/{}_{:03d}_subreg_cropped.nii.gz".format(s[0],subject, label))#.format(subject,subject, label))
 
 
 def load_ctfu_id(path= "/media/DATA/martina_ma/ctfu_ids.csv"):
@@ -241,7 +329,7 @@ if __name__ == '__main__':
        make_cutout(bids_family_dict, (144, 96, 144))
    else:
     
-    csv_filename = '/media/DATA/martina_ma/cutout/cutout_ctfu_continue.csv'
+    csv_filename = '/media/DATA/martina_ma/cutout/cutout_fxclass_revisited.csv'
     with open(csv_filename, "w") as file:
             writer = csv.writer(file, lineterminator='\n')
     
@@ -263,6 +351,9 @@ if __name__ == '__main__':
                 if number < 1066:
                     print("already_processed")
                     continue
+                if number != 337:
+                    continue
+
                 #writer.writerow(subject)
                 vert_seg = bids_family_dict[subject]['msk_seg-vert'][0]
                 # s = extract_substring(vert_seg.BIDS_key)

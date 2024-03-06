@@ -50,6 +50,9 @@ def get_data_loader(
     elif hasattr(dataset, "sample_weights") and split == "train" and opt.train_mode.is_manipulate():
         print("using weighted sampler for imbalanced data")
         sampler = WeightedRandomSampler(dataset.sample_weights(), len(dataset))
+    elif  split == "train" and opt.sampling:#hasattr(dataset, "sample_weights") and
+        print("using weighted sampler for imbalanced data")
+        sampler = WeightedRandomSampler(dataset.sample_weights(), len(dataset))
     else:
         sampler = None
 

@@ -13,7 +13,7 @@ from utils.enums_model import GenerativeType, LatentNetType, ModelMeanType, Mode
 
 @dataclass
 class Train_Option(Option_to_Dataclass):
-    experiment_name: str = "3D_128"
+    experiment_name: str = "3D_less_blocks"
     lr: float = 0.0001# 0.0001
     batch_size: int = 2#4#64
     batch_size_eval: int =2#64
@@ -23,20 +23,22 @@ class Train_Option(Option_to_Dataclass):
     num_cpu: int = 16
     # Logging
     log_dir: str = "lightning_logs"
-    log_every_n_steps = 1#3000
+    log_every_n_steps = 3000
     fast_dev_run: bool = False
     optimizer: OptimizerType = OptimizerType.adam
     weight_decay: float = 0.0
 
 #"/media/DATA/martina_ma/cutout/output_test.csv"#
+    #"corpus_train_val_set.csv" #"corpus_train_val_set.csv" #
 @dataclass
 class DataSet_Option:
-    dataset: str = "/media/DATA/martina_ma/cutout/train_3D_95_all_dataset.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset_wo_outliers.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset.csv"#"/media/DATA/martina_ma/cutout/train_test_3D.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
+    dataset: str = "fractured_train_val_set.csv"#"train_val_cleaned.csv"#"/media/DATA/martina_ma/train_val_cleaned_seg_fails.csv"#"/media/DATA/martina_ma/train_val_csv_cleaned.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_all_dataset.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset_wo_outliers.csv"#"/media/DATA/martina_ma/cutout/train_3D_95_old_verse_seg_dataset.csv"#"/media/DATA/martina_ma/cutout/train_test_3D.csv" #"/media/DATA/martina_ma/cutout/train_test.csv"#"/media/DATA/martina_ma/datasets/test_csv.csv"#"/media/data/robert/code/nako_embedding/dataset/train.csv"
     ds_type: str = "csv_2D"  # Literal["csv_2D"]
     transforms: list[T.Transforms_Enum] | None = None # TODO: adapt list to my transforms and then fix transforms.py
     in_channels: int = 1  # Channel of the Noised input
-    img_size: int | list[int] = 144#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int]
+    img_size: int | list[int] = 144#114#144#256  # TODO Diffusion_Autoencoder_Model can't deal with list[int] (114, 84, 114)
     dims: int = 3
+    corpus: bool = False
 
     @property
     def shape(self):
@@ -55,10 +57,10 @@ class DataSet_Option:
 @dataclass
 class DAE_Model_Option:
     attention_resolutions: list[int] = field(default_factory=lambda: [0])
-    net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 2))
-    dropout: float = 0.1
-    embed_channels: int = 128
-    enc_out_channels: int = 128
+    net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1))#field(default_factory=lambda: (1, 1, 2, 2))
+    dropout: float = 0.3 #0.1
+    embed_channels: int = 512
+    enc_out_channels: int = 512
     net_enc_pool: str = "adaptivenonzero"
     enc_num_res_blocks: int = 2
     enc_channel_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 2, 4, 4))
@@ -107,11 +109,12 @@ class DAE_Option(Train_Option, DAE_Model_Option, DataSet_Option):
     grad_clip: float = 1.0
     rescale_timesteps: bool = False
     # Embedding
-    hessian_penalty: float = 0
+    hessian_penalty: float = 0#.1 #ist value egal?
     # Debugging
     overfit: bool = False
     train_mode: TrainMode = TrainMode.diffusion
     pretrain = None
+    sampling = True#True #weightedrandomsampling only use for fracture
     # Model
     model_name: ModelName = ModelName.autoencoder  # TODO BEATSGAN???
     net_latent_net_type = LatentNetType.none

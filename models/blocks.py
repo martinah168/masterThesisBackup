@@ -371,7 +371,7 @@ class Downsample(nn.Module):
         self.out_channels = out_channels or channels
         self.use_conv = use_conv
         self.dims = dims
-        stride = 2  # if dims != 3 else (1, 2, 2)
+        stride = 2#(1, 2, 2)#2  # if dims != 3 else (1, 2, 2)
         if use_conv:
             self.op = conv_nd(dims, self.channels, self.out_channels, 3, stride=stride, padding=1)
         else:

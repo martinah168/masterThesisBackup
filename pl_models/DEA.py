@@ -28,6 +28,7 @@ import numpy as np
 import pytorch_lightning as pl
 import torch
 import torch.utils.data
+import torch.nn as nn
 import torch.utils.tensorboard
 from monai.visualize import plot_2d_or_3d_image
 from pytorch_lightning import loggers as pl_loggers
@@ -49,9 +50,10 @@ from torchmetrics.functional import dice
 
 from BIDS.core.np_utils import np_map_labels
 import seg_metrics.seg_metrics as sg
-from dataloader.datasets.dataset_csv import model_map_to_segmentation_map, segmentation_map_to_model_map
+from dataloader.datasets.dataset_csv import model_map_to_segmentation_map, segmentation_map_to_model_map, model_map_to_corpus
 
 from utils.enums import TrainMode
+from utils.arguments import DataSet_Option
 from tensorboard.plugins import projector
 config = projector.ProjectorConfig()
 
@@ -118,7 +120,7 @@ class DAE_LitModel(pl.LightningModule):
 
         if self.conf.train_mode == TrainMode.simsiam:
             self.criterion = torch.nn.CosineSimilarity(dim=1)
-
+        self.counts = {'F':0, 'NF': 0, 'U': 0}
         #self.res = self.prepare_resnet()
         # Pytorch Lightning calls the following things.
         # self.prepare_data()
@@ -262,7 +264,8 @@ class DAE_LitModel(pl.LightningModule):
                 data = self.val_data
             else:
                 data = self.test_data
-            return get_data_loader(opt, data, shuffle=train, drop_last=not train)
+            dataloader =  get_data_loader(opt, data, shuffle=train, drop_last=not train)
+            return dataloader
 
     ###### Training #####
     def forward(self, noise=None, x_start=None, ema_model: bool = False, **qargs):
@@ -272,6 +275,22 @@ class DAE_LitModel(pl.LightningModule):
 
     def training_step(self, batch, batch_idx):
         loss = self._shared_step(batch, batch_idx, "train")
+
+        # Assuming your batch contains ground truth labels
+        labels = batch['fracture']
+        
+        # Initialize counts dictionary to keep track of samples from each class
+        #self.counts = {}#= defaultdict(int)
+        
+        # Increment counts for each class in the batch
+        for label in labels:
+            self.counts[label] += 1
+        
+        # Update counts for each class
+        #for class_idx, count in self.counts.items():
+        #    self.log(f'Class {class_idx} samples in this batch: {count}', on_epoch=True)
+
+
         self.last_100_loss.append(loss["loss"].detach().cpu().numpy())
         if len(self.last_100_loss) == 101:
             self.last_100_loss.popleft()
@@ -285,7 +304,7 @@ class DAE_LitModel(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         loss =  self._shared_step(batch, batch_idx, "val")
         
-        if self.current_epoch%10 == 0 and batch_idx%10 == 0:
+        if self.current_epoch%5 == 0:# and batch_idx%5 == 0:
             #print("batch_idx",batch_idx)
             imgs = batch['img']
             i_np = imgs[0][0].cpu().numpy().copy()
@@ -294,31 +313,40 @@ class DAE_LitModel(pl.LightningModule):
             cond = self.encode(imgs)
             stoch = self.encode_stochastic(imgs, cond, T=T)
             xT = self.render(stoch, cond, T=T)
-            xT_mapped = model_map_to_segmentation_map(xT[0][0].cpu().numpy())
-            xT_mapped = xT_mapped-40
-            xT_mapped = np_map_labels(xT_mapped, {-40: 0})
-            i = model_map_to_segmentation_map(imgs[0][0].cpu().numpy())
-            i = i-40
-            i = np_map_labels(i, {-40: 0})
-           # Iterate over each label and compute ASSD
-            for label in range(1, 10):
-                # Create binary masks for the selected label in both arrays
-                binary_mask1 = (i == label).astype(int)
-                binary_mask2 = (xT_mapped == label).astype(int)
-                if 0 == np.count_nonzero(binary_mask1) or 0 == np.count_nonzero(binary_mask2):
-                    #print("label skipped",label)
-                    continue
-                # Compute ASSD for the pair of binary masks
-                label_assd = assd(binary_mask1, binary_mask2)
-                self.log(f"Assd for {label}", label_assd, rank_zero_only=True) 
-            d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int), average = 'macro', ignore_index= 0, num_classes=10)#, multiclass=True)
+            if DataSet_Option.corpus:
+                #xT_mapped = (xT[0][0].cpu().numpy()+1)/2
+                #i = (imgs[0][0].cpu().numpy()+1)/2
+                xT_mapped = model_map_to_corpus(xT[0][0].cpu().numpy())
+                i = model_map_to_corpus(imgs[0][0].cpu().numpy())
+                l_x = np.unique(xT_mapped)
+                l_i = np.unique(i)
+                d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int),ignore_index= 0)#, multiclass=True)
+            else:
+                xT_mapped = model_map_to_segmentation_map(xT[0][0].cpu().numpy())
+                xT_mapped = xT_mapped-40
+                xT_mapped = np_map_labels(xT_mapped, {-40: 0})
+                i = model_map_to_segmentation_map(imgs[0][0].cpu().numpy())
+                i = i-40
+                i = np_map_labels(i, {-40: 0})
+            # Iterate over each label and compute ASSD
+                for label in range(1, 10):
+                    # Create binary masks for the selected label in both arrays
+                    binary_mask1 = (i == label).astype(int)
+                    binary_mask2 = (xT_mapped == label).astype(int)
+                    if 0 == np.count_nonzero(binary_mask1) or 0 == np.count_nonzero(binary_mask2):
+                        #print("label skipped",label)
+                        continue
+                    # Compute ASSD for the pair of binary masks
+                    label_assd = assd(binary_mask1, binary_mask2)
+                    self.log(f"Assd for {label}", label_assd, rank_zero_only=True) 
+                d = dice(torch.tensor(xT_mapped,dtype=int),torch.tensor(i,dtype=int), average = 'macro', ignore_index= 0, num_classes=10)#, multiclass=True)
             self.log(f"d_score", d, rank_zero_only=True) 
             #TODO average = None to tensorboard
             #self.log(f"msd", msd, rank_zero_only=True) 
             #self.log(f"dice_score", dice, rank_zero_only=True) 
-            self.log_image(tag="img_log", image=batch["img"][:,:,60],step=self.global_step)
-            plot_2d_or_3d_image(data=i, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_original")
-            plot_2d_or_3d_image(data=xT_mapped, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_rendered")
+            #self.log_image(tag="img_log", image=batch["img"][:,:,60],step=self.global_step)
+            #plot_2d_or_3d_image(data=i, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_original")
+            #plot_2d_or_3d_image(data=xT_mapped, step=self.global_step, writer=self.logger.experiment, frame_dim=-1, tag="3Dimage_rendered")
 
             perceptual_loss = perceptual.PerceptualLoss(3,"medicalnet_resnet10_23datasets",is_fake_3d=False)
             perceptual_loss.to(self.device)
@@ -396,7 +424,8 @@ class DAE_LitModel(pl.LightningModule):
                     assert "cond_emb" in losses
                     hl = hessian_penalty(self.model.encoder, x_start, G_z=losses["cond_emb"])
                     losses["hessian_penalty"] = hl.detach()
-                    losses["loss"] = losses["loss"] + hl
+                    losses["loss"] = losses["loss"] + hl*self.conf.hessian_penalty 
+                    #hl*min(1, self.global_step/self.conf.T)
 
             elif self.conf.train_mode.is_latent_diffusion():
                 raise NotImplementedError("latent_infer_path")
@@ -425,6 +454,7 @@ class DAE_LitModel(pl.LightningModule):
                 losses[key] = self.all_gather(losses[key]).mean()  # type: ignore
             for key in loss_keys:
                 self.log(f"loss/{step_mode}_{key}", losses[key].item(), rank_zero_only=True)
+                
             
         return losses
 
@@ -439,6 +469,11 @@ class DAE_LitModel(pl.LightningModule):
         used with gradient_accum > 1 and to see if the optimizer will perform 'step' in this iteration or not
         """
         return (batch_idx + 1) % self.conf.accum_batches == 0
+
+    def on_train_epoch_end(self):
+        ## F1 Macro all epoch saving outputs and target per batch
+        print('Class counts:',self.counts)
+        self.counts = {'F':0, 'NF': 0, 'U': 0}
 
     def on_train_batch_end(self, outputs, batch, batch_idx: int) -> None:
         """

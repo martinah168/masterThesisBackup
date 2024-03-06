@@ -30,15 +30,15 @@ import plotly.express as px
 from sklearn.manifold import TSNE
 from BIDS.core import vert_constants
 from BIDS.core.np_utils import np_volume
-from dataloader.datasets.dataset_csv import model_map_to_segmentation_map, segmentation_map_to_model_map 
+from dataloader.datasets.dataset_csv import model_map_to_segmentation_map, segmentation_map_to_model_map, model_map_to_corpus 
 #from utils.metadata import make_anomaly_dict, add_fxclass_fracture_anomaly, parse_string
 import utils.metadata as m
 from BIDS.core.vert_constants import v_name2idx, v_idx2name
 
 def calc_volume(seg_arr):
-    seg = model_map_to_segmentation_map(seg_arr)
-    labels = np.unique(seg_arr)
-    labels = model_map_to_segmentation_map(labels)[1:]
+    seg = model_map_to_corpus(seg_arr)#model_map_to_segmentation_map(seg_arr)
+    labels = np.unique(seg)#_arr)
+    labels = labels[1:]#model_map_to_corpus(seg_arr)#model_map_to_segmentation_map(labels)[1:]
     vol_dict = np_volume(seg, labels)
     total_volume = sum(vol_dict.values())
     return total_volume
@@ -86,15 +86,16 @@ def get_region(label):
         return 'unknown'
 
 
-def extract_embeddings(train_dataloader, val_dataloader, ctfu_dataloader, model):
+def extract_embeddings(train_dataloader, val_dataloader, model):
     data_list = []
 
     with torch.no_grad():
 
-        for x in ctfu_dataloader:
+        for x in train_dataloader:
             img = x['img'].to(device)
             label = x['label']
             subject = x['subject']
+            frac = x['fracture']
             
             output = model.encode(img)
 
@@ -113,11 +114,40 @@ def extract_embeddings(train_dataloader, val_dataloader, ctfu_dataloader, model)
                 "label": label_str,
                 "subject": subject_str,
                 "region": region,
-                "volume": volume
+                "volume": volume,
+                "fracture":frac
             }
 
             data_list.append(data_item)
+            print('append')
+        for x in val_dataloader:
+            img = x['img'].to(device)
+            label = x['label']
+            subject = x['subject']
+            frac = x['fracture']
+            output = model.encode(img)
 
+            
+            label_str = str(label)
+            subject_str = str(subject)
+            #print(subject_str)
+            # if (int(extract_nr(subject_str)) == 526 and int(extract_nr(label)) == 25):# or (subject_str == "['verse534']" and label == "['025']") or (subject_str == "['verse617']" and label == "['024']"):
+            #     print("skipped")
+            #     continue 
+            region = get_region(int(extract_nr(label_str)))
+            volume = calc_volume(img.cpu().numpy())
+
+            data_item = {
+                "embeddings": output,  
+                "label": label_str,
+                "subject": subject_str,
+                "region": region,
+                "volume": volume,
+                "fracture":frac
+            }
+
+            data_list.append(data_item)
+            print('append')
     # Convert the list of dictionaries to a DataFrame
     dataframe = pd.DataFrame(data_list)
 
@@ -160,29 +190,14 @@ if __name__ == '__main__':
             #multiprocessing_context=get_context("fork"),
             persistent_workers=True,
         )
-    arg_ctfu = arguments.DataSet_Option()
-    arg_ctfu.dataset  = "/media/DATA/martina_ma/cutout/ctfu_to_encode.csv"
-
-    dataset_ctfu = get_dataset(arg_ctfu,"train")
-
-    ctfu_dataloader = DataLoader(
-            dataset_ctfu,
-            batch_size=1,#opt.batch_size,
-            #sampler=sampler,
-            # with sampler, use the sample instead of this option
-            shuffle=False,# if sampler else shuffle,
-            num_workers=16,#opt.num_cpu,
-            pin_memory=True,
-            #drop_last=drop_last,
-            #multiprocessing_context=get_context("fork"),
-            persistent_workers=True,
-        )
-    checkpoint_path ="/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_30/checkpoints/epoch=10-step=46717d_score=0.9912_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_10/checkpoints/epoch=0-step=1488_d_score_latest copy.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_232/checkpoints/epoch=283-step=27190_latest.ckpt"# "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"
+    #/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=57-step=435130_latest.ckpt
+    checkpoint_path ="/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=5-step=45690d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=15-step=121840d_score=1.0000_d_score_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=25-step=197990d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=1-step=15230d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=2-step=22845d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=57-step=435130_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=0-step=7615d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_30/checkpoints/epoch=10-step=46717d_score=0.9912_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_10/checkpoints/epoch=0-step=1488_d_score_latest copy.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_232/checkpoints/epoch=283-step=27190_latest.ckpt"# "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"
     device = "cuda:0"  # or "cpu" if you want to use CPU
     assert Path(checkpoint_path).exists()
     model = DAE_LitModel.load_from_checkpoint(checkpoint_path)
     model.ema_model.eval()
     model.ema_model.to(device)
-    embeddings_dataframe = extract_embeddings(train_dataloader, val_dataloader, ctfu_dataloader, model)
-    torch.save(embeddings_dataframe,'/media/DATA/martina_ma/emb_dict_ctfu.pt')
+    print("epoch5")
+    embeddings_dataframe = extract_embeddings(train_dataloader, val_dataloader, model)
+    torch.save(embeddings_dataframe,'/media/DATA/martina_ma/emb_dict_3D_corpus_epoch5.pt')
    

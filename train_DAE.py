@@ -51,10 +51,11 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         filename="{epoch}-{step}{d_score:.4f}_d_score_latest",
         monitor="d_score",
         save_last=True,
-        save_top_k=3,
+        save_top_k=-1,
         auto_insert_metric_name=True,
         mode='max',
         save_on_train_epoch_end= True,
+        every_n_epochs = 1
         #save_on_val_epoch_end = True
     )
 
@@ -103,7 +104,7 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         fast_dev_run=opt.fast_dev_run,
         limit_val_batches=50
     )
-    #ßprint(model)
+    #print(model)
     if mode == "train":
         trainer.fit(model, ckpt_path=resume)
     elif mode == "eval":
@@ -145,7 +146,8 @@ def train(opt: arguments.DAE_Option, mode: Literal["train", "eval"] = "train"):
         #    # pd.DataFrame(out).to_csv(tgt)
     else:
         raise NotImplementedError()
-
+#/media/DATA/martina_ma/cutout_corpus/ctfu00011/ctfu00011_19_subreg_corpus.nii.gz
+#/media/DATA/martina_ma/cutout_corpus/ctfu00011/ctfu00011_19_subreg_cropped_corpus.nii.gz
 
 def get_opt(config=None) -> arguments.DAE_Option:
     torch.cuda.empty_cache()
