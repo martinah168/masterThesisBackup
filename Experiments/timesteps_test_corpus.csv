@@ -1,0 +1,7 @@
+,TimestepsEnc,TimestepsDec,AvgReconstDice
+0,200,20,tensor(0.9874)
+1,200,25,tensor(0.9917)
+2,200,50,tensor(0.9991)
+3,250,20,tensor(0.9892)
+4,250,25,tensor(0.9926)
+5,250,50,tensor(0.9990)

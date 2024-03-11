@@ -48,7 +48,7 @@ def clean(nii_seg_arr, nii, labels):
 
 
 if __name__ == '__main__':
-    path = "/media/DATA/martina_ma/train_val_cleaned_seg_fails.csv"
+    path = "/media/DATA/martina_ma/dae/test_set_not_cleaned_and_filtered.csv"
     dataset = pd.read_csv(path, sep=",")
     for index in range(len(dataset)):
         row = dataset.iloc[index]
@@ -60,10 +60,10 @@ if __name__ == '__main__':
         labels = np.unique(seg_arr)
         result_arr = clean(seg_arr,nii, labels)
         
-        folder = "/media/DATA/martina_ma/cutout_clean/{}/".format(sub)
+        folder = "/media/DATA/martina_ma/cutout_clean_test/{}/".format(sub)
         if not os.path.exists(folder):
                 os.makedirs(folder)
         #nii.set_array_(result_arr).save("Cleaned_fxclass0149_012_30.nii.gz")
 
-        nii.set_array_(result_arr).save("/media/DATA/martina_ma/cutout_clean/{}/{}_{:2d}_subreg_cropped_cleaned.nii.gz".format(sub, sub, int(label)))#.format(subject,subject, label))
+        nii.set_array_(result_arr).save("/media/DATA/martina_ma/cutout_clean_test/{}/{}_{:2d}_subreg_cropped_cleaned.nii.gz".format(sub, sub, int(label)))#.format(subject,subject, label))
 

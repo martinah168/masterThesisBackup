@@ -1,0 +1,93 @@
+# 0.8775938208478019
+# degree = 3
+# gamma = 1
+# C = 1
+    
+# 0.9082037006713608
+# degree = 9
+# gamma = 1
+# C = 1
+
+# Training: 0.9192053289923003
+# Validation: 0.9357651518761483
+# kernel: poly, degree: 9, gamma: 1, C: 0.1
+        
+# Training: 0.900273419592654
+# Validation: 0.9201740870753055
+# kernel: poly, degree: 9, gamma: 1, C: 1
+
+# Training: 0.8235842525283711
+# Validation: 0.8129686399711973
+# degree: 18
+
+# "/media/DATA/martina_ma/dae/lightning_logs/version_12/checkpoints/epoch=16-step=4930_latest.ckpt"
+# conv layers
+# train data: 9257
+# val data: 6172
+# 0.8907095319027273
+        
+#/media/DATA/martina_ma/dae/lightning_logs/version_13/checkpoints/epoch=19-step=2900_latest.ckpt
+#0.84502861741612
+        
+#/media/DATA/martina_ma/dae/lightning_logs/version_14/checkpoints/epoch=19-step=5800_latest.ckpt
+# 0.8922280286544786 epochs 20
+        
+# /media/DATA/martina_ma/dae/lightning_logs/version_15/checkpoints/epoch=32-step=9570_latest.ckpt
+# 0.900274790730181
+        
+#/media/DATA/martina_ma/dae/lightning_logs/version_16/checkpoints/epoch=49-step=14500_latest.ckpt
+        #0.887571940636731
+
+# /media/DATA/martina_ma/dae/lightning_logs/version_17/checkpoints/epoch=93-step=27260_latest.ckpt
+# 0.8896876704205515
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_19/checkpoints/epoch=42-step=12470_latest.ckpt
+# 0.9154449333142728
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_20/checkpoints/epoch=90-step=26390_latest.ckpt
+# 0.9157636693828063
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_21/checkpoints/epoch=95-step=27840_latest.ckpt
+# 0.9228478697100135
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_22/checkpoints/epoch=88-step=25810_latest.ckpt
+# 0.9235382880378671 best value
+# batch_size: 32
+# conv: false
+# data_path: /media/DATA/martina_ma/emb_dict_3D_corpus_tsne_epoch15.pt
+# epochs: 100
+# layers:
+# - 64
+# - 16
+# lr: 0.001
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_23/checkpoints/epoch=95-step=13920_latest.ckpt
+# 0.920933335451181
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_24/checkpoints/epoch=78-step=22910_latest.ckpt
+# 0.9156673073155751
+
+# /media/DATA/martina_ma/emb_dict_3D_cleaned_balanced_tsne.pt
+#         
+# /media/DATA/martina_ma/dae/lightning_logs/version_25/checkpoints/epoch=90-step=26390_latest.ckpt
+# 0.6418581995118361
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_25/checkpoints/epoch=51-step=15080_latest.ckpt
+# 0.6520821089526714
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_26/checkpoints/epoch=69-step=20300_latest.ckpt
+# 0.6608648230803034         
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_27/checkpoints/epoch=81-step=23780_latest.ckpt
+# 0.6353500537403836
+# 
+# /media/DATA/martina_ma/dae/lightning_logs/version_28/checkpoints/epoch=74-step=21750_latest.ckpt
+# 0.6466773617972056
+# /media/DATA/martina_ma/emb_dict_3D_cleaned_balanced_tsne.pt
+# Training: 0.7568825020816377
+# Validation: 0.7449412562013226
+# degree: 30, gamma = 0.1
+# 
+# Training: 0.812181556222927
+#Validation: 0.8242006448846038
+#degree: 9, gamma = 1

@@ -1,0 +1,524 @@
+,label,subject,file_path,volume,Split
+0,['7'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 7_subreg_cropped_cleaned.nii.gz,13582,test
+1,['8'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_ 8_subreg_cropped_cleaned.nii.gz,24640,test
+2,['8'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_ 8_subreg_cropped_cleaned.nii.gz,22305,test
+3,['16'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_16_subreg_cropped_cleaned.nii.gz,25010,test
+4,['22'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_22_subreg_cropped_cleaned.nii.gz,54210,test
+5,['15'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_15_subreg_cropped_cleaned.nii.gz,26940,test
+6,['11'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_11_subreg_cropped_cleaned.nii.gz,31082,test
+7,['21'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_21_subreg_cropped_cleaned.nii.gz,60985,test
+8,['18'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_18_subreg_cropped_cleaned.nii.gz,43019,test
+9,['9'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_ 9_subreg_cropped_cleaned.nii.gz,20417,test
+10,['22'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_22_subreg_cropped_cleaned.nii.gz,80036,test
+11,['14'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_14_subreg_cropped_cleaned.nii.gz,30455,test
+12,['15'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_15_subreg_cropped_cleaned.nii.gz,28901,test
+13,['12'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_12_subreg_cropped_cleaned.nii.gz,25209,test
+14,['22'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_22_subreg_cropped_cleaned.nii.gz,84602,test
+15,['10'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_10_subreg_cropped_cleaned.nii.gz,24751,test
+16,['18'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_18_subreg_cropped_cleaned.nii.gz,30684,test
+17,['18'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_18_subreg_cropped_cleaned.nii.gz,33147,test
+18,['24'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_24_subreg_cropped_cleaned.nii.gz,70126,test
+19,['7'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_ 7_subreg_cropped_cleaned.nii.gz,21636,test
+20,['10'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_10_subreg_cropped_cleaned.nii.gz,27628,test
+21,['15'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_15_subreg_cropped_cleaned.nii.gz,32889,test
+22,['14'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_14_subreg_cropped_cleaned.nii.gz,26624,test
+23,['23'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_23_subreg_cropped_cleaned.nii.gz,64525,test
+24,['6'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 6_subreg_cropped_cleaned.nii.gz,12703,test
+25,['20'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_20_subreg_cropped_cleaned.nii.gz,35166,test
+26,['16'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_16_subreg_cropped_cleaned.nii.gz,49434,test
+27,['14'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_14_subreg_cropped_cleaned.nii.gz,32830,test
+28,['7'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_ 7_subreg_cropped_cleaned.nii.gz,20072,test
+29,['23'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_23_subreg_cropped_cleaned.nii.gz,59443,test
+30,['18'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_18_subreg_cropped_cleaned.nii.gz,41981,test
+31,['5'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 5_subreg_cropped_cleaned.nii.gz,14828,test
+32,['21'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_21_subreg_cropped_cleaned.nii.gz,55939,test
+33,['24'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_24_subreg_cropped_cleaned.nii.gz,60444,test
+34,['9'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 9_subreg_cropped_cleaned.nii.gz,19940,test
+35,['13'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_13_subreg_cropped_cleaned.nii.gz,28995,test
+36,['17'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_17_subreg_cropped_cleaned.nii.gz,36925,test
+37,['22'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_22_subreg_cropped_cleaned.nii.gz,54216,test
+39,['18'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_18_subreg_cropped_cleaned.nii.gz,38572,test
+40,['17'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_17_subreg_cropped_cleaned.nii.gz,37474,test
+41,['16'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_16_subreg_cropped_cleaned.nii.gz,34652,test
+42,['4'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 4_subreg_cropped_cleaned.nii.gz,16152,test
+43,['14'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_14_subreg_cropped_cleaned.nii.gz,17086,test
+44,['21'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_21_subreg_cropped_cleaned.nii.gz,35925,test
+45,['16'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_16_subreg_cropped_cleaned.nii.gz,36516,test
+46,['16'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_16_subreg_cropped_cleaned.nii.gz,36385,test
+47,['24'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_24_subreg_cropped_cleaned.nii.gz,69202,test
+48,['8'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_ 8_subreg_cropped_cleaned.nii.gz,14524,test
+49,['19'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_19_subreg_cropped_cleaned.nii.gz,68523,test
+50,['21'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_21_subreg_cropped_cleaned.nii.gz,69724,test
+51,['20'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_20_subreg_cropped_cleaned.nii.gz,40716,test
+52,['4'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 4_subreg_cropped_cleaned.nii.gz,13565,test
+53,['11'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_11_subreg_cropped_cleaned.nii.gz,23937,test
+54,['17'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_17_subreg_cropped_cleaned.nii.gz,37599,test
+55,['20'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_20_subreg_cropped_cleaned.nii.gz,45300,test
+56,['6'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_ 6_subreg_cropped_cleaned.nii.gz,15844,test
+57,['20'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_20_subreg_cropped_cleaned.nii.gz,63669,test
+58,['10'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_10_subreg_cropped_cleaned.nii.gz,16604,test
+59,['23'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_23_subreg_cropped_cleaned.nii.gz,65814,test
+60,['1'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 1_subreg_cropped_cleaned.nii.gz,11748,test
+61,['24'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_24_subreg_cropped_cleaned.nii.gz,63515,test
+62,['23'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_23_subreg_cropped_cleaned.nii.gz,67050,test
+63,['22'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_22_subreg_cropped_cleaned.nii.gz,68135,test
+64,['18'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_18_subreg_cropped_cleaned.nii.gz,31587,test
+65,['17'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_17_subreg_cropped_cleaned.nii.gz,56607,test
+66,['11'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_11_subreg_cropped_cleaned.nii.gz,22211,test
+67,['23'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_23_subreg_cropped_cleaned.nii.gz,57801,test
+68,['23'],['fxclass0205'],/media/DATA/martina_ma/cutout_clean_test/fxclass0205/fxclass0205_23_subreg_cropped_cleaned.nii.gz,59025,test
+69,['21'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_21_subreg_cropped_cleaned.nii.gz,54782,test
+70,['2'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 2_subreg_cropped_cleaned.nii.gz,16352,test
+71,['18'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_18_subreg_cropped_cleaned.nii.gz,29738,test
+72,['18'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_18_subreg_cropped_cleaned.nii.gz,35368,test
+73,['20'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_20_subreg_cropped_cleaned.nii.gz,34504,test
+74,['20'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_20_subreg_cropped_cleaned.nii.gz,44733,test
+75,['20'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_20_subreg_cropped_cleaned.nii.gz,43218,test
+76,['20'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_20_subreg_cropped_cleaned.nii.gz,55614,test
+77,['21'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_21_subreg_cropped_cleaned.nii.gz,45114,test
+78,['19'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_19_subreg_cropped_cleaned.nii.gz,35624,test
+79,['23'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_23_subreg_cropped_cleaned.nii.gz,61194,test
+80,['19'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_19_subreg_cropped_cleaned.nii.gz,52822,test
+81,['16'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_16_subreg_cropped_cleaned.nii.gz,39073,test
+82,['21'],['verse081'],/media/DATA/martina_ma/cutout_clean_test/verse081/verse081_21_subreg_cropped_cleaned.nii.gz,67631,test
+83,['9'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_ 9_subreg_cropped_cleaned.nii.gz,23319,test
+84,['17'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_17_subreg_cropped_cleaned.nii.gz,30003,test
+85,['18'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_18_subreg_cropped_cleaned.nii.gz,40781,test
+86,['19'],['verse081'],/media/DATA/martina_ma/cutout_clean_test/verse081/verse081_19_subreg_cropped_cleaned.nii.gz,51203,test
+87,['17'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_17_subreg_cropped_cleaned.nii.gz,28749,test
+88,['13'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_13_subreg_cropped_cleaned.nii.gz,25087,test
+89,['22'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_22_subreg_cropped_cleaned.nii.gz,56163,test
+90,['15'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_15_subreg_cropped_cleaned.nii.gz,23222,test
+91,['20'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_20_subreg_cropped_cleaned.nii.gz,55649,test
+92,['8'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_ 8_subreg_cropped_cleaned.nii.gz,26834,test
+93,['21'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_21_subreg_cropped_cleaned.nii.gz,85383,test
+94,['24'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_24_subreg_cropped_cleaned.nii.gz,44535,test
+95,['23'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_23_subreg_cropped_cleaned.nii.gz,69064,test
+96,['21'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_21_subreg_cropped_cleaned.nii.gz,33810,test
+97,['3'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 3_subreg_cropped_cleaned.nii.gz,11997,test
+98,['15'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_15_subreg_cropped_cleaned.nii.gz,32323,test
+99,['21'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_21_subreg_cropped_cleaned.nii.gz,66821,test
+100,['9'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_ 9_subreg_cropped_cleaned.nii.gz,29890,test
+101,['19'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_19_subreg_cropped_cleaned.nii.gz,34392,test
+103,['19'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_19_subreg_cropped_cleaned.nii.gz,37705,test
+104,['15'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_15_subreg_cropped_cleaned.nii.gz,33752,test
+105,['1'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 1_subreg_cropped_cleaned.nii.gz,15441,test
+106,['19'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_19_subreg_cropped_cleaned.nii.gz,38868,test
+107,['23'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_23_subreg_cropped_cleaned.nii.gz,45912,test
+108,['23'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_23_subreg_cropped_cleaned.nii.gz,49116,test
+109,['12'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_12_subreg_cropped_cleaned.nii.gz,17742,test
+110,['18'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_18_subreg_cropped_cleaned.nii.gz,39162,test
+111,['15'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_15_subreg_cropped_cleaned.nii.gz,21710,test
+112,['16'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_16_subreg_cropped_cleaned.nii.gz,50184,test
+113,['12'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_12_subreg_cropped_cleaned.nii.gz,20638,test
+114,['3'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 3_subreg_cropped_cleaned.nii.gz,11652,test
+115,['23'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_23_subreg_cropped_cleaned.nii.gz,63414,test
+116,['2'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 2_subreg_cropped_cleaned.nii.gz,12840,test
+117,['18'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_18_subreg_cropped_cleaned.nii.gz,44259,test
+118,['18'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_18_subreg_cropped_cleaned.nii.gz,40249,test
+119,['19'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_19_subreg_cropped_cleaned.nii.gz,40400,test
+120,['22'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_22_subreg_cropped_cleaned.nii.gz,58984,test
+121,['23'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_23_subreg_cropped_cleaned.nii.gz,78231,test
+122,['17'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_17_subreg_cropped_cleaned.nii.gz,38118,test
+123,['23'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_23_subreg_cropped_cleaned.nii.gz,89773,test
+124,['20'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_20_subreg_cropped_cleaned.nii.gz,62038,test
+125,['23'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_23_subreg_cropped_cleaned.nii.gz,63798,test
+126,['11'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_11_subreg_cropped_cleaned.nii.gz,35511,test
+127,['11'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_11_subreg_cropped_cleaned.nii.gz,31209,test
+128,['18'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_18_subreg_cropped_cleaned.nii.gz,52418,test
+129,['22'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_22_subreg_cropped_cleaned.nii.gz,67566,test
+130,['18'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_18_subreg_cropped_cleaned.nii.gz,26162,test
+131,['21'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_21_subreg_cropped_cleaned.nii.gz,65481,test
+132,['17'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_17_subreg_cropped_cleaned.nii.gz,30522,test
+133,['19'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_19_subreg_cropped_cleaned.nii.gz,44922,test
+134,['24'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_24_subreg_cropped_cleaned.nii.gz,58064,test
+135,['23'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_23_subreg_cropped_cleaned.nii.gz,52219,test
+136,['18'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_18_subreg_cropped_cleaned.nii.gz,39402,test
+137,['16'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_16_subreg_cropped_cleaned.nii.gz,26516,test
+138,['18'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_18_subreg_cropped_cleaned.nii.gz,46050,test
+139,['8'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_ 8_subreg_cropped_cleaned.nii.gz,23248,test
+140,['6'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 6_subreg_cropped_cleaned.nii.gz,12849,test
+141,['9'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 9_subreg_cropped_cleaned.nii.gz,17413,test
+142,['11'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_11_subreg_cropped_cleaned.nii.gz,27322,test
+143,['19'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_19_subreg_cropped_cleaned.nii.gz,31860,test
+144,['10'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_10_subreg_cropped_cleaned.nii.gz,23468,test
+145,['17'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_17_subreg_cropped_cleaned.nii.gz,54900,test
+146,['18'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_18_subreg_cropped_cleaned.nii.gz,58822,test
+147,['23'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_23_subreg_cropped_cleaned.nii.gz,89558,test
+148,['19'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_19_subreg_cropped_cleaned.nii.gz,31235,test
+149,['6'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 6_subreg_cropped_cleaned.nii.gz,10814,test
+150,['20'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_20_subreg_cropped_cleaned.nii.gz,44880,test
+151,['18'],['verse081'],/media/DATA/martina_ma/cutout_clean_test/verse081/verse081_18_subreg_cropped_cleaned.nii.gz,43862,test
+152,['17'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_17_subreg_cropped_cleaned.nii.gz,53328,test
+153,['6'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 6_subreg_cropped_cleaned.nii.gz,12942,test
+154,['6'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 6_subreg_cropped_cleaned.nii.gz,14359,test
+155,['18'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_18_subreg_cropped_cleaned.nii.gz,33296,test
+156,['8'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_ 8_subreg_cropped_cleaned.nii.gz,32982,test
+157,['17'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_17_subreg_cropped_cleaned.nii.gz,41550,test
+158,['22'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_22_subreg_cropped_cleaned.nii.gz,51335,test
+159,['19'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_19_subreg_cropped_cleaned.nii.gz,51820,test
+160,['20'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_20_subreg_cropped_cleaned.nii.gz,57273,test
+161,['15'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_15_subreg_cropped_cleaned.nii.gz,45978,test
+162,['2'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 2_subreg_cropped_cleaned.nii.gz,17060,test
+163,['9'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_ 9_subreg_cropped_cleaned.nii.gz,27115,test
+164,['21'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_21_subreg_cropped_cleaned.nii.gz,60796,test
+165,['22'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_22_subreg_cropped_cleaned.nii.gz,68406,test
+166,['24'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_24_subreg_cropped_cleaned.nii.gz,47476,test
+167,['19'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_19_subreg_cropped_cleaned.nii.gz,46859,test
+168,['20'],['verse073'],/media/DATA/martina_ma/cutout_clean_test/verse073/verse073_20_subreg_cropped_cleaned.nii.gz,43290,test
+169,['21'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_21_subreg_cropped_cleaned.nii.gz,76686,test
+170,['14'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_14_subreg_cropped_cleaned.nii.gz,32585,test
+171,['17'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_17_subreg_cropped_cleaned.nii.gz,43182,test
+172,['14'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_14_subreg_cropped_cleaned.nii.gz,31646,test
+173,['15'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_15_subreg_cropped_cleaned.nii.gz,31762,test
+174,['15'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_15_subreg_cropped_cleaned.nii.gz,36764,test
+175,['16'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_16_subreg_cropped_cleaned.nii.gz,29514,test
+176,['10'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_10_subreg_cropped_cleaned.nii.gz,16606,test
+177,['15'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_15_subreg_cropped_cleaned.nii.gz,35263,test
+178,['8'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_ 8_subreg_cropped_cleaned.nii.gz,21246,test
+179,['19'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_19_subreg_cropped_cleaned.nii.gz,57694,test
+180,['10'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_10_subreg_cropped_cleaned.nii.gz,20961,test
+181,['12'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_12_subreg_cropped_cleaned.nii.gz,24864,test
+182,['5'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 5_subreg_cropped_cleaned.nii.gz,10790,test
+183,['23'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_23_subreg_cropped_cleaned.nii.gz,53188,test
+184,['1'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 1_subreg_cropped_cleaned.nii.gz,10396,test
+185,['11'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_11_subreg_cropped_cleaned.nii.gz,16833,test
+186,['14'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_14_subreg_cropped_cleaned.nii.gz,24537,test
+187,['16'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_16_subreg_cropped_cleaned.nii.gz,33750,test
+189,['23'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_23_subreg_cropped_cleaned.nii.gz,46220,test
+190,['19'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_19_subreg_cropped_cleaned.nii.gz,49042,test
+191,['24'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_24_subreg_cropped_cleaned.nii.gz,63785,test
+192,['12'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_12_subreg_cropped_cleaned.nii.gz,24404,test
+193,['7'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 7_subreg_cropped_cleaned.nii.gz,22050,test
+194,['20'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_20_subreg_cropped_cleaned.nii.gz,52980,test
+195,['23'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_23_subreg_cropped_cleaned.nii.gz,64914,test
+196,['18'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_18_subreg_cropped_cleaned.nii.gz,53478,test
+197,['5'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 5_subreg_cropped_cleaned.nii.gz,18815,test
+198,['18'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_18_subreg_cropped_cleaned.nii.gz,35170,test
+199,['13'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_13_subreg_cropped_cleaned.nii.gz,21624,test
+200,['11'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_11_subreg_cropped_cleaned.nii.gz,23465,test
+201,['21'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_21_subreg_cropped_cleaned.nii.gz,46330,test
+202,['12'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_12_subreg_cropped_cleaned.nii.gz,31002,test
+203,['14'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_14_subreg_cropped_cleaned.nii.gz,19611,test
+204,['12'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_12_subreg_cropped_cleaned.nii.gz,26598,test
+205,['4'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 4_subreg_cropped_cleaned.nii.gz,12610,test
+206,['16'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_16_subreg_cropped_cleaned.nii.gz,35249,test
+207,['9'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_ 9_subreg_cropped_cleaned.nii.gz,17588,test
+208,['19'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_19_subreg_cropped_cleaned.nii.gz,58019,test
+209,['16'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_16_subreg_cropped_cleaned.nii.gz,26574,test
+210,['21'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_21_subreg_cropped_cleaned.nii.gz,47541,test
+211,['10'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_10_subreg_cropped_cleaned.nii.gz,18996,test
+212,['19'],['fxclass0384'],/media/DATA/martina_ma/cutout_clean_test/fxclass0384/fxclass0384_19_subreg_cropped_cleaned.nii.gz,49970,test
+213,['9'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_ 9_subreg_cropped_cleaned.nii.gz,25204,test
+214,['10'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_10_subreg_cropped_cleaned.nii.gz,17382,test
+215,['23'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_23_subreg_cropped_cleaned.nii.gz,56526,test
+216,['8'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 8_subreg_cropped_cleaned.nii.gz,20566,test
+217,['21'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_21_subreg_cropped_cleaned.nii.gz,74469,test
+218,['24'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_24_subreg_cropped_cleaned.nii.gz,77674,test
+219,['22'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_22_subreg_cropped_cleaned.nii.gz,59275,test
+220,['13'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_13_subreg_cropped_cleaned.nii.gz,39042,test
+221,['18'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_18_subreg_cropped_cleaned.nii.gz,35736,test
+222,['13'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_13_subreg_cropped_cleaned.nii.gz,25886,test
+223,['21'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_21_subreg_cropped_cleaned.nii.gz,44067,test
+224,['17'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_17_subreg_cropped_cleaned.nii.gz,48445,test
+225,['16'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_16_subreg_cropped_cleaned.nii.gz,28892,test
+226,['16'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_16_subreg_cropped_cleaned.nii.gz,37707,test
+227,['8'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_ 8_subreg_cropped_cleaned.nii.gz,28806,test
+228,['21'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_21_subreg_cropped_cleaned.nii.gz,63600,test
+229,['10'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_10_subreg_cropped_cleaned.nii.gz,21332,test
+230,['24'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_24_subreg_cropped_cleaned.nii.gz,45055,test
+231,['9'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_ 9_subreg_cropped_cleaned.nii.gz,17306,test
+232,['17'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_17_subreg_cropped_cleaned.nii.gz,31870,test
+233,['16'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_16_subreg_cropped_cleaned.nii.gz,34848,test
+234,['18'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_18_subreg_cropped_cleaned.nii.gz,41787,test
+235,['16'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_16_subreg_cropped_cleaned.nii.gz,30756,test
+236,['18'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_18_subreg_cropped_cleaned.nii.gz,42846,test
+237,['24'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_24_subreg_cropped_cleaned.nii.gz,54660,test
+238,['3'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 3_subreg_cropped_cleaned.nii.gz,12178,test
+239,['13'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_13_subreg_cropped_cleaned.nii.gz,22536,test
+240,['25'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_25_subreg_cropped_cleaned.nii.gz,57632,test
+241,['3'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 3_subreg_cropped_cleaned.nii.gz,8726,test
+242,['9'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_ 9_subreg_cropped_cleaned.nii.gz,29210,test
+243,['9'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_ 9_subreg_cropped_cleaned.nii.gz,16776,test
+244,['10'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_10_subreg_cropped_cleaned.nii.gz,17864,test
+245,['12'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_12_subreg_cropped_cleaned.nii.gz,21182,test
+246,['3'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 3_subreg_cropped_cleaned.nii.gz,10829,test
+247,['24'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_24_subreg_cropped_cleaned.nii.gz,53604,test
+248,['22'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_22_subreg_cropped_cleaned.nii.gz,77939,test
+249,['11'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_11_subreg_cropped_cleaned.nii.gz,22974,test
+250,['12'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_12_subreg_cropped_cleaned.nii.gz,14800,test
+251,['14'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_14_subreg_cropped_cleaned.nii.gz,24498,test
+252,['8'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 8_subreg_cropped_cleaned.nii.gz,21641,test
+253,['22'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_22_subreg_cropped_cleaned.nii.gz,48860,test
+254,['18'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_18_subreg_cropped_cleaned.nii.gz,45288,test
+255,['12'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_12_subreg_cropped_cleaned.nii.gz,29526,test
+256,['20'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_20_subreg_cropped_cleaned.nii.gz,82538,test
+257,['24'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_24_subreg_cropped_cleaned.nii.gz,54618,test
+258,['10'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_10_subreg_cropped_cleaned.nii.gz,26835,test
+259,['23'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_23_subreg_cropped_cleaned.nii.gz,68066,test
+260,['9'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_ 9_subreg_cropped_cleaned.nii.gz,24663,test
+261,['16'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_16_subreg_cropped_cleaned.nii.gz,56894,test
+262,['21'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_21_subreg_cropped_cleaned.nii.gz,52353,test
+263,['8'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_ 8_subreg_cropped_cleaned.nii.gz,10368,test
+264,['10'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_10_subreg_cropped_cleaned.nii.gz,21465,test
+265,['8'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_ 8_subreg_cropped_cleaned.nii.gz,15588,test
+266,['21'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_21_subreg_cropped_cleaned.nii.gz,54024,test
+267,['9'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_ 9_subreg_cropped_cleaned.nii.gz,19566,test
+268,['5'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_ 5_subreg_cropped_cleaned.nii.gz,8968,test
+269,['12'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_12_subreg_cropped_cleaned.nii.gz,18111,test
+270,['19'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_19_subreg_cropped_cleaned.nii.gz,46956,test
+271,['22'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_22_subreg_cropped_cleaned.nii.gz,63448,test
+272,['7'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_ 7_subreg_cropped_cleaned.nii.gz,15735,test
+273,['22'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_22_subreg_cropped_cleaned.nii.gz,72500,test
+274,['16'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_16_subreg_cropped_cleaned.nii.gz,29016,test
+275,['13'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_13_subreg_cropped_cleaned.nii.gz,29432,test
+276,['20'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_20_subreg_cropped_cleaned.nii.gz,39208,test
+277,['19'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_19_subreg_cropped_cleaned.nii.gz,49377,test
+278,['22'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_22_subreg_cropped_cleaned.nii.gz,47197,test
+279,['13'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_13_subreg_cropped_cleaned.nii.gz,37778,test
+280,['12'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_12_subreg_cropped_cleaned.nii.gz,23449,test
+281,['23'],['fxclass0019'],/media/DATA/martina_ma/cutout_clean_test/fxclass0019/fxclass0019_23_subreg_cropped_cleaned.nii.gz,62744,test
+282,['24'],['verse073'],/media/DATA/martina_ma/cutout_clean_test/verse073/verse073_24_subreg_cropped_cleaned.nii.gz,43209,test
+283,['23'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_23_subreg_cropped_cleaned.nii.gz,65767,test
+284,['14'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_14_subreg_cropped_cleaned.nii.gz,26726,test
+285,['19'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_19_subreg_cropped_cleaned.nii.gz,32967,test
+286,['15'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_15_subreg_cropped_cleaned.nii.gz,27556,test
+287,['24'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_24_subreg_cropped_cleaned.nii.gz,89910,test
+288,['13'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_13_subreg_cropped_cleaned.nii.gz,26864,test
+289,['20'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_20_subreg_cropped_cleaned.nii.gz,76584,test
+290,['15'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_15_subreg_cropped_cleaned.nii.gz,34879,test
+291,['17'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_17_subreg_cropped_cleaned.nii.gz,43264,test
+292,['7'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_ 7_subreg_cropped_cleaned.nii.gz,24228,test
+293,['24'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_24_subreg_cropped_cleaned.nii.gz,60927,test
+294,['8'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 8_subreg_cropped_cleaned.nii.gz,20104,test
+295,['24'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_24_subreg_cropped_cleaned.nii.gz,69287,test
+296,['10'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_10_subreg_cropped_cleaned.nii.gz,31072,test
+297,['13'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_13_subreg_cropped_cleaned.nii.gz,32872,test
+298,['14'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_14_subreg_cropped_cleaned.nii.gz,28402,test
+299,['15'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_15_subreg_cropped_cleaned.nii.gz,26844,test
+300,['9'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_ 9_subreg_cropped_cleaned.nii.gz,21808,test
+301,['19'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_19_subreg_cropped_cleaned.nii.gz,40080,test
+302,['11'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_11_subreg_cropped_cleaned.nii.gz,16656,test
+303,['13'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_13_subreg_cropped_cleaned.nii.gz,29666,test
+304,['14'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_14_subreg_cropped_cleaned.nii.gz,29583,test
+305,['21'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_21_subreg_cropped_cleaned.nii.gz,43092,test
+306,['11'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_11_subreg_cropped_cleaned.nii.gz,22222,test
+307,['24'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_24_subreg_cropped_cleaned.nii.gz,41650,test
+308,['15'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_15_subreg_cropped_cleaned.nii.gz,45206,test
+309,['18'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_18_subreg_cropped_cleaned.nii.gz,20270,test
+310,['22'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_22_subreg_cropped_cleaned.nii.gz,39898,test
+311,['22'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_22_subreg_cropped_cleaned.nii.gz,52890,test
+312,['24'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_24_subreg_cropped_cleaned.nii.gz,51246,test
+313,['19'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_19_subreg_cropped_cleaned.nii.gz,38030,test
+314,['9'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 9_subreg_cropped_cleaned.nii.gz,23615,test
+315,['15'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_15_subreg_cropped_cleaned.nii.gz,30167,test
+316,['21'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_21_subreg_cropped_cleaned.nii.gz,60617,test
+317,['17'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_17_subreg_cropped_cleaned.nii.gz,39413,test
+318,['21'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_21_subreg_cropped_cleaned.nii.gz,53284,test
+319,['7'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 7_subreg_cropped_cleaned.nii.gz,17412,test
+320,['10'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_10_subreg_cropped_cleaned.nii.gz,26057,test
+321,['7'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 7_subreg_cropped_cleaned.nii.gz,15288,test
+322,['19'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_19_subreg_cropped_cleaned.nii.gz,45263,test
+323,['13'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_13_subreg_cropped_cleaned.nii.gz,35734,test
+324,['17'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_17_subreg_cropped_cleaned.nii.gz,36441,test
+325,['4'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 4_subreg_cropped_cleaned.nii.gz,13634,test
+326,['24'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_24_subreg_cropped_cleaned.nii.gz,70960,test
+327,['17'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_17_subreg_cropped_cleaned.nii.gz,31166,test
+328,['10'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_10_subreg_cropped_cleaned.nii.gz,20872,test
+329,['13'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_13_subreg_cropped_cleaned.nii.gz,21882,test
+330,['18'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_18_subreg_cropped_cleaned.nii.gz,64566,test
+331,['9'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_ 9_subreg_cropped_cleaned.nii.gz,32388,test
+332,['5'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 5_subreg_cropped_cleaned.nii.gz,12522,test
+333,['19'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_19_subreg_cropped_cleaned.nii.gz,50604,test
+334,['14'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_14_subreg_cropped_cleaned.nii.gz,31398,test
+335,['14'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_14_subreg_cropped_cleaned.nii.gz,39404,test
+336,['19'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_19_subreg_cropped_cleaned.nii.gz,63297,test
+337,['18'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_18_subreg_cropped_cleaned.nii.gz,40395,test
+338,['21'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_21_subreg_cropped_cleaned.nii.gz,56974,test
+339,['11'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_11_subreg_cropped_cleaned.nii.gz,22565,test
+340,['22'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_22_subreg_cropped_cleaned.nii.gz,41033,test
+341,['10'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_10_subreg_cropped_cleaned.nii.gz,23084,test
+342,['11'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_11_subreg_cropped_cleaned.nii.gz,24700,test
+343,['11'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_11_subreg_cropped_cleaned.nii.gz,20623,test
+344,['17'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_17_subreg_cropped_cleaned.nii.gz,41064,test
+345,['4'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 4_subreg_cropped_cleaned.nii.gz,10124,test
+346,['15'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_15_subreg_cropped_cleaned.nii.gz,40042,test
+347,['15'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_15_subreg_cropped_cleaned.nii.gz,36215,test
+348,['14'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_14_subreg_cropped_cleaned.nii.gz,25240,test
+349,['9'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 9_subreg_cropped_cleaned.nii.gz,15944,test
+350,['12'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_12_subreg_cropped_cleaned.nii.gz,20331,test
+351,['12'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_12_subreg_cropped_cleaned.nii.gz,23972,test
+352,['24'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_24_subreg_cropped_cleaned.nii.gz,79333,test
+353,['13'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_13_subreg_cropped_cleaned.nii.gz,29275,test
+354,['12'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_12_subreg_cropped_cleaned.nii.gz,29805,test
+355,['24'],['fxclass0019'],/media/DATA/martina_ma/cutout_clean_test/fxclass0019/fxclass0019_24_subreg_cropped_cleaned.nii.gz,57824,test
+356,['13'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_13_subreg_cropped_cleaned.nii.gz,21228,test
+357,['12'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_12_subreg_cropped_cleaned.nii.gz,36573,test
+358,['5'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 5_subreg_cropped_cleaned.nii.gz,13817,test
+359,['4'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 4_subreg_cropped_cleaned.nii.gz,10070,test
+360,['1'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 1_subreg_cropped_cleaned.nii.gz,14145,test
+361,['7'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 7_subreg_cropped_cleaned.nii.gz,13848,test
+362,['20'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_20_subreg_cropped_cleaned.nii.gz,58702,test
+363,['7'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_ 7_subreg_cropped_cleaned.nii.gz,20514,test
+364,['15'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_15_subreg_cropped_cleaned.nii.gz,26124,test
+365,['7'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 7_subreg_cropped_cleaned.nii.gz,19130,test
+366,['22'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_22_subreg_cropped_cleaned.nii.gz,90180,test
+367,['22'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_22_subreg_cropped_cleaned.nii.gz,67633,test
+368,['17'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_17_subreg_cropped_cleaned.nii.gz,43904,test
+369,['15'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_15_subreg_cropped_cleaned.nii.gz,26874,test
+370,['8'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_ 8_subreg_cropped_cleaned.nii.gz,19222,test
+371,['22'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_22_subreg_cropped_cleaned.nii.gz,39562,test
+372,['20'],['fxclass0059'],/media/DATA/martina_ma/cutout_clean_test/fxclass0059/fxclass0059_20_subreg_cropped_cleaned.nii.gz,45064,test
+373,['11'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_11_subreg_cropped_cleaned.nii.gz,29642,test
+374,['8'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_ 8_subreg_cropped_cleaned.nii.gz,27110,test
+375,['24'],['fxclass0120'],/media/DATA/martina_ma/cutout_clean_test/fxclass0120/fxclass0120_24_subreg_cropped_cleaned.nii.gz,46476,test
+376,['14'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_14_subreg_cropped_cleaned.nii.gz,25716,test
+377,['10'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_10_subreg_cropped_cleaned.nii.gz,17347,test
+378,['15'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_15_subreg_cropped_cleaned.nii.gz,32910,test
+379,['20'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_20_subreg_cropped_cleaned.nii.gz,56821,test
+380,['17'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_17_subreg_cropped_cleaned.nii.gz,50074,test
+381,['24'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_24_subreg_cropped_cleaned.nii.gz,80130,test
+382,['22'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_22_subreg_cropped_cleaned.nii.gz,68432,test
+383,['18'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_18_subreg_cropped_cleaned.nii.gz,41517,test
+384,['16'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_16_subreg_cropped_cleaned.nii.gz,37440,test
+385,['14'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_14_subreg_cropped_cleaned.nii.gz,32136,test
+386,['22'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_22_subreg_cropped_cleaned.nii.gz,68803,test
+387,['11'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_11_subreg_cropped_cleaned.nii.gz,26596,test
+388,['23'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_23_subreg_cropped_cleaned.nii.gz,67338,test
+389,['20'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_20_subreg_cropped_cleaned.nii.gz,44499,test
+390,['23'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_23_subreg_cropped_cleaned.nii.gz,64314,test
+391,['21'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_21_subreg_cropped_cleaned.nii.gz,80626,test
+392,['13'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_13_subreg_cropped_cleaned.nii.gz,29488,test
+393,['18'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_18_subreg_cropped_cleaned.nii.gz,56097,test
+394,['17'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_17_subreg_cropped_cleaned.nii.gz,39262,test
+395,['9'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_ 9_subreg_cropped_cleaned.nii.gz,33932,test
+396,['20'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_20_subreg_cropped_cleaned.nii.gz,58655,test
+397,['20'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_20_subreg_cropped_cleaned.nii.gz,61710,test
+398,['22'],['fxclass0019'],/media/DATA/martina_ma/cutout_clean_test/fxclass0019/fxclass0019_22_subreg_cropped_cleaned.nii.gz,54068,test
+399,['22'],['verse073'],/media/DATA/martina_ma/cutout_clean_test/verse073/verse073_22_subreg_cropped_cleaned.nii.gz,52915,test
+400,['20'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_20_subreg_cropped_cleaned.nii.gz,73176,test
+401,['8'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_ 8_subreg_cropped_cleaned.nii.gz,21063,test
+402,['19'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_19_subreg_cropped_cleaned.nii.gz,41331,test
+403,['12'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_12_subreg_cropped_cleaned.nii.gz,16212,test
+404,['24'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_24_subreg_cropped_cleaned.nii.gz,56870,test
+405,['21'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_21_subreg_cropped_cleaned.nii.gz,53074,test
+406,['11'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_11_subreg_cropped_cleaned.nii.gz,21012,test
+407,['12'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_12_subreg_cropped_cleaned.nii.gz,24960,test
+408,['11'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_11_subreg_cropped_cleaned.nii.gz,25030,test
+409,['24'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_24_subreg_cropped_cleaned.nii.gz,65831,test
+410,['21'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_21_subreg_cropped_cleaned.nii.gz,52048,test
+411,['16'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_16_subreg_cropped_cleaned.nii.gz,28497,test
+412,['13'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_13_subreg_cropped_cleaned.nii.gz,43412,test
+413,['23'],['verse073'],/media/DATA/martina_ma/cutout_clean_test/verse073/verse073_23_subreg_cropped_cleaned.nii.gz,48868,test
+414,['24'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_24_subreg_cropped_cleaned.nii.gz,61685,test
+415,['19'],['verse080'],/media/DATA/martina_ma/cutout_clean_test/verse080/verse080_19_subreg_cropped_cleaned.nii.gz,55761,test
+416,['23'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_23_subreg_cropped_cleaned.nii.gz,66349,test
+417,['20'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_20_subreg_cropped_cleaned.nii.gz,33547,test
+418,['10'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_10_subreg_cropped_cleaned.nii.gz,18489,test
+419,['8'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 8_subreg_cropped_cleaned.nii.gz,12776,test
+420,['13'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_13_subreg_cropped_cleaned.nii.gz,23250,test
+421,['16'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_16_subreg_cropped_cleaned.nii.gz,32314,test
+422,['23'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_23_subreg_cropped_cleaned.nii.gz,46252,test
+423,['19'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_19_subreg_cropped_cleaned.nii.gz,47647,test
+424,['22'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_22_subreg_cropped_cleaned.nii.gz,64767,test
+425,['23'],['fxclass0110'],/media/DATA/martina_ma/cutout_clean_test/fxclass0110/fxclass0110_23_subreg_cropped_cleaned.nii.gz,84160,test
+426,['10'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_10_subreg_cropped_cleaned.nii.gz,24255,test
+427,['18'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_18_subreg_cropped_cleaned.nii.gz,48786,test
+428,['16'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_16_subreg_cropped_cleaned.nii.gz,38571,test
+429,['16'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_16_subreg_cropped_cleaned.nii.gz,22521,test
+430,['17'],['ctfu00521'],/media/DATA/martina_ma/cutout_clean_test/ctfu00521/ctfu00521_17_subreg_cropped_cleaned.nii.gz,26667,test
+431,['24'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_24_subreg_cropped_cleaned.nii.gz,41768,test
+432,['21'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_21_subreg_cropped_cleaned.nii.gz,64561,test
+433,['2'],['verse650'],/media/DATA/martina_ma/cutout_clean_test/verse650/verse650_ 2_subreg_cropped_cleaned.nii.gz,15231,test
+434,['12'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_12_subreg_cropped_cleaned.nii.gz,39273,test
+435,['22'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_22_subreg_cropped_cleaned.nii.gz,44980,test
+436,['24'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_24_subreg_cropped_cleaned.nii.gz,57512,test
+437,['17'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_17_subreg_cropped_cleaned.nii.gz,24135,test
+438,['19'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_19_subreg_cropped_cleaned.nii.gz,64334,test
+439,['13'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_13_subreg_cropped_cleaned.nii.gz,17659,test
+440,['10'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_10_subreg_cropped_cleaned.nii.gz,23583,test
+441,['23'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_23_subreg_cropped_cleaned.nii.gz,54590,test
+442,['11'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_11_subreg_cropped_cleaned.nii.gz,23487,test
+443,['2'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 2_subreg_cropped_cleaned.nii.gz,21476,test
+444,['5'],['fxclass0334'],/media/DATA/martina_ma/cutout_clean_test/fxclass0334/fxclass0334_ 5_subreg_cropped_cleaned.nii.gz,10010,test
+445,['20'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_20_subreg_cropped_cleaned.nii.gz,46616,test
+446,['22'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_22_subreg_cropped_cleaned.nii.gz,49242,test
+447,['22'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_22_subreg_cropped_cleaned.nii.gz,61347,test
+448,['21'],['fxclass0103'],/media/DATA/martina_ma/cutout_clean_test/fxclass0103/fxclass0103_21_subreg_cropped_cleaned.nii.gz,41512,test
+449,['23'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_23_subreg_cropped_cleaned.nii.gz,44115,test
+450,['14'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_14_subreg_cropped_cleaned.nii.gz,40436,test
+451,['25'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_25_subreg_cropped_cleaned.nii.gz,95864,test
+452,['6'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 6_subreg_cropped_cleaned.nii.gz,19181,test
+453,['24'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_24_subreg_cropped_cleaned.nii.gz,41008,test
+454,['9'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_ 9_subreg_cropped_cleaned.nii.gz,15756,test
+455,['24'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_24_subreg_cropped_cleaned.nii.gz,64980,test
+456,['17'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_17_subreg_cropped_cleaned.nii.gz,26766,test
+457,['21'],['verse073'],/media/DATA/martina_ma/cutout_clean_test/verse073/verse073_21_subreg_cropped_cleaned.nii.gz,49753,test
+458,['20'],['fxclass0037'],/media/DATA/martina_ma/cutout_clean_test/fxclass0037/fxclass0037_20_subreg_cropped_cleaned.nii.gz,53207,test
+459,['11'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_11_subreg_cropped_cleaned.nii.gz,20008,test
+460,['17'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_17_subreg_cropped_cleaned.nii.gz,37759,test
+461,['11'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_11_subreg_cropped_cleaned.nii.gz,15506,test
+462,['20'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_20_subreg_cropped_cleaned.nii.gz,52389,test
+463,['13'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_13_subreg_cropped_cleaned.nii.gz,27668,test
+464,['10'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_10_subreg_cropped_cleaned.nii.gz,33882,test
+465,['21'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_21_subreg_cropped_cleaned.nii.gz,57241,test
+466,['21'],['verse009'],/media/DATA/martina_ma/cutout_clean_test/verse009/verse009_21_subreg_cropped_cleaned.nii.gz,47122,test
+467,['10'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_10_subreg_cropped_cleaned.nii.gz,29832,test
+468,['20'],['verse712'],/media/DATA/martina_ma/cutout_clean_test/verse712/verse712_20_subreg_cropped_cleaned.nii.gz,56913,test
+469,['12'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_12_subreg_cropped_cleaned.nii.gz,26781,test
+470,['11'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_11_subreg_cropped_cleaned.nii.gz,17193,test
+471,['20'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_20_subreg_cropped_cleaned.nii.gz,59066,test
+472,['16'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_16_subreg_cropped_cleaned.nii.gz,37852,test
+473,['17'],['fxclass0384'],/media/DATA/martina_ma/cutout_clean_test/fxclass0384/fxclass0384_17_subreg_cropped_cleaned.nii.gz,36956,test
+474,['17'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_17_subreg_cropped_cleaned.nii.gz,36259,test
+475,['16'],['verse068'],/media/DATA/martina_ma/cutout_clean_test/verse068/verse068_16_subreg_cropped_cleaned.nii.gz,34071,test
+476,['23'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_23_subreg_cropped_cleaned.nii.gz,81261,test
+477,['20'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_20_subreg_cropped_cleaned.nii.gz,50554,test
+478,['16'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_16_subreg_cropped_cleaned.nii.gz,26145,test
+479,['20'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_20_subreg_cropped_cleaned.nii.gz,67864,test
+480,['12'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_12_subreg_cropped_cleaned.nii.gz,34010,test
+481,['14'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_14_subreg_cropped_cleaned.nii.gz,47470,test
+482,['23'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_23_subreg_cropped_cleaned.nii.gz,89553,test
+483,['24'],['fxclass0321'],/media/DATA/martina_ma/cutout_clean_test/fxclass0321/fxclass0321_24_subreg_cropped_cleaned.nii.gz,65824,test
+484,['12'],['fxclass0271'],/media/DATA/martina_ma/cutout_clean_test/fxclass0271/fxclass0271_12_subreg_cropped_cleaned.nii.gz,26264,test
+485,['19'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_19_subreg_cropped_cleaned.nii.gz,45781,test
+486,['17'],['fxclass0018'],/media/DATA/martina_ma/cutout_clean_test/fxclass0018/fxclass0018_17_subreg_cropped_cleaned.nii.gz,29304,test
+487,['9'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_ 9_subreg_cropped_cleaned.nii.gz,15584,test
+488,['15'],['fxclass0185'],/media/DATA/martina_ma/cutout_clean_test/fxclass0185/fxclass0185_15_subreg_cropped_cleaned.nii.gz,27048,test
+489,['19'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_19_subreg_cropped_cleaned.nii.gz,47586,test
+490,['15'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_15_subreg_cropped_cleaned.nii.gz,46478,test
+491,['7'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_ 7_subreg_cropped_cleaned.nii.gz,19682,test
+492,['10'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_10_subreg_cropped_cleaned.nii.gz,35613,test
+493,['21'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_21_subreg_cropped_cleaned.nii.gz,61254,test
+494,['24'],['fxclass0205'],/media/DATA/martina_ma/cutout_clean_test/fxclass0205/fxclass0205_24_subreg_cropped_cleaned.nii.gz,52242,test
+495,['22'],['tri018'],/media/DATA/martina_ma/cutout_clean_test/tri018/tri018_22_subreg_cropped_cleaned.nii.gz,67916,test
+496,['14'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_14_subreg_cropped_cleaned.nii.gz,42681,test
+497,['22'],['verse750'],/media/DATA/martina_ma/cutout_clean_test/verse750/verse750_22_subreg_cropped_cleaned.nii.gz,64077,test
+498,['21'],['fxclass0019'],/media/DATA/martina_ma/cutout_clean_test/fxclass0019/fxclass0019_21_subreg_cropped_cleaned.nii.gz,52494,test
+499,['13'],['ctfu00492'],/media/DATA/martina_ma/cutout_clean_test/ctfu00492/ctfu00492_13_subreg_cropped_cleaned.nii.gz,26442,test
+500,['14'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_14_subreg_cropped_cleaned.nii.gz,32132,test
+501,['19'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_19_subreg_cropped_cleaned.nii.gz,47573,test
+502,['14'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_14_subreg_cropped_cleaned.nii.gz,21924,test
+503,['18'],['ctfu00006'],/media/DATA/martina_ma/cutout_clean_test/ctfu00006/ctfu00006_18_subreg_cropped_cleaned.nii.gz,42067,test
+504,['16'],['ctfu00289'],/media/DATA/martina_ma/cutout_clean_test/ctfu00289/ctfu00289_16_subreg_cropped_cleaned.nii.gz,47276,test
+505,['18'],['fxclass0384'],/media/DATA/martina_ma/cutout_clean_test/fxclass0384/fxclass0384_18_subreg_cropped_cleaned.nii.gz,42618,test
+506,['19'],['verse594'],/media/DATA/martina_ma/cutout_clean_test/verse594/verse594_19_subreg_cropped_cleaned.nii.gz,49310,test
+507,['19'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_19_subreg_cropped_cleaned.nii.gz,37821,test
+508,['9'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_ 9_subreg_cropped_cleaned.nii.gz,24847,test
+509,['20'],['verse081'],/media/DATA/martina_ma/cutout_clean_test/verse081/verse081_20_subreg_cropped_cleaned.nii.gz,46033,test
+510,['9'],['verse759'],/media/DATA/martina_ma/cutout_clean_test/verse759/verse759_ 9_subreg_cropped_cleaned.nii.gz,26225,test
+511,['22'],['fxclass0159'],/media/DATA/martina_ma/cutout_clean_test/fxclass0159/fxclass0159_22_subreg_cropped_cleaned.nii.gz,80649,test
+512,['2'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 2_subreg_cropped_cleaned.nii.gz,15766,test
+513,['17'],['verse757'],/media/DATA/martina_ma/cutout_clean_test/verse757/verse757_17_subreg_cropped_cleaned.nii.gz,36120,test
+514,['19'],['verse260'],/media/DATA/martina_ma/cutout_clean_test/verse260/verse260_19_subreg_cropped_cleaned.nii.gz,41188,test
+515,['1'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 1_subreg_cropped_cleaned.nii.gz,13506,test
+516,['13'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_13_subreg_cropped_cleaned.nii.gz,20261,test
+517,['16'],['verse511'],/media/DATA/martina_ma/cutout_clean_test/verse511/verse511_16_subreg_cropped_cleaned.nii.gz,43695,test
+518,['21'],['fxclass0277'],/media/DATA/martina_ma/cutout_clean_test/fxclass0277/fxclass0277_21_subreg_cropped_cleaned.nii.gz,47305,test
+519,['22'],['fxclass0326'],/media/DATA/martina_ma/cutout_clean_test/fxclass0326/fxclass0326_22_subreg_cropped_cleaned.nii.gz,45159,test
+520,['23'],['verse514'],/media/DATA/martina_ma/cutout_clean_test/verse514/verse514_23_subreg_cropped_cleaned.nii.gz,42861,test
+521,['9'],['verse236'],/media/DATA/martina_ma/cutout_clean_test/verse236/verse236_ 9_subreg_cropped_cleaned.nii.gz,29173,test
+522,['23'],['verse269'],/media/DATA/martina_ma/cutout_clean_test/verse269/verse269_23_subreg_cropped_cleaned.nii.gz,63014,test
+523,['24'],['fxclass0314'],/media/DATA/martina_ma/cutout_clean_test/fxclass0314/fxclass0314_24_subreg_cropped_cleaned.nii.gz,41710,test
+524,['15'],['fxclass0218'],/media/DATA/martina_ma/cutout_clean_test/fxclass0218/fxclass0218_15_subreg_cropped_cleaned.nii.gz,51967,test
+525,['14'],['fxclass0309'],/media/DATA/martina_ma/cutout_clean_test/fxclass0309/fxclass0309_14_subreg_cropped_cleaned.nii.gz,41422,test

@@ -1,0 +1,3 @@
+,TimestepsEnc,TimestepsDec,AvgReconstDice
+0,200,100,tensor(1.)
+1,250,100,tensor(1.)

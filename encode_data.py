@@ -158,7 +158,7 @@ if __name__ == '__main__':
    
     opt = arguments.DAE_Option().get_opt(None, None)
 
-
+    arguments.DataSet_Option.dataset = "/media/DATA/martina_ma/train_val_csv_cleaned.csv"#"/media/DATA/martina_ma/dae/fractured_train_val_set.csv"
     dataset = get_dataset(arguments.DataSet_Option,"train")
     dataset_val = get_dataset(arguments.DataSet_Option,"val")
 
@@ -190,14 +190,15 @@ if __name__ == '__main__':
             #multiprocessing_context=get_context("fork"),
             persistent_workers=True,
         )
+    #/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned/version_5/checkpoints/epoch=10-step=104280d_score=0.9303_d_score_latest.ckpt
     #/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=57-step=435130_latest.ckpt
-    checkpoint_path ="/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=5-step=45690d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=15-step=121840d_score=1.0000_d_score_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=25-step=197990d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=1-step=15230d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=2-step=22845d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=57-step=435130_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=0-step=7615d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_30/checkpoints/epoch=10-step=46717d_score=0.9912_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_10/checkpoints/epoch=0-step=1488_d_score_latest copy.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_232/checkpoints/epoch=283-step=27190_latest.ckpt"# "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"
+    checkpoint_path ="/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned/version_5/checkpoints/epoch=11-step=113760d_score=0.9303_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned/version_5/checkpoints/epoch=10-step=104280d_score=0.9303_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_less_blocks/version_12/checkpoints/epoch=5-step=45690d_score=0.9860_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=5-step=45690d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=15-step=121840d_score=1.0000_d_score_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_corpus/version_20/checkpoints/epoch=25-step=197990d_score=1.0000_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=1-step=15230d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=2-step=22845d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=57-step=435130_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_cleaned_balanced/version_11/checkpoints/epoch=0-step=7615d_score=0.9726_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_30/checkpoints/epoch=10-step=46717d_score=0.9912_d_score_latest.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"#/media/DATA/martina_ma/dae/lightning_logs/DAE_3D_95_old_verse_w_norm/version_10/checkpoints/epoch=0-step=1488_d_score_latest copy.ckpt"#"/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_232/checkpoints/epoch=283-step=27190_latest.ckpt"# "/media/DATA/martina_ma/dae/lightning_logs/DAE_NAKO_256/version_133/checkpoints/epoch=3-step=310_latest.ckpt"
     device = "cuda:0"  # or "cpu" if you want to use CPU
     assert Path(checkpoint_path).exists()
     model = DAE_LitModel.load_from_checkpoint(checkpoint_path)
     model.ema_model.eval()
     model.ema_model.to(device)
-    print("epoch5")
+    print(arguments.DataSet_Option.dataset)
     embeddings_dataframe = extract_embeddings(train_dataloader, val_dataloader, model)
-    torch.save(embeddings_dataframe,'/media/DATA/martina_ma/emb_dict_3D_corpus_epoch5.pt')
+    torch.save(embeddings_dataframe,'/media/DATA/martina_ma/encoding_3D_cleaned_epoch11_ver5.pt')
    

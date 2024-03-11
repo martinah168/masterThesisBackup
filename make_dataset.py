@@ -122,7 +122,7 @@ if __name__ == '__main__':
     file_paths = []
     to_exclude_files = []
     first_last_list = []
-
+    
     def extract_number(filename):
         return int(filename.split('_')[1])
 

@@ -57,7 +57,7 @@ class DataSet_Option:
 @dataclass
 class DAE_Model_Option:
     attention_resolutions: list[int] = field(default_factory=lambda: [0])
-    net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1))#field(default_factory=lambda: (1, 1, 2, 2))
+    net_ch_mult: tuple[int, ...] = field(default_factory=lambda: (1, 1, 1, 1))
     dropout: float = 0.3 #0.1
     embed_channels: int = 512
     enc_out_channels: int = 512

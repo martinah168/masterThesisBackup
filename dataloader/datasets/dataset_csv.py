@@ -17,8 +17,11 @@ outliers = ["verse553", "verse526", "verse534","verse617"]
 
 class Dataset_CSV(Dataset):
     def __init__(self, path, transform, split: None | Literal["train", "val", "test"] = None, col="file_path"):
-        print(path)
-        dataset = pd.read_csv(path, sep=",", index_col=0)
+        if split == 'test':
+            dataset = pd.read_csv(path, sep=",")
+        else:
+            dataset = pd.read_csv(path, sep=",", index_col=0)
+        dataset = pd.read_csv(path, sep=",")
         #dataset = dataset[~dataset['file_path'].str.contains('ctfu')]
         assert col in dataset, dataset
         assert not isinstance(transform, tuple)
@@ -26,6 +29,7 @@ class Dataset_CSV(Dataset):
         self.dataset = dataset.loc[dataset["Split"] == split]
         self.dataset.reset_index()
         self.col = col
+        self.split = split
     
     def sample_weights(self):#sample_weights
         class_counts = self.dataset.fracture_flag.value_counts()
@@ -41,7 +45,7 @@ class Dataset_CSV(Dataset):
         row = self.dataset.iloc[index]
         folder , label = extract_label(row.file_path)
         corpus = "corpus" in row.file_path
-        split = row["Split"]
+        #split = row["Split"]
         nii = NII.load(row[self.col], True)
         from_im = nii.get_seg_array()
         if np.max(from_im) < 1:
@@ -50,7 +54,10 @@ class Dataset_CSV(Dataset):
         if from_im.ndim == 2:
              item = self.get_item_2D(from_im)
         elif from_im.ndim == 3:
-             item = self.get_item_3D(from_im, folder, label, row.file_path,split,row.fracture_flag,corpus)#, row.fracture_flag)
+             if self.split == 'test':
+                item = self.get_item_3D(from_im, folder, label, row.file_path,self.split, "", corpus)
+             else:
+                item = self.get_item_3D(from_im, folder, label, row.file_path,self.split, "",corpus)#, row.fracture_flag)
         else:
              raise NotImplementedError()
         return item
@@ -91,7 +98,7 @@ class Dataset_CSV(Dataset):
         from_im = self.transform(from_im)
         #nii.set_array_(from_im).save("Check_transform_folder_vert.nii.gz")
         #print("from_im shape:", from_im.shape)
-        if split == 'val':
+        if split == 'val' or split == 'test':
             from_im = from_im.numpy()
         elif corpus:
             from_im = from_im.numpy()

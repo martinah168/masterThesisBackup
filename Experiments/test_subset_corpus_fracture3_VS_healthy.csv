@@ -1,0 +1,10 @@
+,subject,label,file_path,Split,fracture_flag,sex,age,fracture_heights,exam_date,cancerous,CT scanner,fracture_grading,Implant
+0,fxclass0271,8,/media/DATA/martina_ma/cutout_corpus_test/fxclass0271/fxclass0271_ 8_subreg_corpus.nii.gz,test,NF,m,50.22465753424657,[21],2013-05-16 00:00:00,1,-1,0,NM
+1,fxclass0185,14,/media/DATA/martina_ma/cutout_corpus_test/fxclass0185/fxclass0185_14_subreg_corpus.nii.gz,test,NF,f,62.27945205479452,[23],2007-08-21 00:00:00,1,-1,0,U
+2,fxclass0018,21,/media/DATA/martina_ma/cutout_corpus_test/fxclass0018/fxclass0018_21_subreg_corpus.nii.gz,test,NF,m,73.9013698630137,"[23, 20, 15, 17]",2013-03-24 00:00:00,0,-1,0,U
+3,fxclass0314,17,/media/DATA/martina_ma/cutout_corpus_test/fxclass0314/fxclass0314_17_subreg_corpus.nii.gz,test,NF,f,63.32876712328767,[19],2012-02-02 00:00:00,1,-1,0,U
+4,fxclass0309,25,/media/DATA/martina_ma/cutout_corpus_test/fxclass0309/fxclass0309_25_subreg_corpus.nii.gz,test,NF,m,83.42191780821918,"[23, 24]",2017-12-31 00:00:00,1,-1,0,U
+5,ctfu00006,16,/media/DATA/martina_ma/cutout_corpus_test/ctfu00006/ctfu00006_16_subreg_corpus.nii.gz,test,F,U,-1.0,,-1,-1,-1,3,NM
+6,ctfu00521,17,/media/DATA/martina_ma/cutout_corpus_test/ctfu00521/ctfu00521_17_subreg_corpus.nii.gz,test,F,U,-1.0,,-1,-1,-1,3,NM
+7,ctfu00521,12,/media/DATA/martina_ma/cutout_corpus_test/ctfu00521/ctfu00521_12_subreg_corpus.nii.gz,test,F,U,-1.0,,-1,-1,-1,3,NM
+8,ctfu00006,14,/media/DATA/martina_ma/cutout_corpus_test/ctfu00006/ctfu00006_14_subreg_corpus.nii.gz,test,F,U,-1.0,,-1,-1,-1,3,NM

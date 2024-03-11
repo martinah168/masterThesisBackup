@@ -123,6 +123,11 @@ def make_cutout(dataset, max_cutout_size):
         from_im = np_map_labels(arr=seg_arr,label_map={50: 49})
         labelmap = {i: 0 for i in range(41, 49)}
         corpus_arr =  np_map_labels(from_im, labelmap)
+
+        if np.max(corpus_arr) < 1 or int(label)in range(1,8):
+            print("brokenfile",sub,label)
+            continue
+            
         center_subreg = ndimage.center_of_mass(corpus_arr)
         cropped_arr_subreg, cutout_coord_slices, padding = np_calc_crop_around_centerpoint(center_subreg, corpus_arr, max_cutout_size)
     #    nii_subreg_s = subreg_nii.set_array(cropped_arr_subreg)
@@ -132,10 +137,10 @@ def make_cutout(dataset, max_cutout_size):
         nii_subreg_s.rescale_()
         nii_subreg_s.reorient_()
         #vert_label_nii.save("{}_{:03d}_vert_cropped.nii.gz".format(subject, label))
-        folder = "/media/DATA/martina_ma/cutout_corpus/{}/".format(sub)
+        folder = "/media/DATA/martina_ma/cutout_corpus_test/{}/".format(sub)
         if not os.path.exists(folder):
                 os.makedirs(folder)
-        nii_subreg_s.save("/media/DATA/martina_ma/cutout_corpus/{}/{}_{:2d}_subreg_corpus.nii.gz".format(sub,sub, int(label)))#.format(subject,subject, label))
+        nii_subreg_s.save("/media/DATA/martina_ma/cutout_corpus_test/{}/{}_{:2d}_subreg_corpus.nii.gz".format(sub,sub, int(label)))#.format(subject,subject, label))
 
 
 
@@ -157,7 +162,7 @@ if __name__ == '__main__':
     max_z = 0
     cut = True
 
-    path = "corpus_train_val_set.csv"
+    path = "/media/DATA/martina_ma/dae/test_set_filtered_cleaned_with_cervicals.csv"#"corpus_train_val_set.csv"
     size =  (128, 96, 128)#(144, 96, 144) 75 60 87
     dataset = pd.read_csv(path, sep=",")
     if cut:

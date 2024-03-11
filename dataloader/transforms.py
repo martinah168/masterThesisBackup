@@ -71,6 +71,29 @@ def get_transforms( tf: list[Transforms_Enum] | None, corpus = False, train=Fals
             out.append(Flip_wLabels())
     return transforms.Compose(out)
 
+def get_transforms_viz( affine = False, flip = False, both = True):#size: tuple[int, int, int],
+    #if tf is None:
+        #tf = [Transforms_Enum.pad, Transforms_Enum.random_crop]#, Transforms_Enum.RandomHorizontalFlip]
+    size: tuple[int, int,int] = (144, 96, 144)
+    out: list = [transforms.ToTensor()]
+    
+    if affine: 
+        #out.append(Pad(size=size))
+        #out.append(RandSpatialCrop())#size))
+        out.append(RandAffine(mode="nearest",translate_range=(5, 5, 5),rotate_range=(np.pi / 18, np.pi / 18, np.pi / 9),  # 20 degrees in radians
+    scale_range=(0.8, 1.2),  # 20% scaling
+    padding_mode="zeros", cache_grid = False))
+        return transforms.Compose(out)
+    if flip:
+        out.append(Flip_wLabels())
+        return transforms.Compose(out)
+    if both:
+        out.append(RandAffine(mode="nearest",translate_range=(5, 5, 5),rotate_range=(np.pi / 18, np.pi / 18, np.pi / 9),  # 20 degrees in radians
+    scale_range=(0.8, 1.2),  # 20% scaling
+    padding_mode="zeros", cache_grid = False))
+        out.append(Flip_wLabels())
+    return transforms.Compose(out)
+
 #     for t in tf:
 #         if isinstance(t, str):
 #             t = Transforms_Enum[t]
@@ -105,7 +128,7 @@ def get_transforms( tf: list[Transforms_Enum] | None, corpus = False, train=Fals
 
 class Flip_wLabels:
     def __call__(self, image: np.ndarray, dim = 2, tmp=60):
-        return np_rhsubf(image=image, dim=2)
+        return np_rhsubf(image=image.numpy(), dim=2)
 
 # class Pad:
 #     def __init__(self, size: tuple[int, int] | int) -> None:
